@@ -34,10 +34,6 @@ typedef struct			s_dot
 	float				z;
 }						t_dot;
 
-/*
-** first light is ambient light. Center for it is useless
-*/
-
 typedef struct			s_sphere
 {
 	t_dot				center;
@@ -57,6 +53,10 @@ typedef struct			s_compute_light_p
 	t_dot				normal_vec;
 	t_sphere			*cur_sphere;
 }						t_compute_light_p;
+
+/*
+** first light is ambient light. Center for it is useless
+*/
 
 typedef struct			s_light
 {

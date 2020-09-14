@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:36:33 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/13 14:36:33 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/14 18:38:34 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,20 @@ void		clean_scene(t_scene *scene)
 	clean_light(scene->light);
 }
 
+void		clean_menu(t_menu *m)
+{
+	SDL_DestroyTexture(m->add_menu);
+	SDL_DestroyTexture(m->img);
+}
+
 void		cleanup(t_sdl *sdl)
 {
 	clean_scene(&sdl->scene);
+	clean_menu(&sdl->menu);
 	SDL_DestroyTexture(sdl->fg);
 	SDL_DestroyRenderer(sdl->renderer);
 	SDL_DestroyWindow(sdl->window);
 	IMG_Quit();
+	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	SDL_Quit();
 }

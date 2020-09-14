@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:41:30 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/13 14:37:15 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/14 18:42:48 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,15 @@ t_sdl		sdl_init(void)
 	sdl.height = 480;
 	scene_init(&sdl);
 	sdl.buffer_len = sdl.width * sdl.height;
-	sdl.buffer = (int*)malloc(sizeof(int) * sdl.buffer_len);
 	sdl.window = SDL_CreateWindow("Hello World!", SDL_WINDOWPOS_CENTERED\
 	, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+	if (SDL_Init(0) != 0)
 		sdl_error("SDL_Init Error: ");
+	SDL_InitSubSystem(SDL_INIT_EVENTS);
 	if (sdl.window == NULL)
 		sdl_error("SDL_CreateWindow Error: ");
 	sdl.renderer = SDL_CreateRenderer(sdl.window, -1,\
-	SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	0);
 	if (sdl.renderer == NULL)
 		sdl_error("SDL_CreateRenderer Error: ");
 	if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG)
@@ -400,4 +400,5 @@ int				main(void)
 	SDL_RenderClear(sdl.renderer);
 	loop(&sdl);
 	cleanup(&sdl);
+	return (0);
 }
