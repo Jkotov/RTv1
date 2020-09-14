@@ -10,6 +10,10 @@ Use CMake for compile:
 TO DO:
 
 - Reflections
+- Other figures:
+  - Cone
+  - Plane
+  - Cylinder
 - GUI
 - Multithreading:
   - POSIX Threads
