@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/15 11:56:11 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/15 17:30:44 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ typedef struct			s_sdl
 	t_menu				menu;
 }						t_sdl;
 
+t_dot					vector_reflection(t_dot direction_vec,\
+t_dot normal_vec);
 size_t 					ft_strlen(const char *str);
 void					ft_putstr(const char *s);
 SDL_Texture				*create_texture(char *file_name, t_sdl *sdl);

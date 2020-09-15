@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:41:30 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/15 16:28:55 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/15 17:30:44 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ void		scene_init(t_sdl *sdl)
 	sdl->scene.sphere = NULL;
 	sdl->scene.light = NULL;
 	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){300, 250, 150},\
-	150, 0xFF00, 100, 0.3, NULL});
+	150, 0xFF00, 100, 0.1, NULL});
 	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){400, 250, 150},\
-	100, 0xFF, 75, 0.5, NULL});
+	100, 0xFF, 75, 0.1, NULL});
 	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){100, 250, 150},\
-	125, 0xFF0000, 10, 0.3, NULL});
+	125, 0xFF0000, 10, 0.1, NULL});
 	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){300, 5375, 150},\
 	5000, 0xFFFF00, 10, 0.1, NULL});
 	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.1);
@@ -290,7 +290,6 @@ int				ray_tracing(t_scene scene, t_dot direction_vector, t_dot start, int depth
 	t_dot		normal_vec;
 	t_dot		dot;
 	int			reflected_color;
-	t_dot		reflected_vec;
 
 	direction_vector = vector_normalize(direction_vector);
 	cur_color = 0;
@@ -307,17 +306,13 @@ int				ray_tracing(t_scene scene, t_dot direction_vector, t_dot start, int depth
 		cur_color = color_intens(cur_sphere->color, intens);
 		if (depth > 0)
 		{
-			reflected_vec =\
-			vector_subtraction(direction_vector, vector_mult_num(vector_mult_num(normal_vec,\
-	2), scalar_mult(normal_vec, direction_vector)));
-			reflected_vec = vector_normalize(reflected_vec);
-			reflected_color = ray_tracing(scene, reflected_vec, dot, depth - 1);
-			cur_color = color_sum(color_intens(cur_color, (1 - cur_sphere->reflective)),
+			reflected_color = ray_tracing(scene,\
+			vector_reflection(direction_vector, normal_vec), dot, depth - 1);
+			cur_color = color_sum(color_intens(cur_color,\
+			(1 - cur_sphere->reflective)),
 			color_intens(reflected_color, cur_sphere->reflective));
 			if (cur_color > 0xffffff)
-			{
-				printf("here");
-			}
+				printf("IF U SEE THIS IN OUTPUT SOMETHING WENT WRONG");
 		}
 	}
 	return (cur_color);
@@ -339,7 +334,7 @@ void			render(t_sdl *sdl)
 			direction_vector = vector_subtraction((t_dot){x, y, 0},\
 			sdl->scene.camera);
 			sdl->buffer[y * sdl->width + x] = ray_tracing(sdl->scene,\
-			direction_vector, (t_dot){(float)x, (float)y, 0}, 1);
+			direction_vector, (t_dot){(float)x, (float)y, 0}, 3);
 		}
 		y = -1;
 	}
