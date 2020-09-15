@@ -59,7 +59,7 @@ void		scene_init(t_sdl *sdl)
 	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){400, 250, 150},\
 	100, 0xFF, 75, 0.5, NULL});
 	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){100, 250, 150},\
-	125, 0xFF0000, 10, 1, NULL});
+	125, 0xFF0000, 10, 0.7, NULL});
 	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){300, 5375, 150},\
 	5000, 0xFFFF00, 10, 0.1, NULL});
 	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.1);

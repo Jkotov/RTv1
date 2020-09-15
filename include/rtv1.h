@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/15 17:38:26 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/15 18:21:11 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,9 @@ t_dot light_vector, float intensity);
 float					lighting(t_scene scene, t_compute_light_p p);
 int						color_intens(int color, float intens);
 int						ray_tracing(t_scene scene, t_dot direction_vector,\
-t_dot start);
+t_dot start, int depth);
+t_dot					vector_reflection(t_dot direction_vec,\
+t_dot normal_vec);
 void					render(t_sdl *sdl);
 void					loop(t_sdl *sdl);
 

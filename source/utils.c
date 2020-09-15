@@ -21,20 +21,6 @@ int			quadratic_equation(t_dot coeffs, float *x1, float *x2)
 	return (2);
 }
 
-float		q_rsqrt(float number)
-{
-	int			n;
-	float		res;
-	const float x2 = number * 0.5F;
-	const float threehalfs = 1.5F;
-
-	n = 0x5f3759df - (*(int*)&number >> 1);
-	res = (*(float *)&n);
-	res *= (threehalfs - (x2 * res * res));
-	res *= (threehalfs - (x2 * res * res));
-	return (res);
-}
-
 void			loop(t_sdl *sdl)
 {
 	SDL_Event	e;
