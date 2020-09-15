@@ -70,18 +70,3 @@ void		add_sphere(t_sphere **list, t_sphere sphere)
 	}
 	*tmp = sphere;
 }
-
-float			distance_to_sphere(t_dot direction_vec,\
-t_dot vec_to_center, float radius)
-{
-	float		solutions[2];
-
-	if (!quadratic_equation((t_dot){1,\
-	2 * scalar_mult(direction_vec, vec_to_center),\
-	scalar_mult(vec_to_center, vec_to_center) - radius\
-	* radius}, &solutions[0], &solutions[1]))
-		return (NAN);
-	if (solutions[0] > solutions[1])
-		solutions[0] = solutions[1];
-	return (solutions[0]);
-}

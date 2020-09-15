@@ -6,7 +6,7 @@
 #    By: ginger <ginger@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/22 13:50:30 by ginger            #+#    #+#              #
-#    Updated: 2020/09/15 16:59:36 by root             ###   ########.fr        #
+#    Updated: 2020/09/15 18:04:51 by epainter         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,12 @@ NAME = RTv1
 ### COMPILATION ###
 
 CC = gcc
-FLAGS = -O2 -Wall -Wextra -Werror
+FLAGS = -O2 -Wall -Wextra
 
 ### INCLUDES ###
 
 S_DIR = source
 H_DIR = include
-LIBFT = libft
 #MLX = minilibx
 
 ### SOURCE ###
@@ -29,9 +28,14 @@ LIBFT = libft
 SRCS = main.c \
         errors.c \
         cleanup.c \
-        scene_init.c \
+        init.c \
         texture.c \
-        vectors.c
+        vectors.c \
+        color.c \
+        control_utils.c \
+        light.c \
+        sphere.c \
+        utils.c
 
 ### OBJECTS ###
 
@@ -61,23 +65,19 @@ RESET = \033[0m
 all: lib $(NAME)
 
 lib:
-	@echo "$(GREEN)Creating lib files$(CYAN)"
-	@make -C $(LIBFT)
-	@#make -C $(MLX)
+	@echo "$(H_DIR)Creating lib files$(CYAN)"
 	@echo 	"$(RESET)"
 
 %.o: %.c $(HEADERS)
-	@$(CC) $(FLAGS) -o $@ -c $<
+	$(CC) -I $(H_DIR)  $(FLAGS) -o $@ -c $< -lSDL2main -lSDL2 -lSDL_mixer -lSDL_image -lm
 	@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(RESET)"
 
 $(NAME): $(OBJS)
-	@$(CC) $(FLAGS) -L $(LIBFT) -o $@ $^
+	$(CC) -I $(HEADERS) $(FLAGS) -o $@ $^ -lSDL2main -lSDL2 -lSDL_mixer -lSDL2_image -lm
 	@echo "$(GREEN)Project successfully compiled$(RESET)"
 
 clean:
 	@echo "$(GREEN)Supressing libraries files$(RESET)"
-	@$(MAKE) fclean -C $(LIBFT)
-	@$(MAKE) clean -C $(MLX)
 	@/bin/rm -f $(OBJS)
 
 fclean: clean
