@@ -6,32 +6,37 @@
 #    By: ginger <ginger@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/22 13:50:30 by ginger            #+#    #+#              #
-#    Updated: 2020/09/15 16:59:36 by root             ###   ########.fr        #
+#    Updated: 2020/09/15 18:34:14 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = RTv1
+NAME = RTv
 
 ### COMPILATION ###
 
 CC = gcc
-FLAGS = -O2 -Wall -Wextra -Werror
+FLAGS = -O2 -Wall -Wextra
+#-Werror
 
 ### INCLUDES ###
 
 S_DIR = source
 H_DIR = include
 LIBFT = libft
-#MLX = minilibx
 
 ### SOURCE ###
 
-SRCS = main.c \
-        errors.c \
-        cleanup.c \
-        scene_init.c \
-        texture.c \
-        vectors.c
+SRCS = cleanup.c \
+       color.c \
+       errors.c  \
+       control_utils.c \
+       init.c \
+       light.c \
+       main.c \
+       sphere.c \
+       texture.c  \
+       utils.c \
+       vectors.c
 
 ### OBJECTS ###
 
@@ -63,21 +68,20 @@ all: lib $(NAME)
 lib:
 	@echo "$(GREEN)Creating lib files$(CYAN)"
 	@make -C $(LIBFT)
-	@#make -C $(MLX)
 	@echo 	"$(RESET)"
 
 %.o: %.c $(HEADERS)
-	@$(CC) $(FLAGS) -o $@ -c $<
+	@$(CC) -I $(H_DIR) $(FLAGS) -o $@ -c $< -lSDL2main -lSDL2 -lSDL2_image -lm
 	@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(RESET)"
 
 $(NAME): $(OBJS)
-	@$(CC) $(FLAGS) -L $(LIBFT) -o $@ $^
+	@$(CC) $(FLAGS) -L $(LIBFT) -I $(HEADERS) -o $@ $^ -lft -lSDL2main -lSDL2 -lSDL2_image -lm
 	@echo "$(GREEN)Project successfully compiled$(RESET)"
 
 clean:
 	@echo "$(GREEN)Supressing libraries files$(RESET)"
 	@$(MAKE) fclean -C $(LIBFT)
-	@$(MAKE) clean -C $(MLX)
+	@#$(MAKE) clean -C $(MLX)
 	@/bin/rm -f $(OBJS)
 
 fclean: clean

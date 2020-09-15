@@ -1,3 +1,4 @@
+
 #include "../include/rtv1.h"
 
 int			quadratic_equation(t_dot coeffs, float *x1, float *x2)

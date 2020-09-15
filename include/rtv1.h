@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/15 16:57:57 by root             ###   ########.fr       */
+/*   Updated: 2020/09/15 16:59:36 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <SDL2/SDL_image.h>
 # include <SDL2/SDL_ttf.h>
 # include <math.h>
+# include "../libft/include/libft.h"
 
 typedef struct 			s_menu
 {
