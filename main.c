@@ -399,6 +399,6 @@ int				main(void)
 	SDL_TEXTUREACCESS_STREAMING, 640, 480);
 	SDL_RenderClear(sdl.renderer);
 	loop(&sdl);
-	cleanup(&sdl);
+//	cleanup(&sdl);
 	return (0);
 }
