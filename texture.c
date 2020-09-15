@@ -18,6 +18,6 @@ SDL_Texture	*create_texture(char *file_name, t_sdl *sdl)
 
 	tex = IMG_LoadTexture(sdl->renderer, file_name);
 	if (tex == NULL)
-		sdl_error("SDL_CreateTextureFromSurface Error: ");
+		sdl_error("IMG Load Error: ");
 	return (tex);
 }

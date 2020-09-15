@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/13 12:32:30 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/15 11:56:11 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_dot					vector_sum(t_dot v1, t_dot v2);
 t_dot					vector_mult_num(t_dot v, float num);
 float					scalar_mult(t_dot vec1, t_dot vec2);
 float					abs_vector(t_dot vec);
-float					q_rsqrt(float number);
+//float					q_rsqrt(float number);
 float					revers_abs_vec(t_dot vec);
 t_dot					vector_normalize(t_dot vector);
 float					distance_to_sphere(t_dot direction_vec,\
@@ -121,7 +121,7 @@ t_dot light_vector, float intensity);
 float					lighting(t_scene scene, t_compute_light_p p);
 int						color_intens(int color, float intens);
 int						ray_tracing(t_scene scene, t_dot direction_vector,\
-t_dot start);
+t_dot start, int depth);
 void					render(t_sdl *sdl);
 void					loop(t_sdl *sdl);
 

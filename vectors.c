@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:38:05 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/13 14:38:05 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/15 12:11:00 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,27 @@ float		abs_vector(t_dot vec)
 }
 
 /*
-** try with return 1 / abs_vector(vec);
+**float		q_rsqrt(float number)
+**{
+**	int			n;
+**	float		res;
+**	const float x2 = number * 0.5F;
+**	const float threehalfs = 1.5F;
+**
+**	n = 0x5f3759df - (*(int*)&number >> 1);
+**	res = (*(float *)&n);
+**	res *= (threehalfs - (x2 * res * res));
+**	res *= (threehalfs - (x2 * res * res));
+**	return (res);
+**}
+*/
+/*
+** try with return (q_rsqrt(scalar_mult(vec, vec)));
 */
 
 float		revers_abs_vec(t_dot vec)
 {
-	return (q_rsqrt(scalar_mult(vec, vec)));
+	return (1 / abs_vector(vec));
 }
 
 t_dot		vector_normalize(t_dot vector)

@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:41:30 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/14 18:42:48 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/15 16:28:55 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ void		scene_init(t_sdl *sdl)
 	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){400, 250, 150},\
 	100, 0xFF, 75, 0.5, NULL});
 	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){100, 250, 150},\
-	125, 0xFF0000, 10, 1, NULL});
+	125, 0xFF0000, 10, 0.3, NULL});
 	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){300, 5375, 150},\
 	5000, 0xFFFF00, 10, 0.1, NULL});
 	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.1);
 	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.5);
-	add_light(&sdl->scene, (t_dot){1000, 40, 0}, 0.4);
+	add_light(&sdl->scene, (t_dot){1000, 40, 0}, 1);
 	add_light(&sdl->scene, (t_dot){300, 100, 550}, 0.4);
 }
 
@@ -106,11 +106,11 @@ t_sdl		sdl_init(void)
 	sdl.width = 640;
 	sdl.height = 480;
 	scene_init(&sdl);
-	sdl.buffer_len = sdl.width * sdl.height;
-	sdl.window = SDL_CreateWindow("Hello World!", SDL_WINDOWPOS_CENTERED\
-	, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
 	if (SDL_Init(0) != 0)
 		sdl_error("SDL_Init Error: ");
+	sdl.buffer_len = sdl.width * sdl.height;
+	sdl.window = SDL_CreateWindow("Hello World!", SDL_WINDOWPOS_CENTERED\
+	, SDL_WINDOWPOS_CENTERED, 640, 480, 0);
 	SDL_InitSubSystem(SDL_INIT_EVENTS);
 	if (sdl.window == NULL)
 		sdl_error("SDL_CreateWindow Error: ");
@@ -169,20 +169,6 @@ int			quadratic_equation(t_dot coeffs, float *x1, float *x2)
 	*x1 = (-coeffs.y - d) * 0.5 / coeffs.x;
 	*x2 = (-coeffs.y + d) * 0.5 / coeffs.x;
 	return (2);
-}
-
-float		q_rsqrt(float number)
-{
-	int			n;
-	float		res;
-	const float x2 = number * 0.5F;
-	const float threehalfs = 1.5F;
-
-	n = 0x5f3759df - (*(int*)&number >> 1);
-	res = (*(float *)&n);
-	res *= (threehalfs - (x2 * res * res));
-	res *= (threehalfs - (x2 * res * res));
-	return (res);
 }
 
 /*
@@ -287,12 +273,24 @@ int				color_intens(int color, float intens)
 	((int)(((color & 0xFF) * intens)));
 }
 
-int				ray_tracing(t_scene scene, t_dot direction_vector, t_dot start)
+int				color_sum(int c1, int c2)
+{
+	return ((int)(((c1 & 0xFF000000) >> 24) + ((c2 & 0xFF000000) >> 24)) << 24) +\
+	((int)(((c1 & 0xFF0000) >> 16) + ((c2 & 0xFF0000) >> 16)) << 16) +\
+	((int)(((c1 & 0xFF00) >> 8) + ((c2 & 0xFF00) >> 8)) << 8) +\
+	((int)(c1 & 0xFF)  + (c2 & 0xFF));
+}
+
+int				ray_tracing(t_scene scene, t_dot direction_vector, t_dot start, int depth)
 {
 	int			cur_color;
 	float		len;
 	float		intens;
 	t_sphere	*cur_sphere;
+	t_dot		normal_vec;
+	t_dot		dot;
+	int			reflected_color;
+	t_dot		reflected_vec;
 
 	direction_vector = vector_normalize(direction_vector);
 	cur_color = 0;
@@ -300,12 +298,27 @@ int				ray_tracing(t_scene scene, t_dot direction_vector, t_dot start)
 	cur_sphere = closest(start, direction_vector, scene, &len);
 	if (len != INFINITY && scene.light)
 	{
+		dot = vector_sum(vector_mult_num(direction_vector, len), start);
+		normal_vec = vector_normalize(vector_subtraction(dot, cur_sphere->center));
 		intens = lighting(scene,\
-		(t_compute_light_p){vector_sum(vector_mult_num(direction_vector,\
-		len), start), cur_sphere->center,\
+		(t_compute_light_p){dot, cur_sphere->center,\
 		cur_sphere->specular, vector_mult_num(direction_vector, -1),\
-		{0, 0, 0}, cur_sphere});
+		normal_vec, cur_sphere});
 		cur_color = color_intens(cur_sphere->color, intens);
+		if (depth > 0)
+		{
+			reflected_vec =\
+			vector_subtraction(direction_vector, vector_mult_num(vector_mult_num(normal_vec,\
+	2), scalar_mult(normal_vec, direction_vector)));
+			reflected_vec = vector_normalize(reflected_vec);
+			reflected_color = ray_tracing(scene, reflected_vec, dot, depth - 1);
+			cur_color = color_sum(color_intens(cur_color, (1 - cur_sphere->reflective)),
+			color_intens(reflected_color, cur_sphere->reflective));
+			if (cur_color > 0xffffff)
+			{
+				printf("here");
+			}
+		}
 	}
 	return (cur_color);
 }
@@ -326,7 +339,7 @@ void			render(t_sdl *sdl)
 			direction_vector = vector_subtraction((t_dot){x, y, 0},\
 			sdl->scene.camera);
 			sdl->buffer[y * sdl->width + x] = ray_tracing(sdl->scene,\
-			direction_vector, (t_dot){(float)x, (float)y, 0});
+			direction_vector, (t_dot){(float)x, (float)y, 0}, 1);
 		}
 		y = -1;
 	}
@@ -339,12 +352,6 @@ void			render(t_sdl *sdl)
 
 void			mouse_events(t_sdl *sdl, SDL_Event e)
 {
-	t_sphere sphere;
-
-	sphere.center = (t_dot){0, 0, 0};
-	sphere.specular = 0;
-	sphere.radius = 0;
-	sphere.color = 0;
 	if (e.button.y < 100)
 	{
 		if (e.button.x > 100 && e.button.x < 200)
@@ -363,7 +370,10 @@ void			loop(t_sdl *sdl)
 {
 	SDL_Event	e;
 	char		quit;
+	uint		cur_time;
+	uint		time;
 
+	time = SDL_GetTicks();
 	quit = 0;
 	while (!quit)
 	{
@@ -377,6 +387,9 @@ void			loop(t_sdl *sdl)
 				mouse_events(sdl, e);
 		}
 		render(sdl);
+		cur_time = SDL_GetTicks();
+		printf("%i ms on frame\n", cur_time - time);
+		time = cur_time;
 	}
 }
 
