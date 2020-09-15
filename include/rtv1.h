@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/15 17:30:44 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/15 16:57:57 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ typedef struct			s_sdl
 	t_menu				menu;
 }						t_sdl;
 
-t_dot					vector_reflection(t_dot direction_vec,\
-t_dot normal_vec);
 size_t 					ft_strlen(const char *str);
 void					ft_putstr(const char *s);
 SDL_Texture				*create_texture(char *file_name, t_sdl *sdl);
@@ -98,12 +96,14 @@ void					add_light(t_scene *scene, t_dot center,\
 float intensity);
 void					add_sphere(t_sphere **list, t_sphere sphere);
 void					scene_init(t_sdl *sdl);
+void					init_menu(t_sdl *sdl);
 t_sdl					sdl_init(void);
 void					clean_light(t_light *light);
 void					clean_sphere(t_sphere *sphere);
 void					clean_scene(t_scene *scene);
 void					cleanup(t_sdl *sdl);
 void					keyboard_events(t_sdl *sdl, char *quit, SDL_Event e);
+void					mouse_events(t_sdl *sdl, SDL_Event e);
 int						quadratic_equation(t_dot coeffs, float *x1,\
 float *x2);
 t_dot					vector_subtraction(t_dot v1, t_dot v2);
@@ -111,7 +111,7 @@ t_dot					vector_sum(t_dot v1, t_dot v2);
 t_dot					vector_mult_num(t_dot v, float num);
 float					scalar_mult(t_dot vec1, t_dot vec2);
 float					abs_vector(t_dot vec);
-//float					q_rsqrt(float number);
+float					q_rsqrt(float number);
 float					revers_abs_vec(t_dot vec);
 t_dot					vector_normalize(t_dot vector);
 float					distance_to_sphere(t_dot direction_vec,\
@@ -123,7 +123,7 @@ t_dot light_vector, float intensity);
 float					lighting(t_scene scene, t_compute_light_p p);
 int						color_intens(int color, float intens);
 int						ray_tracing(t_scene scene, t_dot direction_vector,\
-t_dot start, int depth);
+t_dot start);
 void					render(t_sdl *sdl);
 void					loop(t_sdl *sdl);
 

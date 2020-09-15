@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture.c                                          :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/20 12:36:56 by epainter          #+#    #+#             */
-/*   Updated: 2020/08/21 14:15:04 by epainter         ###   ########.fr       */
+/*   Created: 2020/09/13 12:30:45 by epainter          #+#    #+#             */
+/*   Updated: 2020/09/13 12:32:30 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
-SDL_Texture	*create_texture(char *file_name, t_sdl *sdl)
+size_t 		ft_strlen(const char *str)
 {
-	SDL_Texture *tex;
+	size_t i;
 
-	tex = IMG_LoadTexture(sdl->renderer, file_name);
-	if (tex == NULL)
-		sdl_error("IMG Load Error: ");
-	return (tex);
+	i = 0;
+	while (*(str + i) != '\0')
+		i++;
+	return (i);
+}
+
+void		ft_putstr(const char *s)
+{
+	write(1, s, ft_strlen(s));
+}
+
+void		sdl_error(char *text)
+{
+	ft_putstr(text);
+	ft_putstr(SDL_GetError());
+	exit(1);
 }
