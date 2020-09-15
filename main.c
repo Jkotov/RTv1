@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:41:30 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/14 18:42:48 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/15 15:40:03 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -399,6 +399,6 @@ int				main(void)
 	SDL_TEXTUREACCESS_STREAMING, 640, 480);
 	SDL_RenderClear(sdl.renderer);
 	loop(&sdl);
-//	cleanup(&sdl);
+	cleanup(&sdl);
 	return (0);
 }
