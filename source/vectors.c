@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
 t_dot		vector_subtraction(t_dot v1, t_dot v2)
 {

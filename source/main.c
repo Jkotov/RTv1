@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/20 12:36:56 by epainter          #+#    #+#             */
-/*   Updated: 2020/08/21 14:15:04 by epainter         ###   ########.fr       */
+/*   Created: 2020/08/16 15:41:30 by epainter          #+#    #+#             */
+/*   Updated: 2020/09/15 16:59:36 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
-SDL_Texture	*create_texture(char *file_name, t_sdl *sdl)
+int				main(void)
 {
-	SDL_Texture *tex;
+	t_sdl		sdl;
 
-	tex = IMG_LoadTexture(sdl->renderer, file_name);
-	if (tex == NULL)
-		sdl_error("SDL_CreateTextureFromSurface Error: ");
-	return (tex);
+	sdl = sdl_init();
+	init_menu(&sdl);
+	sdl.fg = SDL_CreateTexture(sdl.renderer,\
+	SDL_PIXELFORMAT_ARGB8888,\
+	SDL_TEXTUREACCESS_STREAMING, 640, 480);
+	SDL_RenderClear(sdl.renderer);
+	loop(&sdl);
+	cleanup(&sdl);
+	return (0);
 }
