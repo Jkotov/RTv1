@@ -69,4 +69,8 @@ void		add_sphere(t_sphere **list, t_sphere sphere)
 		tmp = tmp->next;
 	}
 	*tmp = sphere;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master
