@@ -51,26 +51,18 @@ t_scene scene, float *len)
 }
 
 
-void		add_sphere(t_sphere **list, t_sphere sphere)
-{
+void		add_sphere(t_sphere **list, t_sphere sphere) {
 	t_sphere *tmp;
 
-	if (!*list)
-	{
-		*list = (t_sphere *)malloc(sizeof(t_sphere));
+	if (!*list) {
+		*list = (t_sphere *) malloc (sizeof (t_sphere));
 		tmp = *list;
-	}
-	else
-	{
+	} else {
 		tmp = *list;
 		while (tmp->next)
 			tmp = tmp->next;
-		tmp->next = (t_sphere*)malloc(sizeof(t_sphere));
+		tmp->next = (t_sphere *) malloc (sizeof (t_sphere));
 		tmp = tmp->next;
 	}
 	*tmp = sphere;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> master
