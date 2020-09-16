@@ -7,7 +7,7 @@ INCLUDE(FindPkgConfig)
 find_package(SDL2 REQUIRED)
 PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
 PKG_SEARCH_MODULE(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
-add_compile_options(-Wall -Wextra)
+add_compile_options(-Wall -Wextra -O3)
 
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
 add_executable(RTv1 source/cleanup.c

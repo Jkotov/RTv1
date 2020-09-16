@@ -16,7 +16,7 @@ int				color_sum(int c1, int c2)
 	((int)(c1 & 0xFF)  + (c2 & 0xFF));
 }
 
-int				ray_tracing(t_scene scene, t_dot direction_vector, t_dot start, int depth)
+int				ray_tracing(t_scene scene, t_dot direction_vector, t_dot start)
 {
 	int			cur_color;
 	float		len;
@@ -26,7 +26,6 @@ int				ray_tracing(t_scene scene, t_dot direction_vector, t_dot start, int depth
 	t_dot		dot;
 	int			reflected_color;
 
-	direction_vector = vector_normalize(direction_vector);
 	cur_color = 0;
 	len = INFINITY;
 	cur_sphere = closest(start, direction_vector, scene, &len);
@@ -39,15 +38,15 @@ int				ray_tracing(t_scene scene, t_dot direction_vector, t_dot start, int depth
 		cur_sphere->specular, vector_mult_num(direction_vector, -1),\
 		normal_vec, cur_sphere});
 		cur_color = color_intens(cur_sphere->color, intens);
-		if (depth > 0)
+		if (scene.cur_depth++ < scene.max_depth)
 		{
 			reflected_color = ray_tracing(scene,\
-			vector_reflection(direction_vector, normal_vec), dot, depth - 1);
+			vector_reflection(direction_vector, normal_vec), dot);
 			cur_color = color_sum(color_intens(cur_color,\
 			(1 - cur_sphere->reflective)),
 								  color_intens(reflected_color, cur_sphere->reflective));
 			if (cur_color > 0xffffff)
-				printf("IF U SEE THIS IN OUTPUT SOMETHING WENT WRONG");
+				ft_putstr("IF U SEE THIS IN OUTPUT SOMETHING WENT WRONG");
 		}
 	}
 	return (cur_color);
@@ -58,7 +57,6 @@ void			render(t_sdl *sdl)
 {
 	int		x;
 	int		y;
-	t_dot	direction_vector;
 
 	SDL_LockTexture(sdl->fg, NULL, (void**)&sdl->buffer, &sdl->buffer_len);
 	x = -1;
@@ -67,10 +65,10 @@ void			render(t_sdl *sdl)
 	{
 		while (++y < sdl->height)
 		{
-			direction_vector = vector_subtraction((t_dot){x, y, 0},\
-			sdl->scene.camera);
+			sdl->scene.cur_depth = 0;
 			sdl->buffer[y * sdl->width + x] = ray_tracing(sdl->scene,\
-			direction_vector, (t_dot){(float)x, (float)y, 0}, 3);
+			sdl->scene.dir_vecs[y * sdl->width + x],\
+			sdl->scene.camera);
 		}
 		y = -1;
 	}

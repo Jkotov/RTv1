@@ -4,12 +4,6 @@
 
 void			mouse_events(t_sdl *sdl, SDL_Event e)
 {
-	t_sphere sphere;
-
-	sphere.center = (t_dot){0, 0, 0};
-	sphere.specular = 0;
-	sphere.radius = 0;
-	sphere.color = 0;
 	if (e.button.y < 100)
 	{
 		if (e.button.x > 100 && e.button.x < 200)
@@ -44,6 +38,6 @@ void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e)
 			SDL_PollEvent(&e);
 		add_sphere(&sdl->scene.sphere, (t_sphere){tmp,\
 		abs_vector(vector_subtraction((t_dot){e.button.x, e.button.y, 300},\
-		tmp)), 0xFF00, 100, 0.3, NULL});
+		tmp)), 0xFF00, 100, 0.3, NULL, NULL});
 	}
 }
