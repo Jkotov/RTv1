@@ -6,11 +6,24 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:38:05 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/13 14:38:05 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/16 15:21:25 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rtv1.h"
+
+t_dot		vector_reflection(t_dot direction_vec, t_dot normal_vec)
+{
+	t_dot	reflected_vec;
+
+
+	reflected_vec =\
+	vector_subtraction(direction_vec, vector_mult_num\
+	(vector_mult_num(normal_vec,\
+	2), scalar_mult(normal_vec, direction_vec)));
+	reflected_vec = vector_normalize(reflected_vec);
+	return (reflected_vec);
+}
 
 t_dot		vector_subtraction(t_dot v1, t_dot v2)
 {
@@ -38,12 +51,27 @@ float		abs_vector(t_dot vec)
 }
 
 /*
-** try with return 1 / abs_vector(vec);
+**float		q_rsqrt(float number)
+**{
+**	int			n;
+**	float		res;
+**	const float x2 = number * 0.5F;
+**	const float threehalfs = 1.5F;
+**
+**	n = 0x5f3759df - (*(int*)&number >> 1);
+**	res = (*(float *)&n);
+**	res *= (threehalfs - (x2 * res * res));
+**	res *= (threehalfs - (x2 * res * res));
+**	return (res);
+**}
+*/
+/*
+** try with return (q_rsqrt(scalar_mult(vec, vec)));
 */
 
 float		revers_abs_vec(t_dot vec)
 {
-	return (q_rsqrt(scalar_mult(vec, vec)));
+	return (1 / abs_vector(vec));
 }
 
 t_dot		vector_normalize(t_dot vector)
