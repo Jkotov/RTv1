@@ -6,36 +6,37 @@
 #    By: ginger <ginger@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/22 13:50:30 by ginger            #+#    #+#              #
-#    Updated: 2020/09/15 18:04:51 by epainter         ###   ########.fr        #
+#    Updated: 2020/09/16 15:18:06 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = RTv1
+NAME = RTv
 
 ### COMPILATION ###
 
 CC = gcc
 FLAGS = -O2 -Wall -Wextra
+#-Werror
 
 ### INCLUDES ###
 
 S_DIR = source
 H_DIR = include
-#MLX = minilibx
+LIBFT = libft
 
 ### SOURCE ###
 
-SRCS = main.c \
-        errors.c \
-        cleanup.c \
-        init.c \
-        texture.c \
-        vectors.c \
-        color.c \
-        control_utils.c \
-        light.c \
-        sphere.c \
-        utils.c
+SRCS = cleanup.c \
+       color.c \
+       errors.c  \
+       control_utils.c \
+       init.c \
+       light.c \
+       main.c \
+       sphere.c \
+       texture.c  \
+       utils.c \
+       vectors.c
 
 ### OBJECTS ###
 
@@ -65,19 +66,22 @@ RESET = \033[0m
 all: lib $(NAME)
 
 lib:
-	@echo "$(H_DIR)Creating lib files$(CYAN)"
+	@echo "$(GREEN)Creating lib files$(CYAN)"
+	@make -C $(LIBFT)
 	@echo 	"$(RESET)"
 
 %.o: %.c $(HEADERS)
-	$(CC) -I $(H_DIR)  $(FLAGS) -o $@ -c $< -lSDL2main -lSDL2 -lSDL_mixer -lSDL_image -lm
+	@$(CC) -I $(H_DIR) $(FLAGS) -o $@ -c $< -lSDL2main -lSDL2 -lSDL2_image -lm
 	@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(RESET)"
 
 $(NAME): $(OBJS)
-	$(CC) -I $(HEADERS) $(FLAGS) -o $@ $^ -lSDL2main -lSDL2 -lSDL_mixer -lSDL2_image -lm
+	@$(CC) $(FLAGS) -L $(LIBFT) -I $(HEADERS) -o $@ $^ -lft -lSDL2main -lSDL2 -lSDL2_image -lm
 	@echo "$(GREEN)Project successfully compiled$(RESET)"
 
 clean:
 	@echo "$(GREEN)Supressing libraries files$(RESET)"
+	@$(MAKE) fclean -C $(LIBFT)
+	@#$(MAKE) clean -C $(MLX)
 	@/bin/rm -f $(OBJS)
 
 fclean: clean
