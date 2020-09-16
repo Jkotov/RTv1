@@ -65,6 +65,28 @@ t_dot light_vector, float intensity)
 	return (tmp);
 }
 
+char			sphere_on_light(t_dot start, t_dot direction_vector,\
+t_scene scene)
+{
+	float		cur_len;
+	t_dot		center_start_vec;
+	t_sphere	*cur_sphere;
+
+	cur_sphere = scene.sphere;
+	while (cur_sphere)
+	{
+		center_start_vec = vector_subtraction(start, cur_sphere->center);
+		cur_len = distance_to_sphere(direction_vector,\
+		center_start_vec, cur_sphere->radius);
+		if (cur_len != NAN && cur_len > 0)
+		{
+			return (0);
+		}
+		cur_sphere = cur_sphere->next;
+	}
+	return (1);
+}
+
 float			lighting(t_scene scene, t_compute_light_p p)
 {
 	float	res;
@@ -79,8 +101,8 @@ float			lighting(t_scene scene, t_compute_light_p p)
 	{
 		light_vector = vector_subtraction(cur_light->center, p.dot);
 		tmp = INFINITY;
-		if (!(closest(p.dot, (vector_normalize(light_vector)),\
-		scene, &tmp)))
+		if (sphere_on_light(p.dot, (vector_normalize(light_vector)),\
+		scene))
 		{
 			tmp = scalar_mult(p.normal_vec, light_vector)\
 			* revers_abs_vec(light_vector) * cur_light->intensity;
