@@ -6,7 +6,7 @@
 #    By: ginger <ginger@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/22 13:50:30 by ginger            #+#    #+#              #
-#    Updated: 2020/09/17 18:51:43 by root             ###   ########.fr        #
+#    Updated: 2020/09/17 18:51:47 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,11 +69,11 @@ lib:
 	@echo 	"$(RESET)"
 
 %.o: %.c $(HEADERS)
-	$(CC) -I $(H_DIR)  $(FLAGS) -o $@ -c $< -lSDL2main -lSDL2 -lSDL_mixer -lSDL_image -lm
+	@$(CC) -I $(H_DIR)  $(FLAGS) -o $@ -c $< -lSDL2main -lSDL2 -lSDL_mixer -lSDL_image -lm
 	@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(RESET)"
 
 $(NAME): $(OBJS)
-	$(CC) -I $(HEADERS) $(FLAGS) -o $@ $^ -lSDL2main -lSDL2 -lSDL2_image -lm
+	@$(CC) -I $(HEADERS) $(FLAGS) -o $@ $^ -lSDL2main -lSDL2 -lSDL2_image -lm
 	@echo "$(GREEN)Project successfully compiled$(RESET)"
 
 clean:
