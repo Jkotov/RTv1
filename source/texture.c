@@ -6,11 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 12:36:56 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/16 16:06:23 by root             ###   ########.fr       */
+/*   Updated: 2020/09/17 18:51:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include "rtv1.h"
 
 SDL_Texture	*create_texture(char *file_name, t_sdl *sdl)
 {

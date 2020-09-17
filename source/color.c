@@ -1,6 +1,18 @@
-#include "../include/rtv1.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/16 20:23:47 by epainter          #+#    #+#             */
+/*   Updated: 2020/09/17 18:51:00 by root             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int				color_intens(int color, float intens)
+#include "rtv1.h"
+
+int					color_intens(int color, float intens)
 {
 	return ((int)(((color & 0xFF000000) >> 24) * intens) << 24) +\
 	((int)(((color & 0xFF0000) >> 16) * intens) << 16) +\
@@ -8,34 +20,62 @@ int				color_intens(int color, float intens)
 	((int)(((color & 0xFF) * intens)));
 }
 
-int				ray_tracing(t_scene scene, t_dot direction_vector, t_dot start)
+int					color_sum(int c1, int c2)
 {
-	int			cur_color;
-	float		len;
-	float		intens;
-	t_sphere	*cur_sphere;
+	return (((int)(((c1 & 0xFF000000) >> 24)\
+	+ ((c2 & 0xFF000000) >> 24)) << 24) +\
+	((int)(((c1 & 0xFF0000) >> 16) + ((c2 & 0xFF0000) >> 16)) << 16) +\
+	((int)(((c1 & 0xFF00) >> 8) + ((c2 & 0xFF00) >> 8)) << 8) +\
+	((int)(c1 & 0xFF) + (c2 & 0xFF)));
+}
 
-	direction_vector = vector_normalize(direction_vector);
-	cur_color = 0;
+t_compute_light_p	init_light_params(t_dot dir_vec, int len,\
+t_sphere *sphere, t_dot start)
+{
+	t_compute_light_p	light_p;
+
+	light_p.dot = vector_sum(vector_mult_num(dir_vec, len), start);
+	light_p.center = sphere->center;
+	light_p.specular = sphere->specular;
+	light_p.direction_vec = vector_mult_num(dir_vec, -1);
+	light_p.normal_vec = vector_normalize(vector_subtraction(light_p.dot,\
+		sphere->center));
+	return (light_p);
+}
+
+int					ray_tracing(t_scene scene, t_dot direction_vector,\
+t_dot start)
+{
+	int					color;
+	float				len;
+	t_sphere			*cur_sphere;
+	t_compute_light_p	light_p;
+
+	color = 0;
 	len = INFINITY;
 	cur_sphere = closest(start, direction_vector, scene, &len);
 	if (len != INFINITY && scene.light)
 	{
-		intens = lighting(scene,\
-		(t_compute_light_p){vector_sum(vector_mult_num(direction_vector,\
-		len), start), cur_sphere->center,\
-		cur_sphere->specular, vector_mult_num(direction_vector, -1),\
-		{0, 0, 0}, cur_sphere});
-		cur_color = color_intens(cur_sphere->color, intens);
+		light_p = init_light_params(direction_vector, len, cur_sphere, start);
+		color = color_intens(cur_sphere->color, lighting(scene, light_p));
+		if (scene.cur_depth++ < scene.max_depth)
+		{
+			color = color_sum(color_intens(color,\
+			(1 - cur_sphere->reflective)),\
+			color_intens(ray_tracing(scene,\
+			vector_reflection(direction_vector, light_p.normal_vec),\
+			light_p.dot), cur_sphere->reflective));
+			if (color > 0xffffff)
+				ft_putstr("IF U SEE THIS IN OUTPUT SOMETHING WENT WRONG");
+		}
 	}
-	return (cur_color);
+	return (color);
 }
 
-void			render(t_sdl *sdl)
+void				render(t_sdl *sdl)
 {
 	int		x;
 	int		y;
-	t_dot	direction_vector;
 
 	SDL_LockTexture(sdl->fg, NULL, (void**)&sdl->buffer, &sdl->buffer_len);
 	x = -1;
@@ -44,10 +84,10 @@ void			render(t_sdl *sdl)
 	{
 		while (++y < sdl->height)
 		{
-			direction_vector = vector_subtraction((t_dot){x, y, 0},\
-			sdl->scene.camera);
+			sdl->scene.cur_depth = 0;
 			sdl->buffer[y * sdl->width + x] = ray_tracing(sdl->scene,\
-			direction_vector, (t_dot){(float)x, (float)y, 0});
+			sdl->scene.dir_vecs[y * sdl->width + x],\
+			sdl->scene.camera);
 		}
 		y = -1;
 	}

@@ -6,20 +6,19 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:38:05 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/16 16:06:23 by root             ###   ########.fr       */
+/*   Updated: 2020/09/17 18:51:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include "rtv1.h"
 
 t_dot		vector_reflection(t_dot direction_vec, t_dot normal_vec)
 {
 	t_dot	reflected_vec;
 
-
 	reflected_vec =\
-	vector_subtraction(direction_vec, vector_mult_num\
-	(vector_mult_num(normal_vec,\
+	vector_subtraction(direction_vec,\
+	vector_mult_num(vector_mult_num(normal_vec,\
 	2), scalar_mult(normal_vec, direction_vec)));
 	reflected_vec = vector_normalize(reflected_vec);
 	return (reflected_vec);

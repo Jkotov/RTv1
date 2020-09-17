@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
+/*   Updated: 2020/09/17 18:51:00 by root             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include "rtv1.h"
 
-int			quadratic_equation(t_dot coeffs, float *x1, float *x2)
+int				quadratic_equation(t_dot coeffs, float *x1, float *x2)
 {
 	float	d;
 
@@ -22,25 +33,21 @@ int			quadratic_equation(t_dot coeffs, float *x1, float *x2)
 	return (2);
 }
 
-float		q_rsqrt(float number)
+char			dot_cmp(t_dot d1, t_dot d2)
 {
-	int			n;
-	float		res;
-	const float x2 = number * 0.5F;
-	const float threehalfs = 1.5F;
-
-	n = 0x5f3759df - (*(int*)&number >> 1);
-	res = (*(float *)&n);
-	res *= (threehalfs - (x2 * res * res));
-	res *= (threehalfs - (x2 * res * res));
-	return (res);
+	if (d1.x == d2.x && d1.y == d2.y && d1.z == d2.z)
+		return (1);
+	return (0);
 }
 
 void			loop(t_sdl *sdl)
 {
 	SDL_Event	e;
 	char		quit;
+	uint		cur_time;
+	uint		time;
 
+	time = SDL_GetTicks();
 	quit = 0;
 	while (!quit)
 	{
@@ -54,5 +61,8 @@ void			loop(t_sdl *sdl)
 				mouse_events(sdl, e);
 		}
 		render(sdl);
+		cur_time = SDL_GetTicks();
+		printf("%i ms on frame\n", cur_time - time);
+		time = cur_time;
 	}
 }

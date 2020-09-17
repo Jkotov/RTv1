@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/16 16:06:23 by root             ###   ########.fr       */
+/*   Updated: 2020/09/17 18:51:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <SDL2/SDL_ttf.h>
 # include <math.h>
 
-typedef struct 			s_menu
+typedef struct			s_menu
 {
 	SDL_Rect			menu_size;
 	SDL_Rect			add_menu_size;
@@ -34,14 +34,29 @@ typedef struct			s_dot
 	float				z;
 }						t_dot;
 
+/*
+** cache recalcs if cache's start or center != start or center
+*/
+
+typedef struct			s_sphere_cache
+{
+	t_dot				start;
+	t_dot				center;
+	float				radius;
+	t_dot				center_start_vec;
+	float				sqr_radius;
+	float				c_coeff;
+}						t_sphere_cache;
+
 typedef struct			s_sphere
 {
 	t_dot				center;
 	float				radius;
 	int					color;
-	int 				specular;
+	int					specular;
 	float				reflective;
-	struct s_sphere*	next;
+	t_sphere_cache		*cache;
+	struct s_sphere		*next;
 }						t_sphere;
 
 typedef struct			s_compute_light_p
@@ -51,7 +66,6 @@ typedef struct			s_compute_light_p
 	int					specular;
 	t_dot				direction_vec;
 	t_dot				normal_vec;
-	t_sphere			*cur_sphere;
 }						t_compute_light_p;
 
 /*
@@ -72,6 +86,9 @@ typedef struct			s_scene
 	float				clipping_plane;
 	t_sphere			*sphere;
 	t_light				*light;
+	t_dot				*dir_vecs;
+	uint				max_depth;
+	uint				cur_depth;
 }						t_scene;
 
 typedef struct			s_sdl
@@ -87,7 +104,10 @@ typedef struct			s_sdl
 	t_menu				menu;
 }						t_sdl;
 
-size_t 					ft_strlen(const char *str);
+void					sphere_cache_calc(t_sphere *sphere, t_dot start);
+char					dot_cmp(t_dot d1, t_dot d2);
+t_dot					*directions_vec_compute(t_sdl *sdl);
+size_t					ft_strlen(const char *str);
 void					ft_putstr(const char *s);
 SDL_Texture				*create_texture(char *file_name, t_sdl *sdl);
 void					sdl_error(char *text);
@@ -124,6 +144,8 @@ float					lighting(t_scene scene, t_compute_light_p p);
 int						color_intens(int color, float intens);
 int						ray_tracing(t_scene scene, t_dot direction_vector,\
 t_dot start);
+t_dot					vector_reflection(t_dot direction_vec,\
+t_dot normal_vec);
 void					render(t_sdl *sdl);
 void					loop(t_sdl *sdl);
 

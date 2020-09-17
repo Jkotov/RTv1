@@ -6,11 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:36:33 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/16 16:06:23 by root             ###   ########.fr       */
+/*   Updated: 2020/09/17 18:51:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include "rtv1.h"
 
 void		clean_light(t_light *light)
 {
@@ -23,6 +23,7 @@ void		clean_sphere(t_sphere *sphere)
 {
 	if (sphere->next)
 		clean_sphere(sphere->next);
+	free(sphere->cache);
 	free(sphere);
 }
 
@@ -30,6 +31,7 @@ void		clean_scene(t_scene *scene)
 {
 	clean_sphere(scene->sphere);
 	clean_light(scene->light);
+	free(scene->dir_vecs);
 }
 
 void		clean_menu(t_menu *m)
