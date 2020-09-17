@@ -6,11 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/16 19:36:47 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/17 12:49:49 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include "rtv1.h"
 
 void			init_menu(t_sdl *sdl)
 {
@@ -67,7 +67,7 @@ t_dot			*directions_vec_compute(t_sdl *sdl)
 		}
 		y = -1;
 	}
-	return dir_vecs;
+	return (dir_vecs);
 }
 
 void			scene_init(t_sdl *sdl)

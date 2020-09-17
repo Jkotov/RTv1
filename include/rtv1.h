@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/16 16:49:25 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/17 13:03:47 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <SDL2/SDL_ttf.h>
 # include <math.h>
 
-typedef struct 			s_menu
+typedef struct			s_menu
 {
 	SDL_Rect			menu_size;
 	SDL_Rect			add_menu_size;
@@ -53,10 +53,10 @@ typedef struct			s_sphere
 	t_dot				center;
 	float				radius;
 	int					color;
-	int 				specular;
+	int					specular;
 	float				reflective;
 	t_sphere_cache		*cache;
-	struct s_sphere*	next;
+	struct s_sphere		*next;
 }						t_sphere;
 
 typedef struct			s_compute_light_p
@@ -66,7 +66,6 @@ typedef struct			s_compute_light_p
 	int					specular;
 	t_dot				direction_vec;
 	t_dot				normal_vec;
-	t_sphere			*cur_sphere;
 }						t_compute_light_p;
 
 /*
@@ -108,7 +107,7 @@ typedef struct			s_sdl
 void					sphere_cache_calc(t_sphere *sphere, t_dot start);
 char					dot_cmp(t_dot d1, t_dot d2);
 t_dot					*directions_vec_compute(t_sdl *sdl);
-size_t 					ft_strlen(const char *str);
+size_t					ft_strlen(const char *str);
 void					ft_putstr(const char *s);
 SDL_Texture				*create_texture(char *file_name, t_sdl *sdl);
 void					sdl_error(char *text);

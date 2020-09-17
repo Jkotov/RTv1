@@ -1,6 +1,18 @@
-#include "../include/rtv1.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
+/*   Updated: 2020/09/17 13:00:23 by epainter         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int			quadratic_equation(t_dot coeffs, float *x1, float *x2)
+#include "rtv1.h"
+
+int				quadratic_equation(t_dot coeffs, float *x1, float *x2)
 {
 	float	d;
 

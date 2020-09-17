@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sphere.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/17 12:52:17 by epainter          #+#    #+#             */
+/*   Updated: 2020/09/17 12:59:43 by epainter         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-
-#include "../include/rtv1.h"
+#include "rtv1.h"
 
 /*
 ** if something went wrong try
@@ -40,35 +50,34 @@ t_dot vec_to_center, float radius)
 
 void			sphere_cache_calc(t_sphere *sphere, t_dot start)
 {
-		char	flag;
+	char	flag;
 
-		flag = 0;
-		if (sphere->radius != sphere->cache->radius)
-		{
-			sphere->cache->radius = sphere->radius;
-			sphere->cache->sqr_radius = sphere->radius * sphere->radius;
-			flag = 1;
-		}
-		if (!dot_cmp(sphere->cache->start, start))
-		{
-			sphere->cache->start = start;
-			flag = 1;
-		}
-		if (!dot_cmp(sphere->center, sphere->cache->center))
-		{
-			sphere->cache->center = sphere->center;
-			flag = 1;
-		}
-		if (flag)
-		{
-			sphere->cache->center_start_vec =\
-			vector_subtraction(start, sphere->center);
-			sphere->cache->c_coeff =\
-			scalar_mult(sphere->cache->center_start_vec,\
-			sphere->cache->center_start_vec) -\
-			sphere->cache->sqr_radius;
-		}
+	flag = 0;
+	if (sphere->radius != sphere->cache->radius)
+	{
+		sphere->cache->radius = sphere->radius;
+		sphere->cache->sqr_radius = sphere->radius * sphere->radius;
+		flag = 1;
+	}
+	if (!dot_cmp(sphere->cache->start, start) ||
+	!dot_cmp(sphere->center, sphere->cache->center))
+	{
+		sphere->cache->start = start;
+		sphere->cache->center = sphere->center;
+		flag = 1;
+	}
+	if (flag)
+	{
+		sphere->cache->center_start_vec =
+		vector_subtraction(start, sphere->center);
+		sphere->cache->c_coeff = scalar_mult(sphere->cache->center_start_vec,\
+		sphere->cache->center_start_vec) - sphere->cache->sqr_radius;
+	}
 }
+
+/*
+** Thinks about cache later
+*/
 
 t_sphere		*closest(t_dot start, t_dot direction_vector,\
 t_scene scene, float *len)
@@ -82,15 +91,9 @@ t_scene scene, float *len)
 	cur_sphere = scene.sphere;
 	while (cur_sphere)
 	{
-		if (scene.cur_depth == 0 && dot_cmp(scene.camera, start)) // delete later dot_cmp(scene.camera, start)
-			cur_len = distance_to_sphere_cached(direction_vector,\
-			cur_sphere, start);
-		else
-		{
-			center_start_vec = vector_subtraction(start, cur_sphere->center);
-			cur_len = distance_to_sphere(direction_vector,\
-			center_start_vec, cur_sphere->radius);
-		}
+		center_start_vec = vector_subtraction(start, cur_sphere->center);
+		cur_len = distance_to_sphere(direction_vector,\
+		center_start_vec, cur_sphere->radius);
 		if (cur_len != NAN)
 		{
 			if (*len > cur_len && cur_len > 0)
@@ -104,14 +107,13 @@ t_scene scene, float *len)
 	return (res);
 }
 
-
-void		add_sphere(t_sphere **list, t_sphere sphere)
+void			add_sphere(t_sphere **list, t_sphere sphere)
 {
 	t_sphere *tmp;
 
 	if (!*list)
 	{
-		if(!(*list = (t_sphere *)malloc(sizeof(t_sphere))))
+		if (!(*list = (t_sphere *)malloc(sizeof(t_sphere))))
 			sdl_error("Alloc error");
 		tmp = *list;
 	}
@@ -120,7 +122,7 @@ void		add_sphere(t_sphere **list, t_sphere sphere)
 		tmp = *list;
 		while (tmp->next)
 			tmp = tmp->next;
-		if(!(tmp->next = (t_sphere*)malloc(sizeof(t_sphere))))
+		if (!(tmp->next = (t_sphere*)malloc(sizeof(t_sphere))))
 			sdl_error("Alloc error");
 		tmp = tmp->next;
 	}

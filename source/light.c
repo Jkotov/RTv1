@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   light.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/17 12:50:01 by epainter          #+#    #+#             */
+/*   Updated: 2020/09/17 12:51:53 by epainter         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include "rtv1.h"
 
 void		light_balancer(t_scene *scene)
 {
@@ -47,7 +58,7 @@ void		add_light(t_scene *scene, t_dot center, float intensity)
 	}
 }
 
-float			specular(t_compute_light_p p,\
+float		specular(t_compute_light_p p,\
 t_dot light_vector, float intensity)
 {
 	t_dot	specular_vector;
@@ -65,7 +76,7 @@ t_dot light_vector, float intensity)
 	return (tmp);
 }
 
-char			sphere_on_light(t_dot start, t_dot direction_vector,\
+char		sphere_on_light(t_dot start, t_dot direction_vector,\
 t_scene scene)
 {
 	float		cur_len;
@@ -87,7 +98,7 @@ t_scene scene)
 	return (1);
 }
 
-float			lighting(t_scene scene, t_compute_light_p p)
+float		lighting(t_scene scene, t_compute_light_p p)
 {
 	float	res;
 	t_light	*cur_light;

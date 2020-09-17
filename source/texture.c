@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include "rtv1.h"
 
 SDL_Texture	*create_texture(char *file_name, t_sdl *sdl)
 {
