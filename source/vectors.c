@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
 t_dot		vector_reflection(t_dot direction_vec, t_dot normal_vec)
 {

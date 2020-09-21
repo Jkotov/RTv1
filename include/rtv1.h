@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/17 18:51:44 by root             ###   ########.fr       */
+/*   Updated: 2020/09/21 18:02:07 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ typedef struct			s_dot
 	float				z;
 }						t_dot;
 
+
+typedef struct 			s_gui_cache
+{
+	int 				color;
+	float 				radius;
+	t_dot				position;
+}						t_gui_cache;
 /*
 ** cache recalcs if cache's start or center != start or center
 */
@@ -56,8 +63,11 @@ typedef struct			s_sphere
 	int					specular;
 	float				reflective;
 	t_sphere_cache		*cache;
+//	t_gui_cache			*gui_cache;
 	struct s_sphere		*next;
 }						t_sphere;
+
+
 
 typedef struct			s_compute_light_p
 {
@@ -123,7 +133,7 @@ void					clean_sphere(t_sphere *sphere);
 void					clean_scene(t_scene *scene);
 void					cleanup(t_sdl *sdl);
 void					keyboard_events(t_sdl *sdl, char *quit, SDL_Event e);
-void					mouse_events(t_sdl *sdl, SDL_Event e);
+void					mouse_events(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
 int						quadratic_equation(t_dot coeffs, float *x1,\
 float *x2);
 t_dot					vector_subtraction(t_dot v1, t_dot v2);
@@ -136,10 +146,12 @@ float					revers_abs_vec(t_dot vec);
 t_dot					vector_normalize(t_dot vector);
 float					distance_to_sphere(t_dot direction_vec,\
 t_dot vec_to_center, float radius);
+float					distance_to_sphere_cached(t_dot direction_vec,\
+						t_sphere *sphere, t_dot start);
 t_sphere				*closest(t_dot start, t_dot direction_vector,\
-t_scene scene, float *len);
+						t_scene scene, float *len);
 float					specular(t_compute_light_p p,\
-t_dot light_vector, float intensity);
+						t_dot light_vector, float intensity);
 float					lighting(t_scene scene, t_compute_light_p p);
 int						color_intens(int color, float intens);
 int						ray_tracing(t_scene scene, t_dot direction_vector,\

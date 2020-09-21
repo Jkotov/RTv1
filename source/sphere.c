@@ -6,11 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:52:17 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/17 18:51:44 by root             ###   ########.fr       */
+/*   Updated: 2020/09/21 18:02:07 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
 /*
 ** if something went wrong try

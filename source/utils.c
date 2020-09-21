@@ -6,11 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/17 18:51:44 by root             ###   ########.fr       */
+/*   Updated: 2020/09/18 12:17:30 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
 int				quadratic_equation(t_dot coeffs, float *x1, float *x2)
 {
@@ -43,12 +43,15 @@ char			dot_cmp(t_dot d1, t_dot d2)
 void			loop(t_sdl *sdl)
 {
 	SDL_Event	e;
+	t_gui_cache	*gui_cache;
 	char		quit;
 	uint		cur_time;
 	uint		time;
 
 	time = SDL_GetTicks();
 	quit = 0;
+	if (!(gui_cache = (t_gui_cache *)malloc(sizeof(t_gui_cache))))
+		sdl_error ("GUI Alloc error");
 	while (!quit)
 	{
 		while (SDL_PollEvent(&e))
@@ -58,11 +61,11 @@ void			loop(t_sdl *sdl)
 			if (e.type == SDL_KEYDOWN)
 				keyboard_events(sdl, &quit, e);
 			if (e.type == SDL_MOUSEBUTTONDOWN)
-				mouse_events(sdl, e);
+				mouse_events(sdl, e, gui_cache);
 		}
 		render(sdl);
-		cur_time = SDL_GetTicks();
-		printf("%i ms on frame\n", cur_time - time);
+//		cur_time = SDL_GetTicks();
+//		printf("%i ms on frame\n", cur_time - time);
 		time = cur_time;
 	}
 }
