@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/21 18:03:04 by root             ###   ########.fr       */
+/*   Updated: 2020/09/22 12:47:26 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,8 @@ t_dot			*directions_vec_compute(t_sdl *sdl)
 	return (dir_vecs);
 }
 
-void			scene_init(t_sdl *sdl)
+void			set_defalut_scene(t_sdl *sdl)
 {
-	sdl->scene.camera = (t_dot){(float)sdl->width\
-	/ 2, (float)sdl->height / 2, -1000};
-	sdl->scene.clipping_plane = 500;
-	sdl->scene.max_depth = 2;
-	sdl->scene.dir_vecs = directions_vec_compute(sdl);
-	sdl->scene.sphere = NULL;
-	sdl->scene.light = NULL;
 	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){300, 250, 150},\
 	150, 0xFF00, 100, 0.3, NULL, NULL});
 	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){400, 250, 150},\
@@ -91,4 +84,17 @@ void			scene_init(t_sdl *sdl)
 	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.5);
 	add_light(&sdl->scene, (t_dot){1000, 40, 0}, 0.4);
 	add_light(&sdl->scene, (t_dot){300, 100, 550}, 0.4);
+}
+
+void			scene_init(t_sdl *sdl)
+{
+	sdl->scene.camera = (t_dot){(float)sdl->width\
+	/ 2, (float)sdl->height / 2, -1000};
+	sdl->scene.clipping_plane = 500;
+	sdl->scene.max_depth = 2;
+	sdl->scene.dir_vecs = directions_vec_compute(sdl);
+	sdl->scene.sphere = NULL;
+	sdl->scene.light = NULL;
+	set_defalut_scene(sdl);
+
 }

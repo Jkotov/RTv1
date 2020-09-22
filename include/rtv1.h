@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/21 18:02:07 by root             ###   ########.fr       */
+/*   Updated: 2020/09/22 14:48:51 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <SDL2/SDL_image.h>
 # include <SDL2/SDL_ttf.h>
 # include <math.h>
+# include "../libft/include/libft.h"
+# include "colors.h"
 
 typedef struct			s_menu
 {
@@ -63,7 +65,6 @@ typedef struct			s_sphere
 	int					specular;
 	float				reflective;
 	t_sphere_cache		*cache;
-//	t_gui_cache			*gui_cache;
 	struct s_sphere		*next;
 }						t_sphere;
 
@@ -160,5 +161,12 @@ t_dot					vector_reflection(t_dot direction_vec,\
 t_dot normal_vec);
 void					render(t_sdl *sdl);
 void					loop(t_sdl *sdl);
+
+void 			gui_sphere(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
+void			gui_buttons(t_gui_cache *gui_cache, SDL_Event e);
+void			button_create_sphere(t_sdl *sdl, t_gui_cache *gui_cache);
+int 			count_spheres(t_sphere *list);
+void 			del_sphere(t_sphere **list);
+void 			gui_light(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: ginger <ginger@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/22 13:50:30 by ginger            #+#    #+#              #
-#    Updated: 2020/09/17 18:51:47 by root             ###   ########.fr        #
+#    Updated: 2020/09/22 14:57:19 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,21 +21,23 @@ FLAGS = -O2 -Wall -Wextra
 
 S_DIR = source
 H_DIR = include
-#MLX = minilibx
 
 ### SOURCE ###
 
-SRCS = main.c \
-        errors.c \
-        cleanup.c \
-        init.c \
-        texture.c \
-        vectors.c \
-        color.c \
-        control_utils.c \
-        light.c \
-        sphere.c \
-        utils.c
+SRCS = cleanup.c \
+       color.c \
+       control_utils.c \
+       errors.c \
+       gui_sphere.c \
+       gui_utils.c \
+       gui_light.c \
+       init.c \
+       light.c \
+       main.c  \
+       sphere.c \
+       texture.c \
+       utils.c  \
+       vectors.c
 
 ### OBJECTS ###
 
