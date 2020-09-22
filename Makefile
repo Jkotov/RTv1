@@ -6,7 +6,7 @@
 #    By: ginger <ginger@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/22 13:50:30 by ginger            #+#    #+#              #
-#    Updated: 2020/09/22 14:57:19 by root             ###   ########.fr        #
+#    Updated: 2020/09/22 15:46:05 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ FLAGS = -O2 -Wall -Wextra
 
 S_DIR = source
 H_DIR = include
+LIBFT  = libft
 
 ### SOURCE ###
 
@@ -67,7 +68,8 @@ RESET = \033[0m
 all: lib $(NAME)
 
 lib:
-	@echo "$(H_DIR)Creating lib files$(CYAN)"
+	@echo "$(GREEN)Creating lib files$(CYAN)"
+	@make -C $(LIBFT)
 	@echo 	"$(RESET)"
 
 %.o: %.c $(HEADERS)
@@ -75,16 +77,18 @@ lib:
 	@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(RESET)"
 
 $(NAME): $(OBJS)
-	@$(CC) -I $(HEADERS) $(FLAGS) -o $@ $^ -lSDL2main -lSDL2 -lSDL2_image -lm
+	@$(CC) -I $(HEADERS) $(FLAGS) -L $(LIBFT) -o $@ $^ -lSDL2main -lSDL2 -lSDL2_image -lm
 	@echo "$(GREEN)Project successfully compiled$(RESET)"
 
 clean:
 	@echo "$(GREEN)Supressing libraries files$(RESET)"
+	@make clean -C $(LIBFT)
 	@/bin/rm -f $(OBJS)
 
 fclean: clean
 	@echo "$(GREEN)Supressing libraries files$(RESET)"
-	@/bin/rm -f $(NAME)
+	@rm -f $(NAME)
+	@make fclean -C $(LIBFT)
 
 re: fclean all
 
