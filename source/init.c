@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/17 12:49:49 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/23 14:17:49 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,18 @@ void			scene_init(t_sdl *sdl)
 	sdl->scene.camera = (t_dot){(float)sdl->width\
 	/ 2, (float)sdl->height / 2, -1000};
 	sdl->scene.clipping_plane = 500;
-	sdl->scene.max_depth = 2;
+	sdl->scene.max_depth = 1;
 	sdl->scene.dir_vecs = directions_vec_compute(sdl);
-	sdl->scene.sphere = NULL;
+	sdl->scene.conic = NULL;
 	sdl->scene.light = NULL;
-	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){300, 250, 150},\
-	150, 0xFF00, 100, 0.3, NULL, NULL});
-	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){400, 250, 150},\
-	100, 0xFF, 75, 0.5, NULL, NULL});
-	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){100, 250, 150},\
-	125, 0xFF0000, 10, 0.7, NULL, NULL});
-	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){300, 5375, 150},\
-	5000, 0xFFFF00, 10, 0.1, NULL, NULL});
+	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){0, 0, 00},\
+    {1, 2, 0, -10000, 0, 0, 0, 0, 0, 0}, 0xFF00, 100, 0.3, (t_dot){0, 0, 0}, NULL});
+	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){300, 300, 50},\
+    {1, 2, 1, -20000, 0, 0, 0, 0, 0, 0}, 0xFF, 100, 0.3, (t_dot){0, 0, 0}, NULL});
+	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){100, 100, 100},\
+    {1, 2, -1, 0, 0, 0, 0, 0, 0, 0}, 0xFF0000, 50, 0.3, (t_dot){0, M_PI / 3, 0}, NULL});
+	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){100, 100, 100},\
+    {0, 0, 0, -100, 0, 0, 0, 1, 2, 3}, 0xFFFF00, 50, 0.3, (t_dot){0, 0, 0}, NULL});
 	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.1);
 	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.5);
 	add_light(&sdl->scene, (t_dot){1000, 40, 0}, 0.4);

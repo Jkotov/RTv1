@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 20:23:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/17 12:48:11 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/23 13:55:51 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int					color_sum(int c1, int c2)
 }
 
 t_compute_light_p	init_light_params(t_dot dir_vec, int len,\
-t_sphere *sphere, t_dot start)
+t_surface *sphere, t_dot start)
 {
 	t_compute_light_p	light_p;
 
@@ -38,8 +38,7 @@ t_sphere *sphere, t_dot start)
 	light_p.center = sphere->center;
 	light_p.specular = sphere->specular;
 	light_p.direction_vec = vector_mult_num(dir_vec, -1);
-	light_p.normal_vec = vector_normalize(vector_subtraction(light_p.dot,\
-		sphere->center));
+	light_p.normal_vec = surface_normal(sphere->coeffs, light_p.dot);
 	return (light_p);
 }
 
@@ -48,7 +47,7 @@ t_dot start)
 {
 	int					color;
 	float				len;
-	t_sphere			*cur_sphere;
+	t_surface			*cur_sphere;
 	t_compute_light_p	light_p;
 
 	color = 0;
