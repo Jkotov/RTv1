@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/23 14:17:49 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/23 18:25:44 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void			scene_init(t_sdl *sdl)
     {1, 2, 1, -20000, 0, 0, 0, 0, 0, 0}, 0xFF, 100, 0.3, (t_dot){0, 0, 0}, NULL});
 	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){100, 100, 100},\
     {1, 2, -1, 0, 0, 0, 0, 0, 0, 0}, 0xFF0000, 50, 0.3, (t_dot){0, M_PI / 3, 0}, NULL});
-	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){100, 100, 100},\
-    {0, 0, 0, -100, 0, 0, 0, 1, 2, 3}, 0xFFFF00, 50, 0.3, (t_dot){0, 0, 0}, NULL});
+	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){100, 100, 1000},\
+    {0, 0, 0, -100, 0, 0, 0, 1, 2, 3}, 0xFFFF00, 50, 0.3, (t_dot){0, M_PI_2, 0}, NULL});
 	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.1);
 	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.5);
 	add_light(&sdl->scene, (t_dot){1000, 40, 0}, 0.4);

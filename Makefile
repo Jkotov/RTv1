@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ginger <ginger@student.42.fr>              +#+  +:+       +#+         #
+#    By: epainter <epainter@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/04/22 13:50:30 by ginger            #+#    #+#              #
-#    Updated: 2020/09/17 13:19:47 by epainter         ###   ########.fr        #
-.fr        #
-=======
-#    Updated: 2020/09/16 15:18:06 by root             ###   ########.fr        #
->>>>>>> origin/master
+#    Created: 2020/09/23 18:11:39 by epainter          #+#    #+#              #
+#    Updated: 2020/09/23 18:11:39 by epainter         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

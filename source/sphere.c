@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:52:17 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/23 14:02:01 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/23 18:08:26 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,6 @@
 ** scalar_mult(direction_vec, direction_vec)
 ** instead 1 as A in quadratic_equation
 */
-/*
-float			distance_to_sphere_cached(t_dot direction_vec,\
-t_conic *sphere, t_dot start)
-{
-	float		solutions[2];
-
-	sphere_cache_calc(sphere, start);
-	if (!quadratic_equation((t_dot){1,\
-	2 * scalar_mult(direction_vec, sphere->cache->center_start_vec),\
-	sphere->cache->c_coeff}, &solutions[0], &solutions[1]))
-		return (NAN);
-	if (solutions[0] > solutions[1])
-		solutions[0] = solutions[1];
-	return (solutions[0]);
-}
-*/
-
 
 float			distance_to_conic(t_surface_coeffs s, t_dot v, t_dot start)
 {
@@ -51,6 +34,8 @@ float			distance_to_conic(t_surface_coeffs s, t_dot v, t_dot start)
 	c = s.a * start.x * start.x + s.b * start.y * start.y + s.c * start.z *\
 	start.z + s.f2 * start.y * start.z + s.g2 * start.x * start.z + s.h2 *\
 	start.x * start.y + s.p2 * start.x + s.q2 * start.y + s.r2 * start.z + s.d;
+	if (!a && b)
+		return (-c / b);
 	if (!quadratic_equation((t_dot){a, b, c}, &solutions[0], &solutions[1]))
 		return (NAN);
 	if (solutions[0] > solutions[1])
@@ -58,13 +43,6 @@ float			distance_to_conic(t_surface_coeffs s, t_dot v, t_dot start)
 	return (solutions[0]);
 }
 
-/*
-** Thinks about cache later
-*//*
-float			distance_to_conic(t_surface *conic, t_dot dir_vec, t_dot start)
-{
-
-}*/
 t_surface		*closest(t_dot start, t_dot direction_vector,\
 t_scene scene, float *len)
 {
