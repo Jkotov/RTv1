@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:52:17 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/23 18:08:26 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/24 14:44:30 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_scene scene, float *len)
 	cur_conic = scene.conic;
 	while (cur_conic)
 	{
-		cur_len = distance_to_conic(cur_conic->coeffs, direction_vector, start);
+		cur_len = distance_to_conic(cur_conic->c, direction_vector, start);
 		if (cur_len != NAN)
 		{
 			if (*len > cur_len && cur_len > 0)
@@ -70,8 +70,10 @@ t_scene scene, float *len)
 
 void			add_sphere(t_surface **list, t_surface surface)
 {
-	t_surface *tmp;
+	t_surface	*tmp;
+	t_dot		nil;
 
+	nil = (t_dot){0, 0, 0};
 	if (!*list)
 	{
 		if (!(*list = (t_surface *)malloc(sizeof(t_surface))))
@@ -87,7 +89,8 @@ void			add_sphere(t_surface **list, t_surface surface)
 			sdl_error("Alloc error");
 		tmp = tmp->next;
 	}
-	surface.coeffs = rotate_surface(surface.angle, surface.coeffs);
-	surface.coeffs = surface_shift(surface.coeffs, &surface.center);
+	surface.cache = (t_surface_cache){surface.c, nil, nil};
+	surface.c = surface_shift(&surface);
+	surface.c = rotate_surface(&surface);
 	*tmp = surface;
 }

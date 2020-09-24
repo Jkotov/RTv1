@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/22 22:47:02 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/24 13:54:35 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,22 @@ typedef struct			s_dot
 	float				z;
 }						t_dot;
 
+typedef struct			s_surface_cache
+{
+	t_surface_coeffs	c;
+	t_dot				angle;
+	t_dot				shift;
+}						t_surface_cache;
+
 typedef struct			s_surface
 {
-	t_dot				center;
-	t_surface_coeffs	coeffs;
+	t_dot				shift;
+	t_surface_coeffs	c;
 	int					color;
 	int					specular;
 	float				reflective;
 	t_dot				angle;
+	t_surface_cache		cache;
 	struct s_surface	*next;
 }						t_surface;
 
@@ -109,8 +117,8 @@ typedef struct			s_sdl
 	t_menu				menu;
 }						t_sdl;
 t_dot					surface_normal(t_surface_coeffs c, t_dot dot);
-t_surface_coeffs		surface_shift(t_surface_coeffs c, t_dot *shift);
-t_surface_coeffs		rotate_surface(t_dot angle, t_surface_coeffs c);
+t_surface_coeffs		surface_shift(t_surface *s);
+t_surface_coeffs		rotate_surface(t_surface *s);
 t_surface_coeffs		matrix_using(t_surface_coeffs c, float m[3][3]);
 void					sphere_cache_calc(t_surface *sphere, t_dot start);
 char					dot_cmp(t_dot d1, t_dot d2);

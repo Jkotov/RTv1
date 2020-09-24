@@ -86,7 +86,7 @@ t_scene scene)
 	cur_conic = scene.conic;
 	while (cur_conic)
 	{
-		cur_len = distance_to_conic(cur_conic->coeffs, direction_vector, start);
+		cur_len = distance_to_conic(cur_conic->c, direction_vector, start);
 		if (cur_len != NAN && cur_len > 0)
 		{
 			return (0);

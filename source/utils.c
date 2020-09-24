@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/23 12:59:00 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:04:49 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,25 +67,31 @@ void			loop(t_sdl *sdl)
 	}
 }
 
-t_surface_coeffs	rotate_surface(t_dot angle, t_surface_coeffs c)
+t_surface_coeffs	rotate_surface(t_surface *s)
 {
 	float	m[3][3];
 
-	m[0][0] = cos(angle.x) * cos(angle.z) - cos(angle.y) * sin(angle.x) *\
-	sin(angle.z);
-	m[0][1] = -cos(angle.z) * sin(angle.x) - cos(angle.x) * cos(angle.y) *\
-	sin(angle.z);
-	m[0][2] = sin(angle.y) * sin(angle.z);
-	m[1][0] = cos(angle.y) * cos(angle.z) * sin(angle.x) + cos(angle.x) *\
-	sin(angle.z);
-	m[1][1] = cos(angle.x) * cos(angle.y) * cos(angle.z) - sin(angle.x) *\
-	sin(angle.z);
-	m[1][2] = -cos(angle.z) * sin(angle.y);
-	m[2][0] = sin(angle.x) * sin(angle.y);
-	m[2][1] = cos(angle.x) * sin(angle.y);
-	m[2][2] = cos(angle.y);
-	c = matrix_using(c, m);
-	return (c);
+	s->angle = vector_sum(s->angle, s->cache.angle);
+	m[0][0] = cos(s->angle.x) * cos(s->angle.z) - cos(s->angle.y) *\
+	sin(s->angle.x) * sin(s->angle.z);
+	m[0][1] = -cos(s->angle.z) * sin(s->angle.x) - cos(s->angle.x) *\
+	cos(s->angle.y) * sin(s->angle.z);
+	m[0][2] = sin(s->angle.y) * sin(s->angle.z);
+	m[1][0] = cos(s->angle.y) * cos(s->angle.z) * sin(s->angle.x) +\
+	cos(s->angle.x) * sin(s->angle.z);
+	m[1][1] = cos(s->angle.x) * cos(s->angle.y) * cos(s->angle.z) -\
+	sin(s->angle.x) * sin(s->angle.z);
+	m[1][2] = -cos(s->angle.z) * sin(s->angle.y);
+	m[2][0] = sin(s->angle.x) * sin(s->angle.y);
+	m[2][1] = cos(s->angle.x) * sin(s->angle.y);
+	m[2][2] = cos(s->angle.y);
+	s->cache.angle = s->angle;
+	s->angle = (t_dot){0, 0, 0};
+	s->c = matrix_using(s->cache.c, m);
+	s->shift = s->cache.shift;
+	s->cache.shift = (t_dot){0, 0, 0};
+	s->c = surface_shift(s);
+	return (s->c);
 }
 
 /*
@@ -124,21 +130,26 @@ t_surface_coeffs	matrix_using(t_surface_coeffs c, float m[3][3])
 	return (res);
 }
 
-t_surface_coeffs	surface_shift(t_surface_coeffs c, t_dot *shift)
+t_surface_coeffs	surface_shift(t_surface *s)
 {
 	t_surface_coeffs res;
 
-	res = c;
-	res.p2 = c.p2 - c.g2 * shift->z - c.h2 * shift->y - 2 * c.a * shift->x;
-	res.q2 = c.q2 - c.f2 * shift->z - c.h2 * shift->x - 2 * c.b * shift->y;
-	res.r2 = c.r2 - c.f2 * shift->y - c.g2 * shift->x - 2 * c.c * shift->z;
-	res.d = c.d + c.a * shift->x * shift->x + c.b * shift->y * shift->y +\
-	res.c * shift->z * shift->z + c.f2 * shift->y * shift->z + c.g2 * shift->x *\
-	shift->z + c.h2 * shift->x * shift->y - c.p2 * shift->x - c.q2 * shift->y -\
-	c.r2 * shift->z;
-	shift->x = 0;
-	shift->y = 0;
-	shift->z = 0;
+	res = s->c;
+	res.p2 = s->c.p2 - s->c.g2 * s->shift.z - s->c.h2 * s->shift.y -\
+	2 * s->c.a * s->shift.x;
+	res.q2 = s->c.q2 - s->c.f2 * s->shift.z - s->c.h2 * s->shift.x -\
+	2 * s->c.b * s->shift.y;
+	res.r2 = s->c.r2 - s->c.f2 * s->shift.y - s->c.g2 * s->shift.x -\
+	2 * s->c.c * s->shift.z;
+	res.d = s->c.d + s->c.a * s->shift.x * s->shift.x + s->c.b * s->shift.y *\
+	s->shift.y + res.c * s->shift.z * s->shift.z + s->c.f2 * s->shift.y *\
+	s->shift.z + s->c.g2 * s->shift.x *	s->shift.z + s->c.h2 * s->shift.x *\
+	s->shift.y - s->c.p2 * s->shift.x - s->c.q2 * s->shift.y - s->c.r2 *\
+	s->shift.z;
+	s->cache.shift = vector_sum(s->shift, s->cache.shift);
+	s->shift.x = 0;
+	s->shift.y = 0;
+	s->shift.z = 0;
 	return (res);
 }
 

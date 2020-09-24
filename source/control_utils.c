@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/23 13:04:43 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:07:29 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,20 @@ void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e)
 		*quit = 1;
 	}
 	if (e.key.keysym.sym == SDLK_RIGHT)
-		sdl->scene.conic->center.x = 10;
+		sdl->scene.conic->shift.x = 10;
 	if (e.key.keysym.sym == SDLK_LEFT)
-		sdl->scene.conic->center.x = -10;
+		sdl->scene.conic->shift.x = -10;
 	if (e.key.keysym.sym == SDLK_UP)
-		sdl->scene.conic->center.y = -10;
+		sdl->scene.conic->shift.y = -10;
 	if (e.key.keysym.sym == SDLK_DOWN)
-		sdl->scene.conic->center.y = 10;
+		sdl->scene.conic->shift.y = 10;
 	if (e.key.keysym.sym == SDLK_SPACE)
-		sdl->scene.conic->center.z = 10;
-	sdl->scene.conic->coeffs = surface_shift(sdl->scene.conic->coeffs, &sdl->scene.conic->center);
+		sdl->scene.conic->shift.z = 10;
+	sdl->scene.conic->c = surface_shift(sdl->scene.conic);
 	if (e.key.keysym.sym == SDLK_q)
 	{
-		sdl->scene.conic->angle.y = M_PI / 6;
-		sdl->scene.conic->coeffs = rotate_surface(sdl->scene.conic->angle, sdl->scene.conic->coeffs);
+		sdl->scene.conic->angle.z = M_PI / 6;
+		sdl->scene.conic->c = rotate_surface(sdl->scene.conic);
 	}
 /*	if (e.key.keysym.sym == SDLK_a)
 	{
