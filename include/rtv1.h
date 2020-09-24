@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/24 13:54:35 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/24 14:06:19 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ typedef struct			s_sdl
 t_dot					surface_normal(t_surface_coeffs c, t_dot dot);
 t_surface_coeffs		surface_shift(t_surface *s);
 t_surface_coeffs		rotate_surface(t_surface *s);
-t_surface_coeffs		matrix_using(t_surface_coeffs c, float m[3][3]);
+void					matrix_using(t_surface_coeffs c, float m[3][3], t_surface_coeffs *res);
 void					sphere_cache_calc(t_surface *sphere, t_dot start);
 char					dot_cmp(t_dot d1, t_dot d2);
 t_dot					*directions_vec_compute(t_sdl *sdl);

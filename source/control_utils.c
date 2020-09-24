@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 02:07:29 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:11:08 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,4 @@ void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e)
 		sdl->scene.conic->angle.z = M_PI / 6;
 		sdl->scene.conic->c = rotate_surface(sdl->scene.conic);
 	}
-/*	if (e.key.keysym.sym == SDLK_a)
-	{
-		while (e.button.type != SDL_MOUSEBUTTONDOWN)
-			SDL_PollEvent(&e);
-		tmp = (t_dot){e.button.x, e.button.y, 300};
-		e.button.type = 0;
-		while (e.button.type != SDL_MOUSEBUTTONDOWN)
-			SDL_PollEvent(&e);
-		add_sphere(&sdl->scene.conic, (t_conic){tmp,\
-		abs_vector(vector_subtraction((t_dot){e.button.x, e.button.y, 300},\
-		tmp)), 0xFF00, 100, 0.3, NULL, NULL});
-	}*/
 }

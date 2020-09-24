@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:52:17 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/24 14:44:30 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/24 18:21:50 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 float			distance_to_conic(t_surface_coeffs s, t_dot v, t_dot start)
 {
 	float		solutions[2];
-	float 		a;
+	float		a;
 	float		b;
 	float		c;
 

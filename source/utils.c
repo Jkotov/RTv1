@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 02:04:49 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:43:54 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_surface_coeffs	rotate_surface(t_surface *s)
 	m[2][2] = cos(s->angle.y);
 	s->cache.angle = s->angle;
 	s->angle = (t_dot){0, 0, 0};
-	s->c = matrix_using(s->cache.c, m);
+	matrix_using(s->cache.c, m, &s->c);
 	s->shift = s->cache.shift;
 	s->cache.shift = (t_dot){0, 0, 0};
 	s->c = surface_shift(s);
@@ -98,36 +98,34 @@ t_surface_coeffs	rotate_surface(t_surface *s)
 ** WEpainter enjoy typing
 */
 
-t_surface_coeffs	matrix_using(t_surface_coeffs c, float m[3][3])
+void				matrix_using(t_surface_coeffs c, float m[3][3],\
+t_surface_coeffs *res)
 {
-	t_surface_coeffs	res;
-
-	res.a = m[0][0] * m[0][0] * c.a + m[1][0] * m[1][0] * c.b + m[2][0] *\
+	res->a = m[0][0] * m[0][0] * c.a + m[1][0] * m[1][0] * c.b + m[2][0] *\
 	m[2][0] * c.c + m[1][0] * m[2][0] * c.f2 + m[0][0] * m[2][0] * c.g2 +\
 	m[0][0] * m[1][0] * c.h2;
-	res.b = m[0][1] * m[0][1] * c.a + m[1][1] * m[1][1] * c.b + m[2][1] *\
+	res->b = m[0][1] * m[0][1] * c.a + m[1][1] * m[1][1] * c.b + m[2][1] *\
 	m[2][1] * c.c + m[1][1] * m[2][1] * c.f2 + m[0][1] * m[2][1] * c.g2 +\
 	m[0][1] * m[1][1] * c.h2;
-	res.c = m[0][2] * m[0][2] * c.a + m[1][2] * m[1][2] * c.b + m[2][2] *\
+	res->c = m[0][2] * m[0][2] * c.a + m[1][2] * m[1][2] * c.b + m[2][2] *\
 	m[2][2] * c.c + m[1][2] * m[2][2] * c.f2 + m[0][2] * m[2][2] * c.g2 +\
 	m[0][2] * m[1][2] * c.h2;
-	res.f2 = 2 * m[0][1] * m[0][2] * c.a + 2 * m[1][1] * m[1][2] * c.b + m[2][1] *\
-	m[2][2] * c.c * 2 + m[1][1] * m[2][2] * c.f2 + m[0][1] * m[2][2] * c.g2 +\
-	m[0][1] * m[1][2] * c.h2 + m[1][2] * m[2][1] * c.f2 + m[0][2] * m[2][1] *\
-	c.g2 + m[0][2] * m[1][1] * c.h2;
-	res.g2 = 2 * m[0][0] * m[0][2] * c.a + 2 * m[1][0] * m[1][2] * c.b + m[2][0] *\
-	m[2][2] * c.c * 2 + m[1][0] * m[2][2] * c.f2 + m[0][0] * m[2][2] * c.g2 +\
-	m[0][0] * m[1][2] * c.h2 + m[1][2] * m[2][0] * c.f2 + m[0][2] * m[2][0] *\
-	c.g2 + m[0][2] * m[1][0] * c.h2;
-	res.h2 = 2 * m[0][0] * m[0][1] * c.a + 2 * m[1][0] * m[1][1] * c.b + m[2][0] *\
-	m[2][1] * c.c * 2 + m[1][0] * m[2][1] * c.f2 + m[0][0] * m[2][1] * c.g2 +\
-	m[0][0] * m[1][1] * c.h2 + m[1][1] * m[2][0] * c.f2 + m[0][1] * m[2][0] *\
-	c.g2 + m[0][1] * m[1][0] * c.h2;
-	res.p2 = m[0][0] * c.p2 + m[1][0] * c.q2 + m[2][0] * c.r2;
-	res.q2 = m[0][1] * c.p2 + m[1][1] * c.q2 + m[2][1] * c.r2;
-	res.r2 = m[0][2] * c.p2 + m[1][2] * c.q2 + m[2][2] * c.r2;
-	res.d = c.d;
-	return (res);
+	res->f2 = 2 * m[0][1] * m[0][2] * c.a + 2 * m[1][1] * m[1][2] * c.b +\
+	m[2][1] * m[2][2] * c.c * 2 + m[1][1] * m[2][2] * c.f2 + m[0][1] *\
+	m[2][2] * c.g2 + m[0][1] * m[1][2] * c.h2 + m[1][2] * m[2][1] * c.f2 +\
+	m[0][2] * m[2][1] * c.g2 + m[0][2] * m[1][1] * c.h2;
+	res->g2 = 2 * m[0][0] * m[0][2] * c.a + 2 * m[1][0] * m[1][2] * c.b +\
+	m[2][0] * m[2][2] * c.c * 2 + m[1][0] * m[2][2] * c.f2 + m[0][0] *\
+	m[2][2] * c.g2 + m[0][0] * m[1][2] * c.h2 + m[1][2] * m[2][0] * c.f2 +\
+	m[0][2] * m[2][0] * c.g2 + m[0][2] * m[1][0] * c.h2;
+	res->h2 = 2 * m[0][0] * m[0][1] * c.a + 2 * m[1][0] * m[1][1] * c.b +\
+	m[2][0] * m[2][1] * c.c * 2 + m[1][0] * m[2][1] * c.f2 + m[0][0] *\
+	m[2][1] * c.g2 + m[0][0] * m[1][1] * c.h2 + m[1][1] * m[2][0] * c.f2 +\
+	m[0][1] * m[2][0] * c.g2 + m[0][1] * m[1][0] * c.h2;
+	res->p2 = m[0][0] * c.p2 + m[1][0] * c.q2 + m[2][0] * c.r2;
+	res->q2 = m[0][1] * c.p2 + m[1][1] * c.q2 + m[2][1] * c.r2;
+	res->r2 = m[0][2] * c.p2 + m[1][2] * c.q2 + m[2][2] * c.r2;
+	res->d = c.d;
 }
 
 t_surface_coeffs	surface_shift(t_surface *s)
@@ -143,7 +141,7 @@ t_surface_coeffs	surface_shift(t_surface *s)
 	2 * s->c.c * s->shift.z;
 	res.d = s->c.d + s->c.a * s->shift.x * s->shift.x + s->c.b * s->shift.y *\
 	s->shift.y + res.c * s->shift.z * s->shift.z + s->c.f2 * s->shift.y *\
-	s->shift.z + s->c.g2 * s->shift.x *	s->shift.z + s->c.h2 * s->shift.x *\
+	s->shift.z + s->c.g2 * s->shift.x * s->shift.z + s->c.h2 * s->shift.x *\
 	s->shift.y - s->c.p2 * s->shift.x - s->c.q2 * s->shift.y - s->c.r2 *\
 	s->shift.z;
 	s->cache.shift = vector_sum(s->shift, s->cache.shift);
@@ -161,5 +159,5 @@ t_dot				surface_normal(t_surface_coeffs c, t_dot dot)
 	res.y = 2 * c.b * dot.y + c.f2 * dot.z + c.h2 * dot.x + c.q2;
 	res.z = 2 * c.c * dot.z + c.f2 * dot.y + c.g2 * dot.x + c.r2;
 	res = vector_normalize(res);
-	return res;
+	return (res);
 }
