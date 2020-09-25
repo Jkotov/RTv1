@@ -6,17 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:52:17 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/24 18:21:50 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/25 17:17:46 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-
-/*
-** if something went wrong try
-** scalar_mult(direction_vec, direction_vec)
-** instead 1 as A in quadratic_equation
-*/
 
 float			distance_to_conic(t_surface_coeffs s, t_dot v, t_dot start)
 {

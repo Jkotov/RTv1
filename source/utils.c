@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 13:47:38 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/25 17:17:46 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,29 @@ void			loop(t_sdl *sdl)
 		printf("%i ms on frame\n", cur_time - time);
 		time = cur_time;
 	}
+}
+t_dot				rotate_vector(t_dot v, t_dot angle)
+{
+	float	m[3][3];
+	t_dot	res;
+
+	m[0][0] = cos(angle.x) * cos(angle.z) - cos(angle.y) *\
+	sin(angle.x) * sin(angle.z);
+	m[0][1] = -cos(angle.z) * sin(angle.x) - cos(angle.x) *\
+	cos(angle.y) * sin(angle.z);
+	m[0][2] = sin(angle.y) * sin(angle.z);
+	m[1][0] = cos(angle.y) * cos(angle.z) * sin(angle.x) +\
+	cos(angle.x) * sin(angle.z);
+	m[1][1] = cos(angle.x) * cos(angle.y) * cos(angle.z) -\
+	sin(angle.x) * sin(angle.z);
+	m[1][2] = -cos(angle.z) * sin(angle.y);
+	m[2][0] = sin(angle.x) * sin(angle.y);
+	m[2][1] = cos(angle.x) * sin(angle.y);
+	m[2][2] = cos(angle.y);
+	res = (t_dot){v.x * m[0][0] + v.y * m[0][1] + v.z * m[0][2],\
+	v.x * m[1][0] + v.y * m[1][1] + v.z * m[1][2],\
+	v.x * m[2][0] + v.y * m[2][1] + v.z * m[2][2]};
+	return (res);
 }
 
 t_surface_coeffs	rotate_surface(t_surface *s)

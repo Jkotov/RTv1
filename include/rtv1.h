@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 13:51:47 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/25 17:17:46 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,16 @@ typedef struct			s_dot
 	float				z;
 }						t_dot;
 
+typedef struct			s_camera
+{
+	t_dot				camera;
+	t_dot				*dir_vecs;
+	t_dot				angle;
+	t_dot				x_screen_vec;
+	t_dot				y_screen_vec;
+	t_dot				screen_center;
+}						t_camera;
+
 typedef struct			s_surface_cache
 {
 	t_surface_coeffs	c;
@@ -70,7 +80,6 @@ typedef struct			s_surface
 typedef struct			s_compute_light_p
 {
 	t_dot				dot;
-	t_dot				center;
 	int					specular;
 	t_dot				direction_vec;
 	t_dot				normal_vec;
@@ -90,8 +99,7 @@ typedef struct			s_light
 
 typedef struct			s_scene
 {
-	t_dot				camera;
-	float				clipping_plane;
+	t_camera			camera;
 	t_surface			*conic;
 	t_light				*light;
 	t_dot				*dir_vecs;
@@ -112,6 +120,8 @@ typedef struct			s_sdl
 	t_menu				menu;
 }						t_sdl;
 
+t_dot					rotate_vector(t_dot v, t_dot angle);
+t_dot					cross_product(t_dot v1, t_dot v2);
 void					*ft_memset(void *src, int c, size_t len);
 t_dot					surface_normal(t_surface_coeffs c, t_dot dot);
 t_surface_coeffs		surface_shift(t_surface *s);

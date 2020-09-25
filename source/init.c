@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 13:45:45 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/25 17:17:46 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,44 @@ t_dot			*directions_vec_compute(t_sdl *sdl)
 		{
 			dir_vecs[y * sdl->width + x] =\
 			vector_normalize(vector_subtraction((t_dot){x, y, 0},\
-			sdl->scene.camera));
+			sdl->scene.camera.camera));
 		}
 		y = -1;
 	}
 	return (dir_vecs);
 }
 
+void			camera_move(t_sdl *sdl)
+{
+	sdl->scene.camera.x_screen_vec = rotate_vector((t_dot){1, 0, 0},\
+	sdl->scene.camera.angle);
+	sdl->scene.camera.y_screen_vec = rotate_vector((t_dot){0, 1, 0},\
+	sdl->scene.camera.angle);
+	sdl->scene.camera.camera =\
+	vector_normalize(cross_product(sdl->scene.camera.x_screen_vec,\
+	sdl->scene.camera.y_screen_vec));
+	sdl->scene.camera.camera = vector_mult_num(sdl->scene.camera.camera,\
+	-1000);
+	sdl->scene.camera.camera = vector_sum(sdl->scene.camera.camera,\
+	sdl->scene.camera.screen_center);
+}
+
+void			camera_init(t_sdl *sdl)
+{
+	sdl->scene.camera.x_screen_vec = (t_dot){1, 0, 0};
+	sdl->scene.camera.y_screen_vec = (t_dot){0, 1, 0};
+	sdl->scene.camera.screen_center = (t_dot){sdl->width\
+	/ 2, (float)sdl->height / 2, 0};
+	sdl->scene.camera.angle = (t_dot){0, 0, 0};
+	camera_move(sdl);
+
+}
+
 void			scene_init(t_sdl *sdl)
 {
 	t_surface_cache tmp;
 
-	sdl->scene.camera = (t_dot){(float)sdl->width\
-	/ 2, (float)sdl->height / 2, -1000};
+	camera_init(sdl);
 	ft_memset(&tmp, 0, sizeof(tmp));
 	sdl->scene.max_depth = 3;
 	sdl->scene.dir_vecs = directions_vec_compute(sdl);
