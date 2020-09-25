@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 12:30:45 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/22 13:11:38 by root             ###   ########.fr       */
+/*   Updated: 2020/09/25 17:46:10 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 //	return (i);
 //}
 //
-//void		ft_putstr(const char *s)
+//int			ft_putstr(const char *s)
 //{
-//	write(1, s, ft_strlen(s));
+//	return (write(1, s, ft_strlen(s)));
 //}
 
 void		sdl_error(char *text)

@@ -6,7 +6,7 @@
 #    By: ginger <ginger@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/22 13:50:30 by ginger            #+#    #+#              #
-#    Updated: 2020/09/22 18:59:33 by root             ###   ########.fr        #
+#    Updated: 2020/09/25 17:46:18 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,6 @@ SRCS = cleanup.c \
        color.c \
        control_utils.c \
        errors.c \
-       gui_sphere.c \
-       gui_utils.c \
-       gui_light.c \
        init.c \
        light.c \
        main.c  \
@@ -39,6 +36,10 @@ SRCS = cleanup.c \
        texture.c \
        utils.c  \
        vectors.c
+
+#              gui_sphere.c \
+#              gui_utils.c \
+#              gui_light.c \
 
 ### OBJECTS ###
 

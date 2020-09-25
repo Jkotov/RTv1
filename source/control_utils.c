@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:48:08 by root              #+#    #+#             */
-/*   Updated: 2020/09/25 10:51:40 by root             ###   ########.fr       */
+/*   Updated: 2020/09/25 17:46:18 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,24 @@ void			mouse_events(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache)
 
 void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e)
 {
-	t_dot tmp;
-
 	if (e.key.keysym.sym == SDLK_ESCAPE)
 	{
 		*quit = 1;
 	}
-//	if (e.key.keysym.sym == SDLK_l)
-//	{
-//		printf("btn down\n");
-//	}
+	if (e.key.keysym.sym == SDLK_RIGHT)
+		sdl->scene.conic->shift.x = 10;
+	if (e.key.keysym.sym == SDLK_LEFT)
+		sdl->scene.conic->shift.x = -10;
+	if (e.key.keysym.sym == SDLK_UP)
+		sdl->scene.conic->shift.y = -10;
+	if (e.key.keysym.sym == SDLK_DOWN)
+		sdl->scene.conic->shift.y = 10;
 	if (e.key.keysym.sym == SDLK_SPACE)
-		sdl->scene.sphere->center.z++;
-	if (e.key.keysym.sym == SDLK_a)
+		sdl->scene.conic->shift.z = 10;
+	sdl->scene.conic->c = surface_shift(sdl->scene.conic);
+	if (e.key.keysym.sym == SDLK_q)
 	{
-		while (e.button.type != SDL_MOUSEBUTTONDOWN)
-			SDL_PollEvent(&e);
-		tmp = (t_dot){e.button.x, e.button.y, 300};
-		e.button.type = 0;
-		while (e.button.type != SDL_MOUSEBUTTONDOWN)
-			SDL_PollEvent(&e);
-		add_sphere(&sdl->scene.sphere, (t_sphere){tmp,\
-		abs_vector(vector_subtraction((t_dot){e.button.x, e.button.y, 300},\
-		tmp)), 0xFF00, 100, 0.3, NULL, NULL});
+		sdl->scene.conic->angle.z = M_PI / 6;
+		sdl->scene.conic->c = rotate_surface(sdl->scene.conic);
 	}
 }

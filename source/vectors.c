@@ -6,11 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:38:05 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/17 18:51:44 by root             ###   ########.fr       */
+/*   Updated: 2020/09/25 17:46:10 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include "rtv1.h"
 
 t_dot		vector_reflection(t_dot direction_vec, t_dot normal_vec)
 {
@@ -49,25 +49,6 @@ float		abs_vector(t_dot vec)
 	return (sqrtf(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z));
 }
 
-/*
-**float		q_rsqrt(float number)
-**{
-**	int			n;
-**	float		res;
-**	const float x2 = number * 0.5F;
-**	const float threehalfs = 1.5F;
-**
-**	n = 0x5f3759df - (*(int*)&number >> 1);
-**	res = (*(float *)&n);
-**	res *= (threehalfs - (x2 * res * res));
-**	res *= (threehalfs - (x2 * res * res));
-**	return (res);
-**}
-*/
-/*
-** try with return (q_rsqrt(scalar_mult(vec, vec)));
-*/
-
 float		revers_abs_vec(t_dot vec)
 {
 	return (1 / abs_vector(vec));
@@ -76,4 +57,9 @@ float		revers_abs_vec(t_dot vec)
 t_dot		vector_normalize(t_dot vector)
 {
 	return (vector_mult_num(vector, revers_abs_vec(vector)));
+}
+t_dot		cross_product(t_dot v1, t_dot v2)
+{
+	return (t_dot){v1.y * v2.z - v1.z * v2.y, v1.x * v2.z - v1.y * v2.z,\
+	v1.x * v2.y - v2.x * v2.y};
 }
