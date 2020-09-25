@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/22 12:47:26 by root             ###   ########.fr       */
+/*   Updated: 2020/09/22 14:12:10 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void			init_menu(t_sdl *sdl)
 {
 	sdl->menu.menu_size = (SDL_Rect){0, 0, sdl->width, 300};
 	sdl->menu.img = create_texture("menu.png", sdl);
-	sdl->menu.add_menu_size = (SDL_Rect){450, 100, 150, 350};
-	sdl->menu.add_menu = create_texture("add_coords.png", sdl);
+//	sdl->menu.add_menu_size = (SDL_Rect){450, 100, 150, 350};
+//	sdl->menu.add_menu = create_texture("add_coords.png", sdl);
 }
 
 t_sdl			sdl_init(void)

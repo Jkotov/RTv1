@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:48:08 by root              #+#    #+#             */
-/*   Updated: 2020/09/22 14:48:51 by root             ###   ########.fr       */
+/*   Updated: 2020/09/25 10:51:40 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e)
 	{
 		*quit = 1;
 	}
+//	if (e.key.keysym.sym == SDLK_l)
+//	{
+//		printf("btn down\n");
+//	}
 	if (e.key.keysym.sym == SDLK_SPACE)
 		sdl->scene.sphere->center.z++;
 	if (e.key.keysym.sym == SDLK_a)
