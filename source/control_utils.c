@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 02:11:08 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:15:34 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void		mouse_events(t_sdl *sdl, SDL_Event e)
 
 void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e)
 {
-	t_dot tmp;
-
 	if (e.key.keysym.sym == SDLK_ESCAPE)
 	{
 		*quit = 1;

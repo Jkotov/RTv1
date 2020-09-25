@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:50:01 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/22 22:47:14 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/24 13:54:35 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ char		sphere_on_light(t_dot start, t_dot direction_vector,\
 t_scene scene)
 {
 	float		cur_len;
-	t_dot		center_start_vec;
 	t_surface	*cur_conic;
 
 	cur_conic = scene.conic;

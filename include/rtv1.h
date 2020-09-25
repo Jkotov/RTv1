@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/24 14:06:19 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/25 13:51:47 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@
 # include <SDL2/SDL_image.h>
 # include <SDL2/SDL_ttf.h>
 # include <math.h>
-
-typedef struct 			s_matrix33
-{
-	float				m[3][3];
-}						t_matrix33;
 
 typedef struct			s_surface_coeffs
 {
@@ -116,15 +111,18 @@ typedef struct			s_sdl
 	t_scene				scene;
 	t_menu				menu;
 }						t_sdl;
+
+void					*ft_memset(void *src, int c, size_t len);
 t_dot					surface_normal(t_surface_coeffs c, t_dot dot);
 t_surface_coeffs		surface_shift(t_surface *s);
 t_surface_coeffs		rotate_surface(t_surface *s);
-void					matrix_using(t_surface_coeffs c, float m[3][3], t_surface_coeffs *res);
+void					matrix_using(t_surface_coeffs c, float m[3][3],\
+t_surface_coeffs *res);
 void					sphere_cache_calc(t_surface *sphere, t_dot start);
 char					dot_cmp(t_dot d1, t_dot d2);
 t_dot					*directions_vec_compute(t_sdl *sdl);
 size_t					ft_strlen(const char *str);
-void					ft_putstr(const char *s);
+int						ft_putstr(const char *s);
 SDL_Texture				*create_texture(char *file_name, t_sdl *sdl);
 void					sdl_error(char *text);
 void					light_balancer(t_scene *scene);
@@ -150,7 +148,8 @@ float					abs_vector(t_dot vec);
 float					q_rsqrt(float number);
 float					revers_abs_vec(t_dot vec);
 t_dot					vector_normalize(t_dot vector);
-float					distance_to_conic(t_surface_coeffs s, t_dot v, t_dot start);
+float					distance_to_conic(t_surface_coeffs s,\
+t_dot v, t_dot start);
 t_surface				*closest(t_dot start, t_dot direction_vector,\
 t_scene scene, float *len);
 float					specular(t_compute_light_p p,\

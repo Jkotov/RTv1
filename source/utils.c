@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 02:43:54 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/25 13:47:38 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,4 +160,20 @@ t_dot				surface_normal(t_surface_coeffs c, t_dot dot)
 	res.z = 2 * c.c * dot.z + c.f2 * dot.y + c.g2 * dot.x + c.r2;
 	res = vector_normalize(res);
 	return (res);
+}
+
+void	*ft_memset(void *src, int c, size_t len)
+{
+	unsigned char	*ptr;
+	int				i;
+
+	i = 0;
+	ptr = src;
+	while (i < (int)len)
+	{
+		*ptr = (unsigned char)c;
+		ptr++;
+		i++;
+	}
+	return (src);
 }

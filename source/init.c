@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 02:22:34 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/25 13:45:45 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void			scene_init(t_sdl *sdl)
 
 	sdl->scene.camera = (t_dot){(float)sdl->width\
 	/ 2, (float)sdl->height / 2, -1000};
-	sdl->scene.clipping_plane = 500;
+	ft_memset(&tmp, 0, sizeof(tmp));
 	sdl->scene.max_depth = 3;
 	sdl->scene.dir_vecs = directions_vec_compute(sdl);
 	sdl->scene.conic = NULL;

@@ -6,7 +6,7 @@
 #    By: epainter <epainter@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/23 18:11:39 by epainter          #+#    #+#              #
-#    Updated: 2020/09/23 18:11:39 by epainter         ###   ########.fr        #
+#    Updated: 2020/09/25 13:55:04 by epainter         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = RTv
 ### COMPILATION ###
 
 CC = gcc
-FLAGS = -O2 -Wall -Wextra
+FLAGS = -O2 -Wall -Wextra -Werror
 #-Werror
 
 ### INCLUDES ###
@@ -63,7 +63,7 @@ CYAN = \033[1;36m
 WHITE = \033[1;37m
 RESET = \033[0m
 
-all: lib $(NAME)
+all: $(NAME)
 
 lib:
 	@echo "$(GREEN)Creating lib files$(CYAN)"
@@ -75,16 +75,13 @@ lib:
 	@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(RESET)"
 
 $(NAME): $(OBJS)
-<<<<<<< HEAD
 	$(CC) -I $(HEADERS) $(FLAGS) -o $@ $^ -lSDL2main -lSDL2 -lSDL2_image -lm
-=======
-	@$(CC) $(FLAGS) -L $(LIBFT) -I $(HEADERS) -o $@ $^ -lft -lSDL2main -lSDL2 -lSDL2_image -lm
->>>>>>> origin/master
+	@$(CC) $(FLAGS) -I $(HEADERS) -o $@ $^ -lSDL2main -lSDL2 -lSDL2_image -lm
 	@echo "$(GREEN)Project successfully compiled$(RESET)"
 
 clean:
 	@echo "$(GREEN)Supressing libraries files$(RESET)"
-	@$(MAKE) fclean -C $(LIBFT)
+#	@$(MAKE) fclean -C $(LIBFT)
 	@#$(MAKE) clean -C $(MLX)
 	@/bin/rm -f $(OBJS)
 
