@@ -1,0 +1,35 @@
+build/SDL_blit.lo: \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/video/SDL_blit.c \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/video/../SDL_internal.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/video/../dynapi/SDL_dynapi.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/video/../dynapi/SDL_dynapi_overrides.h \
+  include/SDL_config.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_platform.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/begin_code.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/close_code.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_video.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_stdinc.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_config.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_pixels.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_endian.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_rect.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_error.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_rwops.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_surface.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_blendmode.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/video/SDL_sysvideo.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_messagebox.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_shape.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_thread.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_atomic.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_mutex.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_metal.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/video/SDL_vulkan_internal.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_vulkan.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/video/SDL_blit.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_cpuinfo.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/video/SDL_blit_auto.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/video/SDL_blit_copy.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/video/SDL_blit_slow.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/video/SDL_RLEaccel_c.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/video/SDL_pixels_c.h

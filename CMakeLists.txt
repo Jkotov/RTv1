@@ -1,15 +1,10 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.16)
 project(RTv1 C)
 
-include_directories(libft)
-INCLUDE(FindPkgConfig)
-
-find_package(SDL2 REQUIRED)
-PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
-PKG_SEARCH_MODULE(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
+include_directories(libft SDL/include include)
 add_compile_options(-Wall -Wextra -Werror -O3)
 
-include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS} include)
+link_directories(SDL/lib)
 add_executable(RTv1 source/cleanup.c
         source/color.c
         source/control_utils.c
@@ -21,4 +16,14 @@ add_executable(RTv1 source/cleanup.c
         source/texture.c
         source/utils.c
         source/vectors.c)
-target_link_libraries(RTv1 ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2TTF_LIBRARIES} m)
+target_link_libraries(RTv1 libSDL2.a
+        libSDL2.dylib
+        libSDL2-2.0.0.dylib
+        libSDL2_image.a
+        libSDL2_image.dylib
+        libSDL2_image-2.0.0.dylib
+        libSDL2_test.a
+        libSDL2_ttf.a
+        libSDL2_ttf.dylib
+        libSDL2_ttf-2.0.0.dylib
+        libSDL2main.a)

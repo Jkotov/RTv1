@@ -1,0 +1,23 @@
+build/SDL_mixer.lo: \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/audio/SDL_mixer.c \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/audio/../SDL_internal.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/audio/../dynapi/SDL_dynapi.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/audio/../dynapi/SDL_dynapi_overrides.h \
+  include/SDL_config.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_platform.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/begin_code.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/close_code.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_cpuinfo.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_stdinc.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_config.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_timer.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_error.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_audio.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_endian.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_mutex.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_thread.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_atomic.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_rwops.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/audio/SDL_sysaudio.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/audio/../SDL_dataqueue.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/audio/./SDL_audio_c.h

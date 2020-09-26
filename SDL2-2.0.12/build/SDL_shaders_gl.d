@@ -1,0 +1,23 @@
+build/SDL_shaders_gl.lo: \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/render/opengl/SDL_shaders_gl.c \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/render/opengl/../../SDL_internal.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/render/opengl/../../dynapi/SDL_dynapi.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/render/opengl/../../dynapi/SDL_dynapi_overrides.h \
+  include/SDL_config.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_platform.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/begin_code.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/close_code.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_stdinc.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_config.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_log.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_opengl.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_opengl_glext.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_video.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_pixels.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_endian.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_rect.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_error.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_rwops.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_surface.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/include/SDL_blendmode.h \
+  /Users/epainter/CLionProjects/RTv/SDL2-2.0.12/src/render/opengl/SDL_shaders_gl.h
