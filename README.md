@@ -1,7 +1,7 @@
 # RTv1
 How to:
 
-`sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev`
+`./SDL_built`
 
 Use CMake for compile:
 
@@ -9,11 +9,7 @@ Use CMake for compile:
 
 TO DO:
 
-- Reflections
-- Other figures:
-  - Cone
-  - Plane
-  - Cylinder
+- Camera moves
 - GUI
 - Multithreading:
   - POSIX Threads

@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 17:17:46 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/26 18:23:56 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,14 @@ t_sdl			sdl_init(void)
 
 t_dot			*directions_vec_compute(t_sdl *sdl)
 {
-	t_dot	*dir_vecs;
-	int		x;
-	int		y;
+	t_camera	tmp;
+	t_dot		*dir_vecs;
+	int			x;
+	int			y;
+	t_dot		screen_dot;
 
-	if ((dir_vecs = (t_dot*)malloc(sizeof(t_dot) * sdl->buffer_len)) == NULL)
+	tmp = sdl->scene.camera;
+	if ((dir_vecs = (t_dot*)malloc(sizeof(t_dot) * sdl->width * sdl->height)) == NULL)
 		sdl_error("Alloc error");
 	x = -1;
 	y = -1;
@@ -61,9 +64,11 @@ t_dot			*directions_vec_compute(t_sdl *sdl)
 	{
 		while (++y < sdl->height)
 		{
+			screen_dot = vector_sum(tmp.screen_center, vector_mult_num(tmp.x_screen_vec, sdl->width / 2 - x));
+			screen_dot = vector_sum(screen_dot, vector_mult_num(tmp.y_screen_vec, sdl->height / 2 - y));
 			dir_vecs[y * sdl->width + x] =\
-			vector_normalize(vector_subtraction((t_dot){x, y, 0},\
-			sdl->scene.camera.camera));
+			vector_normalize(vector_subtraction(screen_dot,\
+			tmp.camera));
 		}
 		y = -1;
 	}
@@ -72,43 +77,41 @@ t_dot			*directions_vec_compute(t_sdl *sdl)
 
 void			camera_move(t_sdl *sdl)
 {
-	sdl->scene.camera.x_screen_vec = rotate_vector((t_dot){1, 0, 0},\
-	sdl->scene.camera.angle);
-	sdl->scene.camera.y_screen_vec = rotate_vector((t_dot){0, 1, 0},\
-	sdl->scene.camera.angle);
-	sdl->scene.camera.camera =\
-	vector_normalize(cross_product(sdl->scene.camera.x_screen_vec,\
-	sdl->scene.camera.y_screen_vec));
-	sdl->scene.camera.camera = vector_mult_num(sdl->scene.camera.camera,\
-	-1000);
-	sdl->scene.camera.camera = vector_sum(sdl->scene.camera.camera,\
-	sdl->scene.camera.screen_center);
+	t_camera	tmp;
+
+	tmp = sdl->scene.camera;
+	tmp.center_vec = rotate_vector((t_dot){0, 0, 1}, tmp.angle);
+	tmp.screen_center = vector_mult_num(tmp.center_vec, 1000);
+	tmp.x_screen_vec = rotate_vector((t_dot){1, 0, 0}, tmp.angle);
+	tmp.y_screen_vec = rotate_vector((t_dot){0, 1, 0}, tmp.angle);
+	sdl->scene.camera = tmp;
+	free(tmp.dir_vecs);
+	sdl->scene.camera.dir_vecs = directions_vec_compute(sdl);
 }
 
 void			camera_init(t_sdl *sdl)
 {
 	sdl->scene.camera.x_screen_vec = (t_dot){1, 0, 0};
 	sdl->scene.camera.y_screen_vec = (t_dot){0, 1, 0};
-	sdl->scene.camera.screen_center = (t_dot){sdl->width\
-	/ 2, (float)sdl->height / 2, 0};
 	sdl->scene.camera.angle = (t_dot){0, 0, 0};
+	sdl->scene.camera.camera = (t_dot){0, 0, -1000};
+	sdl->scene.camera.center_vec = (t_dot){0, 0, 1};
+	sdl->scene.camera.dir_vecs = NULL;
 	camera_move(sdl);
-
 }
 
 void			scene_init(t_sdl *sdl)
 {
 	t_surface_cache tmp;
 
-	camera_init(sdl);
 	ft_memset(&tmp, 0, sizeof(tmp));
-	sdl->scene.max_depth = 3;
-	sdl->scene.dir_vecs = directions_vec_compute(sdl);
+	camera_init(sdl);
+	sdl->scene.max_depth = 0;
 	sdl->scene.conic = NULL;
 	sdl->scene.light = NULL;
 	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){0, 0, 00}, {1, 2, 0,\
-	-10000, 0, 0, 0, 0, 0, 0}, 0xFF00, 100, 0.3, (t_dot){0, 0, 0}, tmp, NULL});
-	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){300, 300, 50}, {1, 2, 1,\
+	-10000, 0, 0, 0, 0, 0, 0}, 0xFF00, 100, 0.3, (t_dot){-100, -100, 0}, tmp, NULL});
+	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){300, 100, 300}, {1, 2, 1,\
 	-20000, 0, 0, 0, 0, 0, 0}, 0xFF, 100, 0.3, (t_dot){0, 0, 0}, tmp, NULL});
 	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){100, 100, 100}, {1, 2,\
 	-1, 0, 0, 0, 0, 0, 0, 0}, 0xFF0000, 50, 0.3, (t_dot){0, M_PI / 3, 0},\

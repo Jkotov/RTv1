@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 20:23:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 17:17:46 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/26 18:23:56 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void				render(t_sdl *sdl)
 		{
 			sdl->scene.cur_depth = 0;
 			sdl->buffer[y * sdl->width + x] = ray_tracing(sdl->scene,\
-			sdl->scene.dir_vecs[y * sdl->width + x],\
+			sdl->scene.camera.dir_vecs[y * sdl->width + x],\
 			sdl->scene.camera.camera);
 		}
 		y = -1;

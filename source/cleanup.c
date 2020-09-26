@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:36:33 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/17 18:45:22 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/26 18:23:56 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		clean_scene(t_scene *scene)
 {
 	clean_sphere(scene->conic);
 	clean_light(scene->light);
-	free(scene->dir_vecs);
+	free(scene->camera.dir_vecs);
 }
 
 void		clean_menu(t_menu *m)
