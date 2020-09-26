@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:38:05 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 17:17:46 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/26 02:49:57 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ t_dot		vector_normalize(t_dot vector)
 {
 	return (vector_mult_num(vector, revers_abs_vec(vector)));
 }
+
 t_dot		cross_product(t_dot v1, t_dot v2)
 {
-	return (t_dot){v1.y * v2.z - v1.z * v2.y, v1.x * v2.z - v1.y * v2.z,\
-	v1.x * v2.y - v2.x * v2.y};
+	return (t_dot){v1.y * v2.z - v1.z * v2.y, v1.x * v2.z - v1.z * v2.x,\
+	v1.x * v2.y - v1.y * v2.z};
 }

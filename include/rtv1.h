@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 17:17:46 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/26 02:49:57 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct			s_dot
 
 typedef struct			s_camera
 {
+	t_dot				center_vec;
 	t_dot				camera;
 	t_dot				*dir_vecs;
 	t_dot				angle;
@@ -102,7 +103,6 @@ typedef struct			s_scene
 	t_camera			camera;
 	t_surface			*conic;
 	t_light				*light;
-	t_dot				*dir_vecs;
 	uint				max_depth;
 	uint				cur_depth;
 }						t_scene;
@@ -120,6 +120,8 @@ typedef struct			s_sdl
 	t_menu				menu;
 }						t_sdl;
 
+
+void					camera_move(t_sdl *sdl);
 t_dot					rotate_vector(t_dot v, t_dot angle);
 t_dot					cross_product(t_dot v1, t_dot v2);
 void					*ft_memset(void *src, int c, size_t len);
