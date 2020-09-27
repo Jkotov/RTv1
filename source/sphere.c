@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:52:17 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/26 02:49:57 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/27 18:46:54 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ float			distance_to_conic(t_surface_coeffs s, t_dot v, t_dot start)
 	v.z + s.g2 * v.x * v.z + s.h2 * v.x * v.y;
 	b = 2 * s.a * start.x * v.x + 2 * s.b * start.y * v.y + 2 * s.c *\
 	start.z * v.z + s.f2 * v.y * start.z + s.f2 * v.z * start.y + s.g2 *\
-	v.x * start.z + s.g2 * v.y * start.x + s.h2 * v.y * start.x + s.h2 *\
+	v.x * start.z + s.g2 * v.z * start.x + s.h2 * v.y * start.x + s.h2 *\
 	v.x * start.y + s.p2 * v.x + s.q2 * v.y + s.r2 * v.z;
 	c = s.a * start.x * start.x + s.b * start.y * start.y + s.c * start.z *\
 	start.z + s.f2 * start.y * start.z + s.g2 * start.x * start.z + s.h2 *\
@@ -49,7 +49,7 @@ t_scene scene, float *len)
 	while (cur_conic)
 	{
 		cur_len = distance_to_conic(cur_conic->c, direction_vector, start);
-		if (cur_len != NAN)
+		if (!isnan(cur_len))
 		{
 			if (*len > cur_len && cur_len > 0)
 			{

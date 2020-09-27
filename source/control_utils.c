@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/26 03:35:48 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/27 16:15:21 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void		camera_events(t_sdl *sdl, SDL_Event e)
 	if (e.key.keysym.sym == SDLK_s)
 	{
 		flag = 1;
-		sdl->scene.camera.camera = vector_subtraction(sdl->scene.camera.camera, tmp);}
+		sdl->scene.camera.camera = vector_subtraction(sdl->scene.camera.camera, tmp);
+	}
 	if (e.key.keysym.sym == SDLK_a)
 	{
 		flag = 1;
@@ -64,10 +65,6 @@ void		camera_events(t_sdl *sdl, SDL_Event e)
 	{
 		flag = 1;
 		sdl->scene.camera.angle.x -= M_PI / 120;
-	}
-	if (isnan(sdl->scene.camera.screen_center.x))
-	{
-		ft_putstr("a");
 	}
 	if (e.key.keysym.sym == SDLK_z)
 	{

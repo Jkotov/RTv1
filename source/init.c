@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/26 03:43:33 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/28 00:04:54 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ t_dot			*directions_vec_compute(t_sdl *sdl)
 			dir_vecs[y * sdl->width + x] =\
 			vector_normalize(vector_subtraction(screen_dot,\
 			tmp.camera));
+		//			printf("x = %i\ty = %i\tx = %f\ty = %f\tz = %f\n",
+		//	x, y, screen_dot.x, screen_dot.y, screen_dot.z);
 		}
 		y = -1;
 	}
@@ -81,7 +83,7 @@ void			camera_move(t_sdl *sdl)
 
 	tmp = sdl->scene.camera;
 	tmp.center_vec = rotate_vector((t_dot){0, 0, 1}, tmp.angle);
-	tmp.screen_center = vector_mult_num(tmp.center_vec, 1000);
+	tmp.screen_center = vector_sum(vector_mult_num(tmp.center_vec, 1000), tmp.camera);
 	tmp.x_screen_vec = rotate_vector((t_dot){1, 0, 0}, tmp.angle);
 	tmp.y_screen_vec = rotate_vector((t_dot){0, 1, 0}, tmp.angle);
 	sdl->scene.camera = tmp;
@@ -110,7 +112,7 @@ void			scene_init(t_sdl *sdl)
 	sdl->scene.conic = NULL;
 	sdl->scene.light = NULL;
 	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){0, 0, 00}, {1, 2, 0,\
-	-10000, 0, 0, 0, 0, 0, 0}, 0xFF00, 100, 0.3, (t_dot){-100, -100, 0}, tmp, NULL});
+	-10000, 0, 0, 0, 0, 0, 0}, 0xFF00, 100, 0.3, (t_dot){-M_PI / 6, -M_PI / 6, 0}, tmp, NULL});
 	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){300, 100, 300}, {1, 2, 1,\
 	-20000, 0, 0, 0, 0, 0, 0}, 0xFF, 100, 0.3, (t_dot){0, 0, 0}, tmp, NULL});
 	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){100, 100, 100}, {1, 2,\
