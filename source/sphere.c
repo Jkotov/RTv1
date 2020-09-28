@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:52:17 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/27 18:46:54 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/28 00:19:04 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ float			distance_to_conic(t_surface_coeffs s, t_dot v, t_dot start)
 		return (-c / b);
 	if (!quadratic_equation((t_dot){a, b, c}, &solutions[0], &solutions[1]))
 		return (NAN);
-	if (solutions[0] > solutions[1])
+	if (solutions[0] > solutions[1] && solutions[1] > 0)
 		solutions[0] = solutions[1];
 	return (solutions[0]);
 }
