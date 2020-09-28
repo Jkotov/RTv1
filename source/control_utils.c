@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/28 00:31:02 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/28 11:12:59 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void		mouse_events(t_sdl *sdl, SDL_Event e)
 {
-	float tmp;
-
-	closest(sdl->scene.camera.camera, sdl->scene.camera.dir_vecs[e.button.y *\
-	sdl->width + e.button.x], sdl->scene, &tmp);
+	ray_tracing(sdl->scene, sdl->scene.camera.dir_vecs[e.button.y *\
+	sdl->width + e.button.x], sdl->scene.camera.camera);
 }
 
 void		camera_events(t_sdl *sdl, SDL_Event e)
