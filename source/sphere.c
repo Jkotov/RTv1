@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:52:17 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/28 00:19:04 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/28 19:03:39 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ float			distance_to_conic(t_surface_coeffs s, t_dot v, t_dot start)
 		return (-c / b);
 	if (!quadratic_equation((t_dot){a, b, c}, &solutions[0], &solutions[1]))
 		return (NAN);
+	if (solutions[0] < 0)
+		solutions[0] = solutions[1];
 	if (solutions[0] > solutions[1] && solutions[1] > 0)
 		solutions[0] = solutions[1];
 	return (solutions[0]);
@@ -49,7 +51,7 @@ t_scene scene, float *len)
 	while (cur_conic)
 	{
 		cur_len = distance_to_conic(cur_conic->c, direction_vector, start);
-		if (!isnan(cur_len))
+		if (!isnan(cur_len) )
 		{
 			if (*len > cur_len && cur_len > 0)
 			{

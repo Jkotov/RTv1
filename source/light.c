@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:50:01 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/28 14:01:30 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/28 19:19:43 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_scene scene)
 	while (cur_conic)
 	{
 		cur_len = distance_to_conic(cur_conic->c, direction_vector, start);
-		if (cur_len != NAN && cur_len > 0 && cur_len < 1)
+		if (!isnan(cur_len) && cur_len > 0 && cur_len < 1)
 		{
 			return (0);
 		}
