@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 20:23:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 17:46:18 by root             ###   ########.fr       */
+/*   Updated: 2020/09/17 18:51:44 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,16 @@ int					color_sum(int c1, int c2)
 }
 
 t_compute_light_p	init_light_params(t_dot dir_vec, int len,\
-t_surface *sphere, t_dot start)
+t_sphere *sphere, t_dot start)
 {
 	t_compute_light_p	light_p;
 
 	light_p.dot = vector_sum(vector_mult_num(dir_vec, len), start);
+	light_p.center = sphere->center;
 	light_p.specular = sphere->specular;
 	light_p.direction_vec = vector_mult_num(dir_vec, -1);
-	light_p.normal_vec = surface_normal(sphere->c, light_p.dot);
+	light_p.normal_vec = vector_normalize(vector_subtraction(light_p.dot,\
+		sphere->center));
 	return (light_p);
 }
 
@@ -46,7 +48,7 @@ t_dot start)
 {
 	int					color;
 	float				len;
-	t_surface			*cur_sphere;
+	t_sphere			*cur_sphere;
 	t_compute_light_p	light_p;
 
 	color = 0;
@@ -85,13 +87,13 @@ void				render(t_sdl *sdl)
 			sdl->scene.cur_depth = 0;
 			sdl->buffer[y * sdl->width + x] = ray_tracing(sdl->scene,\
 			sdl->scene.dir_vecs[y * sdl->width + x],\
-			sdl->scene.camera.camera);
+			sdl->scene.camera);
 		}
 		y = -1;
 	}
 	SDL_UnlockTexture(sdl->fg);
 	SDL_RenderClear(sdl->renderer);
 	SDL_RenderCopy(sdl->renderer, sdl->fg, NULL, NULL);
-	//SDL_RenderCopy(sdl->renderer, sdl->menu.img, NULL, &sdl->menu.menu_size);
+	SDL_RenderCopy(sdl->renderer, sdl->menu.img, NULL, &sdl->menu.menu_size);
 	SDL_RenderPresent(sdl->renderer);
 }

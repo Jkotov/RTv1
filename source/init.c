@@ -6,15 +6,15 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 17:53:32 by root             ###   ########.fr       */
+/*   Updated: 2020/09/22 14:12:10 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
 void			init_menu(t_sdl *sdl)
 {
-	sdl->menu.menu_size = (SDL_Rect){0, 0, sdl->width, 30};
+	sdl->menu.menu_size = (SDL_Rect){0, 0, sdl->width, 300};
 	sdl->menu.img = create_texture("menu.png", sdl);
 //	sdl->menu.add_menu_size = (SDL_Rect){450, 100, 150, 350};
 //	sdl->menu.add_menu = create_texture("add_coords.png", sdl);
@@ -70,55 +70,31 @@ t_dot			*directions_vec_compute(t_sdl *sdl)
 	return (dir_vecs);
 }
 
-void			camera_move(t_sdl *sdl)
+void			set_defalut_scene(t_sdl *sdl)
 {
-	sdl->scene.camera.x_screen_vec = rotate_vector((t_dot){1, 0, 0},\
-	sdl->scene.camera.angle);
-	sdl->scene.camera.y_screen_vec = rotate_vector((t_dot){0, 1, 0},\
-	sdl->scene.camera.angle);
-	sdl->scene.camera.camera =\
-	vector_normalize(cross_product(sdl->scene.camera.x_screen_vec,\
-	sdl->scene.camera.y_screen_vec));
-	sdl->scene.camera.camera = vector_mult_num(sdl->scene.camera.camera,\
-	-1000);
-	sdl->scene.camera.camera = vector_sum(sdl->scene.camera.camera,\
-	sdl->scene.camera.screen_center);
-}
-
-void			camera_init(t_sdl *sdl)
-{
-	sdl->scene.camera.x_screen_vec = (t_dot){1, 0, 0};
-	sdl->scene.camera.y_screen_vec = (t_dot){0, 1, 0};
-	sdl->scene.camera.screen_center = (t_dot){sdl->width\
-	/ 2, (float)sdl->height / 2, 0};
-	sdl->scene.camera.angle = (t_dot){0, 0, 0};
-	camera_move(sdl);
-
+	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){300, 250, 150},\
+	150, 0xFF00, 100, 0.3, NULL, NULL});
+	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){400, 250, 150},\
+	100, 0xFF, 75, 0.5, NULL, NULL});
+	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){100, 250, 150},\
+	125, 0xFF0000, 10, 0.7, NULL, NULL});
+	add_sphere(&sdl->scene.sphere, (t_sphere){(t_dot){300, 5375, 150},\
+	5000, 0xFFFF00, 10, 0.1, NULL, NULL});
+	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.1);
+	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.5);
+	add_light(&sdl->scene, (t_dot){1000, 40, 0}, 0.4);
+	add_light(&sdl->scene, (t_dot){300, 100, 550}, 0.4);
 }
 
 void			scene_init(t_sdl *sdl)
 {
-	t_surface_cache tmp;
-
 	sdl->scene.camera = (t_dot){(float)sdl->width\
 	/ 2, (float)sdl->height / 2, -1000};
-	ft_memset(&tmp, 0, sizeof(tmp));
-	sdl->scene.max_depth = 3;
+	sdl->scene.clipping_plane = 500;
+	sdl->scene.max_depth = 2;
 	sdl->scene.dir_vecs = directions_vec_compute(sdl);
-	sdl->scene.conic = NULL;
+	sdl->scene.sphere = NULL;
 	sdl->scene.light = NULL;
-	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){0, 0, 00}, {1, 2, 0,\
-	-10000, 0, 0, 0, 0, 0, 0}, 0xFF00, 100, 0.3, (t_dot){0, 0, 0}, tmp, NULL});
-	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){300, 300, 50}, {1, 2, 1,\
-	-20000, 0, 0, 0, 0, 0, 0}, 0xFF, 100, 0.3, (t_dot){0, 0, 0}, tmp, NULL});
-	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){100, 100, 100}, {1, 2,\
-	-1, 0, 0, 0, 0, 0, 0, 0}, 0xFF0000, 50, 0.3, (t_dot){0, M_PI / 3, 0},\
-	tmp, NULL});
-	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){100, 100, 1000},\
-	{0, 0, 0, -100, 0, 0, 0, 1, 2, 3}, 0xFFFFF0, 50, 0, (t_dot){0, M_PI_2, 0}\
-	, tmp, NULL});
-	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.1);
-	add_light(&sdl->scene, (t_dot){5000, 500, -300}, 0.5);
-	add_light(&sdl->scene, (t_dot){1000, 40, 0}, 0.4);
-	add_light(&sdl->scene, (t_dot){300, 100, 550}, 0.4);
+	set_defalut_scene(sdl);
+
 }

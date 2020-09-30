@@ -6,11 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:50:01 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 17:46:10 by root             ###   ########.fr       */
+/*   Updated: 2020/09/17 18:51:44 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
 void		light_balancer(t_scene *scene)
 {
@@ -80,17 +80,20 @@ char		sphere_on_light(t_dot start, t_dot direction_vector,\
 t_scene scene)
 {
 	float		cur_len;
-	t_surface	*cur_conic;
+	t_dot		center_start_vec;
+	t_sphere	*cur_sphere;
 
-	cur_conic = scene.conic;
-	while (cur_conic)
+	cur_sphere = scene.sphere;
+	while (cur_sphere)
 	{
-		cur_len = distance_to_conic(cur_conic->c, direction_vector, start);
+		center_start_vec = vector_subtraction(start, cur_sphere->center);
+		cur_len = distance_to_sphere(direction_vector,\
+		center_start_vec, cur_sphere->radius);
 		if (cur_len != NAN && cur_len > 0)
 		{
 			return (0);
 		}
-		cur_conic = cur_conic->next;
+		cur_sphere = cur_sphere->next;
 	}
 	return (1);
 }
@@ -102,6 +105,7 @@ float		lighting(t_scene scene, t_compute_light_p p)
 	t_dot	light_vector;
 	float	tmp;
 
+	p.normal_vec = vector_normalize(vector_subtraction(p.dot, p.center));
 	res = scene.light->intensity;
 	cur_light = scene.light->next;
 	while (cur_light)
