@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 20:23:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/26 02:49:57 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/01 19:30:19 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,21 @@ int					color_intens(int color, float intens)
 
 int					color_sum(int c1, int c2)
 {
-	return (((int)(((c1 & 0xFF000000) >> 24)\
-	+ ((c2 & 0xFF000000) >> 24)) << 24) +\
-	((int)(((c1 & 0xFF0000) >> 16) + ((c2 & 0xFF0000) >> 16)) << 16) +\
-	((int)(((c1 & 0xFF00) >> 8) + ((c2 & 0xFF00) >> 8)) << 8) +\
-	((int)(c1 & 0xFF) + (c2 & 0xFF)));
+	int	a;
+	int r;
+	int g;
+	int b;
+
+	a = (int)(((c1 & 0xFF000000) >> 24)\
+	+ ((c2 & 0xFF000000) >> 24)) << 24;
+	r = (int)(((c1 & 0xFF0000) >> 16) + ((c2 & 0xFF0000) >> 16)) << 16;
+	g = (int)(((c1 & 0xFF00) >> 8) + ((c2 & 0xFF00) >> 8)) << 8;
+	b = (int)(c1 & 0xFF) + (c2 & 0xFF);
+	a = a > (int)0xFF000000 ? (int)0xFF000000 : (int)a;
+	r = r > (int)0xFF0000 ? 0xFF0000 : r;
+	g = g > (int)0xFF00 ? 0xFF00 : g;
+	b = b > (int)0xFF ? 0xFF : b;
+	return a + r + g + b;
 }
 
 t_compute_light_p	init_light_params(t_dot dir_vec, int len,\
@@ -34,7 +44,7 @@ t_surface *sphere, t_dot start)
 {
 	t_compute_light_p	light_p;
 
-	light_p.dot = vector_sum(vector_mult_num(dir_vec, len), start);
+	light_p.dot = vector_sum(vector_mult_num(dir_vec, len - len * 0.001), start);
 	light_p.specular = sphere->specular;
 	light_p.direction_vec = vector_mult_num(dir_vec, -1);
 	light_p.normal_vec = surface_normal(sphere->c, light_p.dot);
@@ -63,8 +73,6 @@ t_dot start)
 			color_intens(ray_tracing(scene,\
 			vector_reflection(direction_vector, light_p.normal_vec),\
 			light_p.dot), cur_sphere->reflective));
-			if (color > 0xffffff)
-				ft_putstr("IF U SEE THIS IN OUTPUT SOMETHING WENT WRONG");
 		}
 	}
 	return (color);
@@ -85,8 +93,9 @@ void				render(t_sdl *sdl)
 			sdl->scene.cur_depth = 0;
 			sdl->buffer[y * sdl->width + x] = ray_tracing(sdl->scene,\
 			sdl->scene.camera.dir_vecs[y * sdl->width + x],\
-			sdl->scene.camera.camera);
-		}
+			sdl->scene.camera.camera);\
+/*			printf("x = %i y = %i color = %h\n",x , y, (uint)sdl->buffer[y * sdl->width + x]);
+*/		}
 		y = -1;
 	}
 	SDL_UnlockTexture(sdl->fg);

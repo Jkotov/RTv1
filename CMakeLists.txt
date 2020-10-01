@@ -10,7 +10,7 @@ link_directories(${SDL2_LIB_DIR})
 include_directories(${SDL2_INCLUDE_DIRS}
         ${SDL2IMAGE_INCLUDE_DIRS}
         ${SDL2TTF_INCLUDE_DIRS} include)
-add_compile_options(-Wall -Wextra)
+add_compile_options(-Wall -Wextra -Werror -O3)
 
 add_executable(RTv1 source/cleanup.c
         source/color.c

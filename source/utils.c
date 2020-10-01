@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/28 00:28:16 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/01 17:01:24 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int				quadratic_equation(t_dot coeffs, float *x1, float *x2)
 		return (0);
 	if (d == 0)
 	{
-		*x1 = -coeffs.y * 0.5 / coeffs.x;
+		*x1 = -coeffs.y / 2 / coeffs.x;
 		*x2 = *x1;
 		return (1);
 	}
 	d = sqrtf(d);
-	*x1 = (-coeffs.y - d) * 0.5 / coeffs.x;
-	*x2 = (-coeffs.y + d) * 0.5 / coeffs.x;
+	*x1 = (-coeffs.y - d) / 2 / coeffs.x;
+	*x2 = (-coeffs.y + d) / 2 / coeffs.x;
 	return (2);
 }
 

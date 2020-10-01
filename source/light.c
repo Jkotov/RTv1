@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:50:01 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/28 19:19:43 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/01 17:55:19 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ float		lighting(t_scene scene, t_compute_light_p p)
 	{
 		light_vector = vector_subtraction(cur_light->center, p.dot);
 		tmp = INFINITY;
-		if (sphere_on_light(p.dot, ((light_vector)),\
+		if (sphere_on_light(p.dot, light_vector,\
 		scene))
 		{
 			light_vector = vector_normalize(light_vector);
