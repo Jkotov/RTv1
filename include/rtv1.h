@@ -6,18 +6,20 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/26 02:49:57 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/03 17:27:38 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTV1_H
 # define RTV1_H
-
 # include <SDL2/SDL.h>
 # include <unistd.h>
 # include <SDL2/SDL_image.h>
 # include <SDL2/SDL_ttf.h>
 # include <math.h>
+# include <CL/cl.h>
+# include <fcntl.h>
+# define CL_TARGET_OPENCL_VERSION 220
 
 typedef struct			s_surface_coeffs
 {
@@ -120,7 +122,29 @@ typedef struct			s_sdl
 	t_menu				menu;
 }						t_sdl;
 
+typedef struct			s_rt
+{
+	t_scene				scene;
+	t_dot				dir_vec;
+	t_dot				start;
+}						t_rt;
 
+typedef struct			s_cl
+{
+	cl_int				ret;
+	cl_platform_id		platform_id;
+	uint				ret_num_platforms;
+	cl_device_id		device_id;
+	uint				ret_num_devices;
+	cl_context			context;
+	cl_command_queue	command_queue;
+	cl_mem				buf;
+	cl_program			prog;
+	cl_kernel			kernel;
+}						t_cl;
+
+t_cl					cl_init(t_sdl *sdl);
+void					error(int code);
 void					camera_move(t_sdl *sdl);
 t_dot					rotate_vector(t_dot v, t_dot angle);
 t_dot					cross_product(t_dot v1, t_dot v2);
@@ -147,7 +171,7 @@ t_sdl					sdl_init(void);
 void					clean_light(t_light *light);
 void					clean_sphere(t_surface *sphere);
 void					clean_scene(t_scene *scene);
-void					cleanup(t_sdl *sdl);
+void					cleanup(t_sdl *sdl, t_cl *cl);
 void					keyboard_events(t_sdl *sdl, char *quit, SDL_Event e);
 void					mouse_events(t_sdl *sdl, SDL_Event e);
 int						quadratic_equation(t_dot coeffs, float *x1,\
@@ -168,8 +192,7 @@ float					specular(t_compute_light_p p,\
 t_dot light_vector, float intensity);
 float					lighting(t_scene scene, t_compute_light_p p);
 int						color_intens(int color, float intens);
-int						ray_tracing(t_scene scene, t_dot direction_vector,\
-t_dot start);
+int						ray_tracing(t_rt rt);
 t_dot					vector_reflection(t_dot direction_vec,\
 t_dot normal_vec);
 void					render(t_sdl *sdl);

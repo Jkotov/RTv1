@@ -33,3 +33,12 @@ void		sdl_error(char *text)
 	ft_putstr(SDL_GetError());
 	exit(1);
 }
+
+void	error(int code)
+{
+	if (code)
+	{
+		ft_putstr("error while set openCL values\n");
+		exit(code);
+	}
+}

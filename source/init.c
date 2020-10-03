@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/01 19:42:17 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/02 01:40:37 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_sdl			sdl_init(void)
 {
 	t_sdl		sdl;
 
-	sdl.width = 800;
-	sdl.height = 800;
+	sdl.width = 100;
+	sdl.height = 100;
 	sdl.buffer_len = sdl.width * sdl.height;
 	scene_init(&sdl);
 	if (SDL_Init(0) != 0)
@@ -69,8 +69,6 @@ t_dot			*directions_vec_compute(t_sdl *sdl)
 			dir_vecs[y * sdl->width + x] =\
 			vector_normalize(vector_subtraction(screen_dot,\
 			tmp.camera));
-		//			printf("x = %i\ty = %i\tx = %f\ty = %f\tz = %f\n",
-		//	x, y, screen_dot.x, screen_dot.y, screen_dot.z);
 		}
 		y = -1;
 	}
@@ -82,10 +80,10 @@ void			camera_move(t_sdl *sdl)
 	t_camera	tmp;
 
 	tmp = sdl->scene.camera;
-	tmp.center_vec = rotate_vector((t_dot){0, 0, 1}, tmp.angle);
+	tmp.center_vec = vector_normalize(rotate_vector((t_dot){0, 0, 1}, tmp.angle));
 	tmp.screen_center = vector_sum(vector_mult_num(tmp.center_vec, 1000), tmp.camera);
-	tmp.x_screen_vec = rotate_vector((t_dot){1, 0, 0}, tmp.angle);
-	tmp.y_screen_vec = rotate_vector((t_dot){0, 1, 0}, tmp.angle);
+	tmp.x_screen_vec = vector_normalize(rotate_vector((t_dot){1, 0, 0}, tmp.angle));
+	tmp.y_screen_vec = vector_normalize(rotate_vector((t_dot){0, 1, 0}, tmp.angle));
 	sdl->scene.camera = tmp;
 	free(tmp.dir_vecs);
 	sdl->scene.camera.dir_vecs = directions_vec_compute(sdl);
@@ -108,7 +106,7 @@ void			scene_init(t_sdl *sdl)
 
 	ft_memset(&tmp, 0, sizeof(tmp));
 	camera_init(sdl);
-	sdl->scene.max_depth = 3;
+	sdl->scene.max_depth = 0;
 	sdl->scene.conic = NULL;
 	sdl->scene.light = NULL;
 	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){300, 200, 0}, {1, 2, 0,\

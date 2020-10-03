@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 20:23:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/01 19:30:19 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/01 22:35:43 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ t_surface *sphere, t_dot start)
 	return (light_p);
 }
 
-int					ray_tracing(t_scene scene, t_dot direction_vector,\
-t_dot start)
+int					ray_tracing(t_rt rt)
 {
 	int					color;
 	float				len;
@@ -61,18 +60,18 @@ t_dot start)
 
 	color = 0;
 	len = INFINITY;
-	cur_sphere = closest(start, direction_vector, scene, &len);
-	if (!isinf(len) && scene.light)
+	cur_sphere = closest(rt.start, rt.dir_vec, rt.scene, &len);
+	if (!isinf(len) && rt.scene.light)
 	{
-		light_p = init_light_params(direction_vector, len, cur_sphere, start);
-		color = color_intens(cur_sphere->color, lighting(scene, light_p));
-		if (scene.cur_depth++ < scene.max_depth)
+		light_p = init_light_params(rt.dir_vec, len, cur_sphere, rt.start);
+		color = color_intens(cur_sphere->color, lighting(rt.scene, light_p));
+		if (rt.scene.cur_depth++ < rt.scene.max_depth)
 		{
 			color = color_sum(color_intens(color,\
 			(1 - cur_sphere->reflective)),\
-			color_intens(ray_tracing(scene,\
-			vector_reflection(direction_vector, light_p.normal_vec),\
-			light_p.dot), cur_sphere->reflective));
+			color_intens(ray_tracing((t_rt){rt.scene,\
+			vector_reflection(rt.dir_vec, light_p.normal_vec),\
+			light_p.dot}), cur_sphere->reflective));
 		}
 	}
 	return (color);
@@ -82,6 +81,7 @@ void				render(t_sdl *sdl)
 {
 	int		x;
 	int		y;
+	t_rt	rt;
 
 	SDL_LockTexture(sdl->fg, NULL, (void**)&sdl->buffer, &sdl->buffer_len);
 	x = -1;
@@ -90,12 +90,12 @@ void				render(t_sdl *sdl)
 	{
 		while (++y < sdl->height)
 		{
+			rt.scene = sdl->scene;
+			rt.start = sdl->scene.camera.camera;
+			rt.dir_vec = sdl->scene.camera.dir_vecs[y * sdl->width + x];
 			sdl->scene.cur_depth = 0;
-			sdl->buffer[y * sdl->width + x] = ray_tracing(sdl->scene,\
-			sdl->scene.camera.dir_vecs[y * sdl->width + x],\
-			sdl->scene.camera.camera);\
-/*			printf("x = %i y = %i color = %h\n",x , y, (uint)sdl->buffer[y * sdl->width + x]);
-*/		}
+			sdl->buffer[y * sdl->width + x] = ray_tracing(rt);
+		}
 		y = -1;
 	}
 	SDL_UnlockTexture(sdl->fg);

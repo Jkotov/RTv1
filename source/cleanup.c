@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:36:33 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/26 02:49:57 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/03 16:12:52 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,19 @@ void		clean_menu(t_menu *m)
 	SDL_DestroyTexture(m->img);
 }
 
-void		cleanup(t_sdl *sdl)
+void		clean_cl(t_cl *cl)
 {
+	clReleaseProgram(cl->prog);
+	clReleaseMemObject(cl->buf);
+	clReleaseCommandQueue(cl->command_queue);
+	clReleaseContext(cl->context);
+	clReleaseDevice(cl->device_id);
+}
+
+void		cleanup(t_sdl *sdl, t_cl *cl)
+{
+	cl->platform_id = NULL;
+	clean_cl(cl);
 	clean_scene(&sdl->scene);
 	//clean_menu(&sdl->menu);
 	SDL_DestroyTexture(sdl->fg);
