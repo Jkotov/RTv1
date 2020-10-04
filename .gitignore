@@ -2,6 +2,9 @@ cmake-build-debug
 .idea
 .idea/*
 SDL2
-SDL2-2.0.12/build
-SDL2_image-2.0.5/build
-SDL2_ttf-2.0.15/build
+SDL2-2.0.12
+SDL2_image-2.0.5
+SDL2_ttf-2.0.15
+SDL2-2.0.12/*
+SDL2_image-2.0.5/*
+SDL2_ttf-2.0.15/*
