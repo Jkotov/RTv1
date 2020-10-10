@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:36:33 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/17 18:51:44 by root             ###   ########.fr       */
+/*   Updated: 2020/09/30 16:21:04 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,18 @@ void		clean_light(t_light *light)
 	free(light);
 }
 
-void		clean_sphere(t_sphere *sphere)
+void		clean_sphere(t_surface *sphere)
 {
 	if (sphere->next)
 		clean_sphere(sphere->next);
-	free(sphere->cache);
 	free(sphere);
 }
 
 void		clean_scene(t_scene *scene)
 {
-	clean_sphere(scene->sphere);
+	clean_sphere(scene->conic);
 	clean_light(scene->light);
-	free(scene->dir_vecs);
+	free(scene->camera.dir_vecs);
 }
 
 void		clean_menu(t_menu *m)

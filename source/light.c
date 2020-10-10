@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:50:01 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/17 18:51:44 by root             ###   ########.fr       */
+/*   Updated: 2020/09/30 16:21:04 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,17 @@ char		sphere_on_light(t_dot start, t_dot direction_vector,\
 t_scene scene)
 {
 	float		cur_len;
-	t_dot		center_start_vec;
-	t_sphere	*cur_sphere;
+	t_surface	*cur_conic;
 
-	cur_sphere = scene.sphere;
-	while (cur_sphere)
+	cur_conic = scene.conic;
+	while (cur_conic)
 	{
-		center_start_vec = vector_subtraction(start, cur_sphere->center);
-		cur_len = distance_to_sphere(direction_vector,\
-		center_start_vec, cur_sphere->radius);
-		if (cur_len != NAN && cur_len > 0)
+		cur_len = distance_to_conic(cur_conic->c, direction_vector, start);
+		if (!isnan(cur_len) && cur_len > 0 && cur_len < 1)
 		{
 			return (0);
 		}
-		cur_sphere = cur_sphere->next;
+		cur_conic = cur_conic->next;
 	}
 	return (1);
 }
@@ -105,19 +102,19 @@ float		lighting(t_scene scene, t_compute_light_p p)
 	t_dot	light_vector;
 	float	tmp;
 
-	p.normal_vec = vector_normalize(vector_subtraction(p.dot, p.center));
 	res = scene.light->intensity;
 	cur_light = scene.light->next;
 	while (cur_light)
 	{
 		light_vector = vector_subtraction(cur_light->center, p.dot);
 		tmp = INFINITY;
-		if (sphere_on_light(p.dot, (vector_normalize(light_vector)),\
+		if (sphere_on_light(p.dot, ((light_vector)),\
 		scene))
 		{
+			light_vector = vector_normalize(light_vector);
 			tmp = scalar_mult(p.normal_vec, light_vector)\
-			* revers_abs_vec(light_vector) * cur_light->intensity;
-			res = tmp > 0 ? res + tmp : res;
+			* cur_light->intensity;
+			res = res + fabs(tmp);
 			res += specular(p, light_vector, cur_light->intensity);
 		}
 		cur_light = cur_light->next;
