@@ -15,17 +15,4 @@ void 			gui_cone(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache)
 {
 	if ((e.button.x > 100 && e.button.x < 150))
 		button_create_cone(sdl, gui_cache);
-	else if (e.button.x > 150 && e.button.x < 210)
-	{
-		printf("sdl->scene.conic->c.a = %f\n",sdl->scene.conic->c.a);
-		printf("sdl->scene.conic->c.b = %f\n",sdl->scene.conic->c.b);
-		printf("sdl->scene.conic->c.c = %f\n",sdl->scene.conic->c.c);
-		printf("sdl->scene.conic->angle.y = %f\n.", sdl->scene.conic->angle.x);
-		if (count_objs(sdl->scene.conic) != 3)
-			if(sdl->scene.conic->angle.y == M_PI_2)
-			{
-				printf("sdl->scene.conic->angle.y = %f\n.", sdl->scene.conic->angle.y);
-				del_objs(&sdl->scene.conic);
-			}
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/30 17:59:59 by root             ###   ########.fr       */
+/*   Updated: 2020/10/13 15:55:46 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,39 +18,44 @@ void		mouse_events(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache)
 	sdl->width + e.button.x], sdl->scene.camera.camera);
 
 	gui_buttons(gui_cache, e);
+	printf("e.b.x = %d\n e.b.y = %d\n", e.button.x, e.button.y);
 	printf("color = %d\n position = {%f, %f, %f}\n, radius = %f\n", gui_cache->color, gui_cache->position.x, \
 	gui_cache->position.y, gui_cache->position.z, gui_cache->radius);
-	if ((e.button.x > 530 && e.button.x < 600) && (e.button.y > 0 && e.button.y < 65))
+	if (e.button.x > 290 && e.button.x < 395)
 	{
-//		set_default();
-		printf("reset\n");
+		if (e.button.y > 3 && e.button.y < 20)
+			printf("reset");
+		else if (e.button.y > 21 && e.button.y < 43)
+		{
+			if (count_objs(sdl->scene.conic) != 3)
+				del_objs(&sdl->scene.conic);
+		}
 	}
-	if (e.button.y > 50 && e.button.y < 65)
+	if (e.button.x > 3 && e.button.x < 105)
 	{
-		if ((e.button.x > 0 && e.button.x < 100))
-//			printf("sphere\n");
+		if (e.button.y > 25 && e.button.y < 45)
+		{
+			printf("sphere\n");
 			gui_sphere(sdl, e, gui_cache);
-		else if (e.button.x > 100 && e.button.x < 210)
+		}
+
+		else if (e.button.y > 50 && e.button.y < 67)
 		{
 			gui_cone(sdl, e, gui_cache);
-//			printf("cone\n");
+			printf("cone\n");
 		}
-		else if (e.button.x > 210 && e.button.x < 320)
+		else if (e.button.y > 75 && e.button.y < 92)
 		{
-//			gui_plane(sdl, e, gui_cache);
+	//			gui_plane(sdl, e, gui_cache);
 			printf("plane\n");
 		}
-		else if (e.button.x > 320 && e.button.x < 420)
+		else if (e.button.y > 95 && e.button.y < 116)
 		{
-//			gui_cylinder(sdl, e, gui_cache);
+	//			gui_cylinder(sdl, e, gui_cache);
 			printf("cylinder\n");
 		}
-		else if (e.button.x > 420 && e.button.x < 530)
-		{
-//			gui_light(sdl, e, gui_cache);
-			printf("light\n");
-		}
 	}
+
 }
 
 void		camera_events(t_sdl *sdl, SDL_Event e)

@@ -3,42 +3,47 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ginger <ginger@student.42.fr>              +#+  +:+       +#+         #
+#    By: epainter <epainter@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/04/22 13:50:30 by ginger            #+#    #+#              #
-#    Updated: 2020/09/22 18:59:33 by root             ###   ########.fr        #
+#    Created: 2020/09/23 18:11:39 by epainter          #+#    #+#              #
+#    Updated: 2020/10/09 15:29:40 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = RTv1
+NAME = RTv
 
 ### COMPILATION ###
 
 CC = gcc
 FLAGS = -O2 -Wall -Wextra
+#-Werror
 
 ### INCLUDES ###
 
 S_DIR = source
 H_DIR = include
-LIBFT  = libft
+LIBFT = libft
 
 ### SOURCE ###
 
 SRCS = cleanup.c \
        color.c \
        control_utils.c \
+       gui/gui_utils.c \
+       gui/gui_sphere.c \
+       gui/gui_utils_2.c \
+       gui/gui_cone.c \
        errors.c \
-       gui_sphere.c \
-       gui_utils.c \
-       gui_light.c \
        init.c \
        light.c \
-       main.c  \
+       main.c \
        sphere.c \
        texture.c \
-       utils.c  \
+       utils.c \
        vectors.c
+
+#              gui_light.c \
+
 
 ### OBJECTS ###
 
@@ -65,7 +70,7 @@ CYAN = \033[1;36m
 WHITE = \033[1;37m
 RESET = \033[0m
 
-all: lib $(NAME)
+all: $(NAME)
 
 lib:
 	@echo "$(GREEN)Creating lib files$(CYAN)"
@@ -73,22 +78,23 @@ lib:
 	@echo 	"$(RESET)"
 
 %.o: %.c $(HEADERS)
-	@$(CC) -I $(H_DIR)  $(FLAGS) -o $@ -c $< -lft -lSDL2main -lSDL2 -lSDL_mixer -lSDL_image -lm
+	@$(CC) -I $(H_DIR) $(FLAGS) -o $@ -c $< -lSDL2main -lSDL2 -lSDL2_image -lm
 	@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(RESET)"
 
 $(NAME): $(OBJS)
-	@$(CC) -I $(HEADERS) $(FLAGS) -L $(LIBFT) -o $@ $^ -lft -lSDL2main -lSDL2 -lSDL2_image -lm
+	@$(CC) -I $(HEADERS) $(FLAGS) -o $@ $^ -lSDL2main -lSDL2 -lSDL2_image -lm
+	@$(CC) $(FLAGS) -I $(HEADERS) -o $@ $^ -lSDL2main -lSDL2 -lSDL2_image -lm
 	@echo "$(GREEN)Project successfully compiled$(RESET)"
 
 clean:
 	@echo "$(GREEN)Supressing libraries files$(RESET)"
-	@make clean -C $(LIBFT)
+#	@$(MAKE) fclean -C $(LIBFT)
+	@#$(MAKE) clean -C $(MLX)
 	@/bin/rm -f $(OBJS)
 
 fclean: clean
 	@echo "$(GREEN)Supressing libraries files$(RESET)"
-	@rm -f $(NAME)
-	@make fclean -C $(LIBFT)
+	@/bin/rm -f $(NAME)
 
 re: fclean all
 

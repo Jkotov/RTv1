@@ -32,12 +32,4 @@ void 			gui_sphere(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache)
 {
 	if ((e.button.x > 0 && e.button.x < 50))
 		button_create_sphere(sdl, gui_cache);
-	else if (e.button.x > 50 && e.button.x < 100)
-	{
-		if (count_objs(sdl->scene.conic) != 3)
-		{
-			if (sdl->scene.conic->angle.x == M_PI / 6)
-				del_objs(&sdl->scene.conic);
-		}
-	}
 }
