@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/30 18:55:41 by root             ###   ########.fr       */
+/*   Updated: 2020/10/14 18:17:38 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ typedef struct			s_light
 typedef struct			s_scene
 {
 	t_camera			camera;
-	t_surface			*conic;
+	t_surface			*shape;
 	t_light				*light;
 	uint				max_depth;
 	uint				cur_depth;
@@ -151,7 +151,7 @@ void					sdl_error(char *text);
 void					light_balancer(t_scene *scene);
 void					add_light(t_scene *scene, t_dot center,\
 float intensity);
-void					add_sphere(t_surface **list, t_surface surface);
+void					add_shape(t_surface **list, t_surface surface);
 void					scene_init(t_sdl *sdl);
 void					init_menu(t_sdl *sdl);
 t_sdl					sdl_init(void);
@@ -171,7 +171,7 @@ float					abs_vector(t_dot vec);
 float					q_rsqrt(float number);
 float					revers_abs_vec(t_dot vec);
 t_dot					vector_normalize(t_dot vector);
-float					distance_to_conic(t_surface_coeffs s,\
+float					distance_to_shape(t_surface_coeffs s,\
 t_dot v, t_dot start);
 t_surface				*closest(t_dot start, t_dot direction_vector,\
 t_scene scene, float *len);
@@ -185,14 +185,13 @@ t_dot					vector_reflection(t_dot direction_vec,\
 t_dot normal_vec);
 void					render(t_sdl *sdl);
 void					loop(t_sdl *sdl);
-void					gui_sphere(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
-void					gui_buttons(t_gui_cache *gui_cache, SDL_Event e);
+void					gui_buttons(t_gui_cache *gui_cache, SDL_Event e, t_sdl *sdl);
 void					del_objs(t_surface **list);
 int						count_objs(t_surface *list);
-void					gui_cone(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
-//void					button_create_sphere(t_sdl *sdl, t_gui_cache *gui_cache);
-//int						count_spheres(t_sphere *list);
-//void					del_sphere(t_sphere **list);
+void					button_create_sphere(t_sdl *sdl, t_gui_cache *gui_cache);
+void					button_create_cone(t_sdl *sdl, t_gui_cache *gui_cache);
+void					button_create_plane(t_sdl *sdl, t_gui_cache *gui_cache);
+void					button_create_cylinder(t_sdl *sdl, t_gui_cache *gui_cache);
 //void					gui_light(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
 
 #endif

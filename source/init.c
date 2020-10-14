@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/30 17:42:23 by root             ###   ########.fr       */
+/*   Updated: 2020/10/14 18:20:20 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,19 +100,26 @@ void			camera_init(t_sdl *sdl)
 	camera_move(sdl);
 }
 
+/*
+ * 1 fig - cylinder
+ * 2 fig - ellipsoid
+ * 3 fig - conic
+ * 4 fig - plane
+ */
+
 void 			set_default_scene(t_sdl *sdl)
 {
 	t_surface_cache tmp;
 
 	ft_memset(&tmp, 0, sizeof(tmp));
-	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){300, 200, 0}, {1, 2, 0,\
+	add_shape(&sdl->scene.shape, (t_surface){(t_dot){300, 200, 0}, {1, 2, 0,\
 	-10000, 0, 0, 0, 0, 0, 0}, 0xFF00, 100, 0.3, (t_dot){M_PI / 6, M_PI / 6, 0}, tmp, NULL});
-	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){300, 100, 300}, {1, 2, 1,\
+	add_shape(&sdl->scene.shape, (t_surface){(t_dot){300, 100, 300}, {1, 2, 1,\
 	-20000, 0, 0, 0, 0, 0, 0}, 0xFF, 100, 0.3, (t_dot){0, 0, 0}, tmp, NULL});
-	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){100, 100, 100}, {1, 2,\
+	add_shape(&sdl->scene.shape, (t_surface){(t_dot){100, 100, 100}, {1, 2,\
 	-1, 0, 0, 0, 0, 0, 0, 0}, 0xFF0000, 50, 0.3, (t_dot){0, M_PI / 3, 0},\
 	tmp, NULL});
-	add_sphere(&sdl->scene.conic, (t_surface){(t_dot){100, 100, 1000},\
+	add_shape(&sdl->scene.shape, (t_surface){(t_dot){100, 100, 1000},\
 	{0, 0, 0, -100, 0, 0, 0, 1, 2, 3}, 0xFFFFF0, 50, 0, (t_dot){0, M_PI_2, 0}\
 	, tmp, NULL});
 	add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.1);
@@ -125,7 +132,7 @@ void			scene_init(t_sdl *sdl)
 {
 	camera_init(sdl);
 	sdl->scene.max_depth = 0;
-	sdl->scene.conic = NULL;
+	sdl->scene.shape = NULL;
 	sdl->scene.light = NULL;
 	set_default_scene(sdl);
 }

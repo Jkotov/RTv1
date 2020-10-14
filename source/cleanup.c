@@ -28,7 +28,7 @@ void		clean_sphere(t_surface *sphere)
 
 void		clean_scene(t_scene *scene)
 {
-	clean_sphere(scene->conic);
+	clean_sphere(scene->shape);
 	clean_light(scene->light);
 	free(scene->camera.dir_vecs);
 }

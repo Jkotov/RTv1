@@ -17,7 +17,6 @@ SDL_Texture	*create_texture(char *file_name, t_sdl *sdl)
 	SDL_Texture *tex;
 
 	tex = IMG_LoadTexture(sdl->renderer, file_name);
-	printf("put menu\n");
 	if (tex == NULL)
 		sdl_error("IMG Load Error: ");
 	return (tex);

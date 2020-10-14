@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:45:37 by root              #+#    #+#             */
-/*   Updated: 2020/10/13 15:42:53 by root             ###   ########.fr       */
+/*   Updated: 2020/10/14 18:05:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_dot			get_position(int x_coord, t_gui_cache *gui_cache)
 	else if (x_coord > 275 && x_coord < 290)
 		position = (t_dot){-200, -200, 0};
 	gui_cache->p_counter += 25;
-	printf("p_counter = %f\n", gui_cache->p_counter);
 	return (position);
 }
 
@@ -64,7 +63,24 @@ int				get_color(int x_coord)
 	return (color);
 }
 
-void			gui_buttons(t_gui_cache *gui_cache, SDL_Event e)
+void				get_light(int x_coord, t_sdl *sdl)
+{
+	if (x_coord > 210 && x_coord < 230)
+		add_light(&sdl->scene, (t_dot){1000, 40, 0}, 0.4);
+	else if (x_coord > 230 && x_coord < 255)
+		add_light(&sdl->scene, (t_dot){0, 0, 0}, 0.1);
+	else if (x_coord > 255 && x_coord < 275)
+		add_light(&sdl->scene, (t_dot){300, 300, -1000}, 0.5);
+	else if (x_coord > 275 && x_coord < 290)
+		add_light(&sdl->scene, (t_dot){300, 100, -550}, 0.4);
+}
+
+/*
+ * gui_buttons control color, radius (for sphere), position for new objects.
+ * light has 4 fixed positions.
+ */
+
+void			gui_buttons(t_gui_cache *gui_cache, SDL_Event e, t_sdl *sdl)
 {
 	if (gui_cache->color != RED && gui_cache->color != ORANGE \
 		&& gui_cache->color != MINT && gui_cache->color != PURPLE && \
@@ -74,28 +90,19 @@ void			gui_buttons(t_gui_cache *gui_cache, SDL_Event e)
 		gui_cache->color = WHITE;
 		gui_cache->position = (t_dot){-200, 0, 0};
 	}
-	if (e.button.x > 210)
+	if (e.button.x > 210 && e.button.x < 290)
 	{
 		if (e.button.y > 25 && e.button.y < 43)
-		{
-//		colors
 			gui_cache->color = get_color(e.button.x);
-		}
 		else if (e.button.y > 43  && e.button.y < 70)
-		{
-//		radius
 			gui_cache->radius = get_radius(e.button.x);
-		}
-		else if (e.button.x > 70 && e.button.y < 93 && e.button.x < 200)
-		{
-//		position
+		else if (e.button.y > 75 && e.button.y < 93)
 			gui_cache->position = get_position(e.button.x, gui_cache);
-		}
-		else if (e.button.x > 93 && e.button.y < 115 && e.button.x > 200)
-		{
-//		position
-			gui_cache->position = get_position(e.button.x, gui_cache);
-		}
+		else if (e.button.y > 100 && e.button.y < 120)
+			get_light (e.button.x, sdl);
 	}
 }
 
+/**
+ * ДОПИЛИТЬ СТРУКТУРУ УДАЛЕНИЯ
+ **/

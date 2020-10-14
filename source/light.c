@@ -80,17 +80,17 @@ char		sphere_on_light(t_dot start, t_dot direction_vector,\
 t_scene scene)
 {
 	float		cur_len;
-	t_surface	*cur_conic;
+	t_surface	*cur_shape;
 
-	cur_conic = scene.conic;
-	while (cur_conic)
+	cur_shape = scene.shape;
+	while (cur_shape)
 	{
-		cur_len = distance_to_conic(cur_conic->c, direction_vector, start);
+		cur_len = distance_to_shape(cur_shape->c, direction_vector, start);
 		if (!isnan(cur_len) && cur_len > 0 && cur_len < 1)
 		{
 			return (0);
 		}
-		cur_conic = cur_conic->next;
+		cur_shape = cur_shape->next;
 	}
 	return (1);
 }
