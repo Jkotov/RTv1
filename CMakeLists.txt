@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.6)
 project(RTv1 C)
 
 
-set(SDL2_INCLUDE_DIR SDL2/include)
-set(SDL2_LIB_DIR SDL2/lib)
+set(SDL2_INCLUDE_DIR ./SDL2/include)
+set(SDL2_LIB_DIR ./SDL2/lib)
 
 include_directories(${SDL2_INCLUDE_DIR})
 link_directories(${SDL2_LIB_DIR})
@@ -23,4 +23,4 @@ add_executable(RTv1 source/cleanup.c
         source/texture.c
         source/utils.c
         source/vectors.c)
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2TTF_LIBRARIES} m)
+target_link_libraries(${PROJECT_NAME} SDL2 SDL2_image SDL2_ttf m)
