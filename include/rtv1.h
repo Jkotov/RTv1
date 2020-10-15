@@ -192,7 +192,6 @@ void					button_create_sphere(t_sdl *sdl, t_gui_cache *gui_cache);
 void					button_create_cone(t_sdl *sdl, t_gui_cache *gui_cache);
 void					button_create_plane(t_sdl *sdl, t_gui_cache *gui_cache);
 void					button_create_cylinder(t_sdl *sdl, t_gui_cache *gui_cache);
-t_surface				*last_shape(t_surface **list);
 //void					gui_light(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
 
 #endif

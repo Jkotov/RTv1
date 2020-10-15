@@ -20,19 +20,3 @@ int 			count_objs(t_surface *list)
 	}
 	return(i);
 }
-
-t_surface 		*last_shape(t_surface **list)
-{
-	t_surface	*head;
-
-	if(!(head = (t_surface*)malloc(sizeof(t_surface))))
-		sdl_error("Alloc error");
-	head = (*list);
-	while ((*list)->next != NULL)
-	{
-		printf("list color = %d\n", (*list)->color);
-		list = &(*list)->next;
-	}
-
-	return (*list);
-}
