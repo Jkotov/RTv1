@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/26 02:49:57 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/15 18:30:54 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,8 @@ void					clean_light(t_light *light);
 void					clean_sphere(t_surface *sphere);
 void					clean_scene(t_scene *scene);
 void					cleanup(t_sdl *sdl);
-void					keyboard_events(t_sdl *sdl, char *quit, SDL_Event e);
-void					mouse_events(t_sdl *sdl, SDL_Event e);
+void					keyboard_events(t_sdl *sdl, char *quit, SDL_Event e, t_surface *cur);
+t_surface				*mouse_events(t_sdl *sdl, SDL_Event e);
 int						quadratic_equation(t_dot coeffs, float *x1,\
 float *x2);
 t_dot					vector_subtraction(t_dot v1, t_dot v2);

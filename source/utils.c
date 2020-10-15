@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/01 17:01:24 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/15 18:30:54 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ void			loop(t_sdl *sdl)
 	char		quit;
 	uint		cur_time;
 	uint		time;
+	t_surface	*cur;
 
 	time = SDL_GetTicks();
 	quit = 0;
+	cur = NULL;
 	while (!quit)
 	{
 		while (SDL_PollEvent(&e))
@@ -56,9 +58,9 @@ void			loop(t_sdl *sdl)
 			if (e.type == SDL_QUIT)
 				quit = 1;
 			if (e.type == SDL_KEYDOWN)
-				keyboard_events(sdl, &quit, e);
+				keyboard_events(sdl, &quit, e, cur);
 			if (e.type == SDL_MOUSEBUTTONDOWN)
-				mouse_events(sdl, e);
+				cur = mouse_events(sdl, e);
 		}
 		render(sdl);
 		cur_time = SDL_GetTicks();
