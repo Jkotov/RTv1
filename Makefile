@@ -6,7 +6,7 @@
 #    By: epainter <epainter@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/23 18:11:39 by epainter          #+#    #+#              #
-#    Updated: 2020/10/09 15:29:40 by root             ###   ########.fr        #
+#    Updated: 2020/10/15 17:35:03 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,15 +29,14 @@ LIBFT = libft
 SRCS = cleanup.c \
        color.c \
        control_utils.c \
+       gui/gui_shape_btns.c \
        gui/gui_utils.c \
-       gui/gui_sphere.c \
        gui/gui_utils_2.c \
-       gui/gui_cone.c \
        errors.c \
        init.c \
        light.c \
        main.c \
-       sphere.c \
+       shape.c \
        texture.c \
        utils.c \
        vectors.c

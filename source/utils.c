@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/30 16:47:25 by root             ###   ########.fr       */
+/*   Updated: 2020/10/15 15:24:13 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,11 @@ void			loop(t_sdl *sdl)
 			if (e.type == SDL_QUIT)
 				quit = 1;
 			if (e.type == SDL_KEYDOWN)
+			{
+//				printf("keydown");
+//				last_shape(&sdl->scene.shape);
 				keyboard_events(sdl, &quit, e);
+			}
 			if (e.type == SDL_MOUSEBUTTONDOWN)
 				mouse_events(sdl, e, gui_cache);
 		}

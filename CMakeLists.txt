@@ -17,7 +17,6 @@ add_executable(RTv1 source/cleanup.c
         source/init.c
         source/light.c
         source/main.c
-        source/sphere.c
         source/texture.c
         source/utils.c
         source/vectors.c)

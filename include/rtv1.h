@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/14 18:17:38 by root             ###   ########.fr       */
+/*   Updated: 2020/10/15 15:23:40 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ void					button_create_sphere(t_sdl *sdl, t_gui_cache *gui_cache);
 void					button_create_cone(t_sdl *sdl, t_gui_cache *gui_cache);
 void					button_create_plane(t_sdl *sdl, t_gui_cache *gui_cache);
 void					button_create_cylinder(t_sdl *sdl, t_gui_cache *gui_cache);
+t_surface				*last_shape(t_surface **list);
 //void					gui_light(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
 
 #endif
