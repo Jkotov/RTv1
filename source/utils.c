@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/15 15:24:13 by root             ###   ########.fr       */
+/*   Updated: 2020/10/16 15:23:38 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void			loop(t_sdl *sdl)
 	SDL_Event	e;
 	char		quit;
 	t_gui_cache	*gui_cache;
+	t_surface *head;
 //	uint		cur_time;
 //	uint		time;
 
@@ -67,6 +68,15 @@ void			loop(t_sdl *sdl)
 			if (e.type == SDL_MOUSEBUTTONDOWN)
 				mouse_events(sdl, e, gui_cache);
 		}
+		head = sdl->scene.shape;
+		give_number(&sdl->scene.shape);
+//		while(sdl->scene.shape->next)
+//		{
+//			printf("shape number is: %i\n", sdl->scene.shape->number);
+//			sdl->scene.shape = sdl->scene.shape->next;
+//		}
+//		printf("shape number is: %i\n", sdl->scene.shape->number);
+		sdl->scene.shape = head;
 		render(sdl);
 //		cur_time = SDL_GetTicks();
 //		printf("%i ms on frame\n", cur_time - time);

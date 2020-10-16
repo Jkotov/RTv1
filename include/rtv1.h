@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/15 15:23:40 by root             ###   ########.fr       */
+/*   Updated: 2020/10/17 00:05:56 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct			s_surface
 	float				reflective;
 	t_dot				angle;
 	t_surface_cache		cache;
+	int 				number;
 	struct s_surface	*next;
 }						t_surface;
 
@@ -127,6 +128,7 @@ typedef struct			s_sdl
 	SDL_Texture			*fg;
 	int					*buffer;
 	int					buffer_len;
+	int 				counter;
 	t_scene				scene;
 	t_menu				menu;
 }						t_sdl;
@@ -192,6 +194,8 @@ void					button_create_sphere(t_sdl *sdl, t_gui_cache *gui_cache);
 void					button_create_cone(t_sdl *sdl, t_gui_cache *gui_cache);
 void					button_create_plane(t_sdl *sdl, t_gui_cache *gui_cache);
 void					button_create_cylinder(t_sdl *sdl, t_gui_cache *gui_cache);
+void					give_number(t_surface **list);
+t_surface				*select_last(t_surface **list, int nb);
 //void					gui_light(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
 
 #endif

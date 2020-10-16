@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/15 15:30:19 by root             ###   ########.fr       */
+/*   Updated: 2020/10/17 00:40:49 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,9 @@ void		mouse_events(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache)
 	t_surface_cache tmp;
 
 	ft_memset(&tmp, 0, sizeof(tmp));
-//	cur_shape = sdl->scene.shape->cache;
 	ray_tracing(sdl->scene, sdl->scene.camera.dir_vecs[e.button.y *\
 	sdl->width + e.button.x], sdl->scene.camera.camera);
 	gui_buttons(gui_cache, e, sdl);
-	if (e.button.y > 120)
-	{
-		sdl->scene.shape = closest(sdl->scene.camera.camera, \
-		sdl->scene.camera.dir_vecs[e.button.y * sdl->width + e.button.x], \
-		sdl->scene, &sdl->scene.camera.camera.z);
-		printf("x = %d\n y %d\n", e.button.x, e.button.y);
-	}
-
-//	printf("e.b.x = %d\n e.b.y = %d\n", e.button.x, e.button.y);
-//	printf("color = %d\n position = {%f, %f, %f}\n, radius = %f\n", gui_cache->color, gui_cache->position.x, \
-//	gui_cache->position.y, gui_cache->position.z, gui_cache->radius);
 	if (e.button.x > 0 && e.button.x < 105)
 	{
 		if (e.button.y > 3 && e.button.y < 45)
@@ -107,12 +95,32 @@ void		camera_events(t_sdl *sdl, SDL_Event e)
 		camera_move(sdl);
 }
 
+void		get_counter(t_sdl *sdl, SDL_Event e)
+{
+	if (e.key.keysym.sym == SDLK_0)
+	{
+		if (sdl->scene.shape->next == NULL)
+			sdl->counter = sdl->scene.shape->number;
+		else
+			sdl->counter += 1;
+	}
+	if (e.key.keysym.sym == SDLK_1) {
+		printf ("key down");
+		if (sdl->counter - 1 < 0)
+			sdl->counter = 0;
+		else
+			sdl->counter--;
+	}
+}
 
 
 void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e)
 {
+	t_surface	*head;
 
-
+	head = sdl->scene.shape;
+	 get_counter(sdl, e);
+	sdl->scene.shape = select_last(&sdl->scene.shape, sdl->counter);
 	if (e.key.keysym.sym == SDLK_ESCAPE)
 		*quit = 1;
 	if (e.key.keysym.sym == SDLK_RIGHT)
@@ -134,4 +142,5 @@ void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e)
 		sdl->scene.shape->angle.z = M_PI / 6;
 		sdl->scene.shape->c = rotate_surface(sdl->scene.shape);
 	}
+	sdl->scene.shape = head;
 }
