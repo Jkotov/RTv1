@@ -6,7 +6,7 @@
 #    By: epainter <epainter@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/23 18:11:39 by epainter          #+#    #+#              #
-#    Updated: 2020/09/25 13:55:04 by epainter         ###   ########.fr        #
+#    Updated: 2020/10/15 17:35:03 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = RTv
 ### COMPILATION ###
 
 CC = gcc
-FLAGS = -O2 -Wall -Wextra -Werror
+FLAGS = -O2 -Wall -Wextra
 #-Werror
 
 ### INCLUDES ###
@@ -28,15 +28,21 @@ LIBFT = libft
 
 SRCS = cleanup.c \
        color.c \
-       errors.c  \
        control_utils.c \
+       gui/gui_shape_btns.c \
+       gui/gui_utils.c \
+       gui/gui_utils_2.c \
+       errors.c \
        init.c \
        light.c \
        main.c \
-       sphere.c \
-       texture.c  \
+       shape.c \
+       texture.c \
        utils.c \
        vectors.c
+
+#              gui_light.c \
+
 
 ### OBJECTS ###
 
@@ -75,7 +81,7 @@ lib:
 	@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(RESET)"
 
 $(NAME): $(OBJS)
-	$(CC) -I $(HEADERS) $(FLAGS) -o $@ $^ -lSDL2main -lSDL2 -lSDL2_image -lm
+	@$(CC) -I $(HEADERS) $(FLAGS) -o $@ $^ -lSDL2main -lSDL2 -lSDL2_image -lm
 	@$(CC) $(FLAGS) -I $(HEADERS) -o $@ $^ -lSDL2main -lSDL2 -lSDL2_image -lm
 	@echo "$(GREEN)Project successfully compiled$(RESET)"
 

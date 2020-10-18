@@ -6,21 +6,21 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:41:30 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/17 13:19:47 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/30 17:43:05 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
 int				main(void)
 {
 	t_sdl		sdl;
 
 	sdl = sdl_init();
-	//init_menu(&sdl);
+	init_menu(&sdl);
 	sdl.fg = SDL_CreateTexture(sdl.renderer,\
 	SDL_PIXELFORMAT_ARGB8888,\
-	SDL_TEXTUREACCESS_STREAMING, 640, 480);
+	SDL_TEXTUREACCESS_STREAMING, sdl.width, sdl.height);
 	SDL_RenderClear(sdl.renderer);
 	loop(&sdl);
 	cleanup(&sdl);

@@ -6,11 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:36:33 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/17 18:45:22 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/30 16:21:04 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
 void		clean_light(t_light *light)
 {
@@ -28,9 +28,9 @@ void		clean_sphere(t_surface *sphere)
 
 void		clean_scene(t_scene *scene)
 {
-	clean_sphere(scene->conic);
+	clean_sphere(scene->shape);
 	clean_light(scene->light);
-	free(scene->dir_vecs);
+	free(scene->camera.dir_vecs);
 }
 
 void		clean_menu(t_menu *m)
@@ -42,7 +42,7 @@ void		clean_menu(t_menu *m)
 void		cleanup(t_sdl *sdl)
 {
 	clean_scene(&sdl->scene);
-	//clean_menu(&sdl->menu);
+	clean_menu(&sdl->menu);
 	SDL_DestroyTexture(sdl->fg);
 	SDL_DestroyRenderer(sdl->renderer);
 	SDL_DestroyWindow(sdl->window);

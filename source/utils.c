@@ -6,11 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/25 17:17:46 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/16 15:23:38 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
 int				quadratic_equation(t_dot coeffs, float *x1, float *x2)
 {
@@ -44,10 +44,14 @@ void			loop(t_sdl *sdl)
 {
 	SDL_Event	e;
 	char		quit;
-	uint		cur_time;
-	uint		time;
+	t_gui_cache	*gui_cache;
+	t_surface *head;
+//	uint		cur_time;
+//	uint		time;
 
-	time = SDL_GetTicks();
+//	time = SDL_GetTicks();
+	if (!(gui_cache = (t_gui_cache *)malloc(sizeof(t_gui_cache))))
+		sdl_error ("GUI Alloc error");
 	quit = 0;
 	while (!quit)
 	{
@@ -56,34 +60,53 @@ void			loop(t_sdl *sdl)
 			if (e.type == SDL_QUIT)
 				quit = 1;
 			if (e.type == SDL_KEYDOWN)
+			{
+//				printf("keydown");
+//				last_shape(&sdl->scene.shape);
 				keyboard_events(sdl, &quit, e);
+			}
 			if (e.type == SDL_MOUSEBUTTONDOWN)
-				mouse_events(sdl, e);
+				mouse_events(sdl, e, gui_cache);
 		}
+		head = sdl->scene.shape;
+		give_number(&sdl->scene.shape);
+//		while(sdl->scene.shape->next)
+//		{
+//			printf("shape number is: %i\n", sdl->scene.shape->number);
+//			sdl->scene.shape = sdl->scene.shape->next;
+//		}
+//		printf("shape number is: %i\n", sdl->scene.shape->number);
+		sdl->scene.shape = head;
 		render(sdl);
-		cur_time = SDL_GetTicks();
-		printf("%i ms on frame\n", cur_time - time);
-		time = cur_time;
+//		cur_time = SDL_GetTicks();
+//		printf("%i ms on frame\n", cur_time - time);
+//		time = cur_time;
 	}
 }
 t_dot				rotate_vector(t_dot v, t_dot angle)
 {
 	float	m[3][3];
 	t_dot	res;
+	float	x;
+	float	y;
+	float	z;
 
-	m[0][0] = cos(angle.x) * cos(angle.z) - cos(angle.y) *\
-	sin(angle.x) * sin(angle.z);
-	m[0][1] = -cos(angle.z) * sin(angle.x) - cos(angle.x) *\
-	cos(angle.y) * sin(angle.z);
-	m[0][2] = sin(angle.y) * sin(angle.z);
-	m[1][0] = cos(angle.y) * cos(angle.z) * sin(angle.x) +\
-	cos(angle.x) * sin(angle.z);
-	m[1][1] = cos(angle.x) * cos(angle.y) * cos(angle.z) -\
-	sin(angle.x) * sin(angle.z);
-	m[1][2] = -cos(angle.z) * sin(angle.y);
-	m[2][0] = sin(angle.x) * sin(angle.y);
-	m[2][1] = cos(angle.x) * sin(angle.y);
-	m[2][2] = cos(angle.y);
+	x = angle.x;
+	y = angle.y;
+	z = angle.z;
+	m[0][0] = (cos(y + z) + cos(y - z)) / 2;
+	m[0][1] = (-cos(x + y + z) + cos(x - y + z) - cos(x + y - z) +\
+	cos(x - y - z) - 2 * sin(x + z) + 2 * sin(x - z)) / 4;
+	m[0][2] = (-2 * cos(x + z) + 2 * cos(x - z) + sin(x + y + z) -\
+	sin(x - y + z) + sin(x + y - z) - sin(x - y - z)) / 4;
+	m[1][0] = (sin(y + z) - sin(y - z)) / 2;
+	m[1][1] = (2 * cos(x + z) + 2 * cos(x - z) - sin(x + y + z) +\
+	sin(x - y + z) + sin(x + y - z) - sin(x - y - z)) / 4;
+	m[1][2] = (-cos(x + y + z) + cos(x - y + z) + cos(x + y - z) -\
+	cos(x - y - z) - 2 * sin(x + z) - 2 * sin(x - z)) / 4;
+	m[2][0] = -sin(y);
+	m[2][1] = (sin(x + y) + sin(x - y)) / 2;
+	m[2][2] = (cos(x + y) + cos(x - y)) / 2;
 	res = (t_dot){v.x * m[0][0] + v.y * m[0][1] + v.z * m[0][2],\
 	v.x * m[1][0] + v.y * m[1][1] + v.z * m[1][2],\
 	v.x * m[2][0] + v.y * m[2][1] + v.z * m[2][2]};
@@ -93,21 +116,27 @@ t_dot				rotate_vector(t_dot v, t_dot angle)
 t_surface_coeffs	rotate_surface(t_surface *s)
 {
 	float	m[3][3];
+	float	x;
+	float	y;
+	float	z;
 
 	s->angle = vector_sum(s->angle, s->cache.angle);
-	m[0][0] = cos(s->angle.x) * cos(s->angle.z) - cos(s->angle.y) *\
-	sin(s->angle.x) * sin(s->angle.z);
-	m[0][1] = -cos(s->angle.z) * sin(s->angle.x) - cos(s->angle.x) *\
-	cos(s->angle.y) * sin(s->angle.z);
-	m[0][2] = sin(s->angle.y) * sin(s->angle.z);
-	m[1][0] = cos(s->angle.y) * cos(s->angle.z) * sin(s->angle.x) +\
-	cos(s->angle.x) * sin(s->angle.z);
-	m[1][1] = cos(s->angle.x) * cos(s->angle.y) * cos(s->angle.z) -\
-	sin(s->angle.x) * sin(s->angle.z);
-	m[1][2] = -cos(s->angle.z) * sin(s->angle.y);
-	m[2][0] = sin(s->angle.x) * sin(s->angle.y);
-	m[2][1] = cos(s->angle.x) * sin(s->angle.y);
-	m[2][2] = cos(s->angle.y);
+	x = s->angle.x;
+	y = s->angle.y;
+	z = s->angle.z;
+	m[0][0] = (cos(y + z) + cos(y - z)) / 2;
+	m[0][1] = (-cos(x + y + z) + cos(x - y + z) - cos(x + y - z) +\
+	cos(x - y - z) - 2 * sin(x + z) + 2 * sin(x - z)) / 4;
+	m[0][2] = (-2 * cos(x + z) + 2 * cos(x - z) + sin(x + y + z) -\
+	sin(x - y + z) + sin(x + y - z) - sin(x - y - z)) / 4;
+	m[1][0] = (sin(y + z) - sin(y - z)) / 2;
+	m[1][1] = (2 * cos(x + z) + 2 * cos(x - z) - sin(x + y + z) +\
+	sin(x - y + z) + sin(x + y - z) - sin(x - y - z)) / 4;
+	m[1][2] = (-cos(x + y + z) + cos(x - y + z) + cos(x + y - z) -\
+	cos(x - y - z) - 2 * sin(x + z) - 2 * sin(x - z)) / 4;
+	m[2][0] = -sin(y);
+	m[2][1] = (sin(x + y) + sin(x - y)) / 2;
+	m[2][2] = (cos(x + y) + cos(x - y)) / 2;
 	s->cache.angle = s->angle;
 	s->angle = (t_dot){0, 0, 0};
 	matrix_using(s->cache.c, m, &s->c);

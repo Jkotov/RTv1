@@ -6,11 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:50:01 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/24 13:54:35 by epainter         ###   ########.fr       */
+/*   Updated: 2020/09/30 16:21:04 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
 void		light_balancer(t_scene *scene)
 {
@@ -80,17 +80,17 @@ char		sphere_on_light(t_dot start, t_dot direction_vector,\
 t_scene scene)
 {
 	float		cur_len;
-	t_surface	*cur_conic;
+	t_surface	*cur_shape;
 
-	cur_conic = scene.conic;
-	while (cur_conic)
+	cur_shape = scene.shape;
+	while (cur_shape)
 	{
-		cur_len = distance_to_conic(cur_conic->c, direction_vector, start);
-		if (cur_len != NAN && cur_len > 0)
+		cur_len = distance_to_shape(cur_shape->c, direction_vector, start);
+		if (!isnan(cur_len) && cur_len > 0 && cur_len < 1)
 		{
 			return (0);
 		}
-		cur_conic = cur_conic->next;
+		cur_shape = cur_shape->next;
 	}
 	return (1);
 }
@@ -108,12 +108,13 @@ float		lighting(t_scene scene, t_compute_light_p p)
 	{
 		light_vector = vector_subtraction(cur_light->center, p.dot);
 		tmp = INFINITY;
-		if (sphere_on_light(p.dot, (vector_normalize(light_vector)),\
+		if (sphere_on_light(p.dot, ((light_vector)),\
 		scene))
 		{
+			light_vector = vector_normalize(light_vector);
 			tmp = scalar_mult(p.normal_vec, light_vector)\
-			* revers_abs_vec(light_vector) * cur_light->intensity;
-			res = tmp > 0 ? res + tmp : res;
+			* cur_light->intensity;
+			res = res + fabs(tmp);
 			res += specular(p, light_vector, cur_light->intensity);
 		}
 		cur_light = cur_light->next;
