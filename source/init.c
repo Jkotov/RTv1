@@ -45,17 +45,19 @@ t_sdl			sdl_init(void)
 	return (sdl);
 }
 
-t_dot			*directions_vec_compute(t_sdl *sdl)
+t_dot			*directions_vec_compute(t_sdl *sdl, t_dot *dir_vecs)
 {
 	t_camera	tmp;
-	t_dot		*dir_vecs;
 	int			x;
 	int			y;
 	t_dot		screen_dot;
 
 	tmp = sdl->scene.camera;
-	if ((dir_vecs = (t_dot*)malloc(sizeof(t_dot) * sdl->width * sdl->height)) == NULL)
-		sdl_error("Alloc error");
+	if (dir_vecs == NULL)
+    {
+		if ((dir_vecs = (t_dot *)malloc(sizeof(t_dot) * sdl->width * sdl->height)) == NULL)
+			sdl_error("Alloc error");
+    }
 	x = -1;
 	y = -1;
 	while (++x < sdl->width)
@@ -67,8 +69,6 @@ t_dot			*directions_vec_compute(t_sdl *sdl)
 			dir_vecs[y * sdl->width + x] =\
 			vector_normalize(vector_subtraction(screen_dot,\
 			tmp.camera));
-		//			printf("x = %i\ty = %i\tx = %f\ty = %f\tz = %f\n",
-		//	x, y, screen_dot.x, screen_dot.y, screen_dot.z);
 		}
 		y = -1;
 	}
@@ -85,8 +85,7 @@ void			camera_move(t_sdl *sdl)
 	tmp.x_screen_vec = rotate_vector((t_dot){1, 0, 0}, tmp.angle);
 	tmp.y_screen_vec = rotate_vector((t_dot){0, 1, 0}, tmp.angle);
 	sdl->scene.camera = tmp;
-	free(tmp.dir_vecs);
-	sdl->scene.camera.dir_vecs = directions_vec_compute(sdl);
+	sdl->scene.camera.dir_vecs = directions_vec_compute(sdl, sdl->scene.camera.dir_vecs);
 }
 
 void			camera_init(t_sdl *sdl)

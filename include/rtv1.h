@@ -144,7 +144,7 @@ void					matrix_using(t_surface_coeffs c, float m[3][3],\
 t_surface_coeffs *res);
 void					sphere_cache_calc(t_surface *sphere, t_dot start);
 char					dot_cmp(t_dot d1, t_dot d2);
-t_dot					*directions_vec_compute(t_sdl *sdl);
+t_dot					*directions_vec_compute(t_sdl *sdl, t_dot *dir_vecs);
 size_t					ft_strlen(const char *str);
 int						ft_putstr(const char *s);
 SDL_Texture				*create_texture(char *file_name, t_sdl *sdl);
