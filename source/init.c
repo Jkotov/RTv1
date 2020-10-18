@@ -29,7 +29,7 @@ t_sdl			sdl_init(void)
 	if (SDL_Init(0) != 0)
 		sdl_error("SDL_Init Error: ");
 	sdl.window = SDL_CreateWindow("Hello World!", SDL_WINDOWPOS_CENTERED\
-	, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
+	, SDL_WINDOWPOS_CENTERED, sdl.width, sdl.height, SDL_WINDOW_SHOWN);
 	SDL_InitSubSystem(SDL_INIT_EVENTS);
 	if (sdl.window == NULL)
 		sdl_error("SDL_CreateWindow Error: ");

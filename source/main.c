@@ -20,7 +20,7 @@ int				main(void)
 	init_menu(&sdl);
 	sdl.fg = SDL_CreateTexture(sdl.renderer,\
 	SDL_PIXELFORMAT_ARGB8888,\
-	SDL_TEXTUREACCESS_STREAMING, 640, 480);
+	SDL_TEXTUREACCESS_STREAMING, sdl.width, sdl.height);
 	SDL_RenderClear(sdl.renderer);
 	loop(&sdl);
 	cleanup(&sdl);

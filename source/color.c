@@ -34,7 +34,7 @@ t_surface *sphere, t_dot start)
 {
 	t_compute_light_p	light_p;
 
-	light_p.dot = vector_sum(vector_mult_num(dir_vec, len), start);
+    light_p.dot = vector_sum(vector_mult_num(dir_vec, len - len * 0.001), start);
 	light_p.specular = sphere->specular;
 	light_p.direction_vec = vector_mult_num(dir_vec, -1);
 	light_p.normal_vec = surface_normal(sphere->c, light_p.dot);
@@ -63,8 +63,6 @@ t_dot start)
 			color_intens(ray_tracing(scene,\
 			vector_reflection(direction_vector, light_p.normal_vec),\
 			light_p.dot), cur_sphere->reflective));
-			if (color > 0xffffff)
-				ft_putstr("IF U SEE THIS IN OUTPUT SOMETHING WENT WRONG");
 		}
 	}
 	return (color);

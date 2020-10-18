@@ -16,7 +16,6 @@
 # include <SDL2/SDL.h>
 # include <unistd.h>
 # include <SDL2/SDL_image.h>
-# include <SDL2/SDL_ttf.h>
 # include <math.h>
 # include "colors.h"
 # define WIDTH 640
