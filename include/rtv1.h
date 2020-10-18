@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/18 23:02:04 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/18 23:34:15 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ typedef struct			s_dot
 	float				z;
 }						t_dot;
 
-typedef struct 			s_gui_cache
+typedef struct			s_gui_cache
 {
-	int 				color;
-	float 				radius;
-	float 				p_counter;
+	int					color;
+	float				radius;
+	float				p_counter;
 	t_dot				position;
 }						t_gui_cache;
 
@@ -88,7 +88,7 @@ typedef struct			s_surface
 	float				reflective;
 	t_dot				angle;
 	t_surface_cache		cache;
-	int 				number;
+	int					number;
 	struct s_surface	*next;
 }						t_surface;
 
@@ -130,7 +130,7 @@ typedef struct			s_sdl
 	SDL_Texture			*fg;
 	int					*buffer;
 	int					buffer_len;
-	int 				counter;
+	int					counter;
 	t_scene				scene;
 	t_menu				menu;
 }						t_sdl;
@@ -163,7 +163,8 @@ void					clean_sphere(t_surface *sphere);
 void					clean_scene(t_scene *scene);
 void					cleanup(t_sdl *sdl);
 void					keyboard_events(t_sdl *sdl, char *quit, SDL_Event e);
-void					mouse_events(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
+void					mouse_events(t_sdl *sdl, SDL_Event e,\
+t_gui_cache *gui_cache);
 int						quadratic_equation(t_dot coeffs, float *x1,\
 float *x2);
 t_dot					vector_sub(t_dot v1, t_dot v2);
@@ -188,13 +189,16 @@ t_dot					vector_reflection(t_dot direction_vec,\
 t_dot normal_vec);
 void					render(t_sdl *sdl);
 void					loop(t_sdl *sdl);
-void					gui_buttons(t_gui_cache *gui_cache, SDL_Event e, t_sdl *sdl);
+void					gui_buttons(t_gui_cache *gui_cache, SDL_Event e,\
+t_sdl *sdl);
 void					del_objs(t_surface **list);
 int						count_objs(t_surface *list);
-void					button_create_sphere(t_sdl *sdl, t_gui_cache *gui_cache);
+void					button_create_sphere(t_sdl *sdl,\
+t_gui_cache *gui_cache);
 void					button_create_cone(t_sdl *sdl, t_gui_cache *gui_cache);
 void					button_create_plane(t_sdl *sdl, t_gui_cache *gui_cache);
-void					button_create_cylinder(t_sdl *sdl, t_gui_cache *gui_cache);
+void					button_create_cylinder(t_sdl *sdl,\
+t_gui_cache *gui_cache);
 void					give_number(t_surface **list);
 t_surface				*select_last(t_surface **list, int nb);
 //void					gui_light(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
