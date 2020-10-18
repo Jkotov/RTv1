@@ -35,7 +35,6 @@ void		clean_scene(t_scene *scene)
 
 void		clean_menu(t_menu *m)
 {
-	SDL_DestroyTexture(m->add_menu);
 	SDL_DestroyTexture(m->img);
 }
 

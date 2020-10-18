@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 20:23:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/30 16:21:04 by root             ###   ########.fr       */
+/*   Updated: 2020/10/18 20:47:47 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ t_surface *sphere, t_dot start)
 {
 	t_compute_light_p	light_p;
 
-    light_p.dot = vector_sum(vector_mult_num(dir_vec, len - len * 0.001), start);
+	light_p.dot = vector_sum(vector_mult_num(dir_vec,\
+	len - len * 0.001), start);
 	light_p.specular = sphere->specular;
 	light_p.direction_vec = vector_mult_num(dir_vec, -1);
 	light_p.normal_vec = surface_normal(sphere->c, light_p.dot);

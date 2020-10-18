@@ -51,7 +51,7 @@ t_scene scene, float *len)
 	while (cur_shape)
 	{
 		cur_len = distance_to_shape(cur_shape->c, direction_vector, start);
-		if (!isnan(cur_len) )
+		if (!isnan(cur_len))
 		{
 			if (*len > cur_len && cur_len > 0)
 			{

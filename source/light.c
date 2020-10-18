@@ -67,7 +67,7 @@ t_dot light_vector, float intensity)
 	if (p.specular <= 0)
 		return (0);
 	specular_vector =\
-	vector_subtraction(vector_mult_num(vector_mult_num(p.normal_vec,\
+	vector_sub(vector_mult_num(vector_mult_num(p.normal_vec,\
 	2), scalar_mult(p.normal_vec, light_vector)), light_vector);
 	if (scalar_mult(specular_vector, p.direction_vec) < 0)
 		return (0);
@@ -106,7 +106,7 @@ float		lighting(t_scene scene, t_compute_light_p p)
 	cur_light = scene.light->next;
 	while (cur_light)
 	{
-		light_vector = vector_subtraction(cur_light->center, p.dot);
+		light_vector = vector_sub(cur_light->center, p.dot);
 		tmp = INFINITY;
 		if (sphere_on_light(p.dot, ((light_vector)),\
 		scene))

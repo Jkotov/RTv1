@@ -6,13 +6,13 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/16 15:23:38 by root             ###   ########.fr       */
+/*   Updated: 2020/10/18 23:15:13 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rtv1.h"
 
-int				quadratic_equation(t_dot coeffs, float *x1, float *x2)
+int					quadratic_equation(t_dot coeffs, float *x1, float *x2)
 {
 	float	d;
 
@@ -40,18 +40,18 @@ char			dot_cmp(t_dot d1, t_dot d2)
 	return (0);
 }
 
-void			loop(t_sdl *sdl)
+void				loop(t_sdl *sdl)
 {
 	SDL_Event	e;
 	char		quit;
 	t_gui_cache	*gui_cache;
-	t_surface *head;
+	t_surface	*head;
 //	uint		cur_time;
 //	uint		time;
 
 //	time = SDL_GetTicks();
 	if (!(gui_cache = (t_gui_cache *)malloc(sizeof(t_gui_cache))))
-		sdl_error ("GUI Alloc error");
+		sdl_error("GUI Alloc error");
 	quit = 0;
 	while (!quit)
 	{
@@ -82,64 +82,56 @@ void			loop(t_sdl *sdl)
 //		printf("%i ms on frame\n", cur_time - time);
 //		time = cur_time;
 	}
+	free(gui_cache);
 }
-t_dot				rotate_vector(t_dot v, t_dot angle)
+
+t_matrix33			fill_rot_m(t_dot angle)
 {
-	float	m[3][3];
-	t_dot	res;
-	float	x;
-	float	y;
-	float	z;
+	t_matrix33	m;
+	float		x;
+	float		y;
+	float		z;
 
 	x = angle.x;
 	y = angle.y;
 	z = angle.z;
-	m[0][0] = (cos(y + z) + cos(y - z)) / 2;
-	m[0][1] = (-cos(x + y + z) + cos(x - y + z) - cos(x + y - z) +\
+	m.m[0][0] = (cos(y + z) + cos(y - z)) / 2;
+	m.m[0][1] = (-cos(x + y + z) + cos(x - y + z) - cos(x + y - z) +\
 	cos(x - y - z) - 2 * sin(x + z) + 2 * sin(x - z)) / 4;
-	m[0][2] = (-2 * cos(x + z) + 2 * cos(x - z) + sin(x + y + z) -\
+	m.m[0][2] = (-2 * cos(x + z) + 2 * cos(x - z) + sin(x + y + z) -\
 	sin(x - y + z) + sin(x + y - z) - sin(x - y - z)) / 4;
-	m[1][0] = (sin(y + z) - sin(y - z)) / 2;
-	m[1][1] = (2 * cos(x + z) + 2 * cos(x - z) - sin(x + y + z) +\
+	m.m[1][0] = (sin(y + z) - sin(y - z)) / 2;
+	m.m[1][1] = (2 * cos(x + z) + 2 * cos(x - z) - sin(x + y + z) +\
 	sin(x - y + z) + sin(x + y - z) - sin(x - y - z)) / 4;
-	m[1][2] = (-cos(x + y + z) + cos(x - y + z) + cos(x + y - z) -\
+	m.m[1][2] = (-cos(x + y + z) + cos(x - y + z) + cos(x + y - z) -\
 	cos(x - y - z) - 2 * sin(x + z) - 2 * sin(x - z)) / 4;
-	m[2][0] = -sin(y);
-	m[2][1] = (sin(x + y) + sin(x - y)) / 2;
-	m[2][2] = (cos(x + y) + cos(x - y)) / 2;
-	res = (t_dot){v.x * m[0][0] + v.y * m[0][1] + v.z * m[0][2],\
-	v.x * m[1][0] + v.y * m[1][1] + v.z * m[1][2],\
-	v.x * m[2][0] + v.y * m[2][1] + v.z * m[2][2]};
+	m.m[2][0] = -sin(y);
+	m.m[2][1] = (sin(x + y) + sin(x - y)) / 2;
+	m.m[2][2] = (cos(x + y) + cos(x - y)) / 2;
+	return (m);
+}
+
+t_dot				rotate_vector(t_dot v, t_dot angle)
+{
+	t_matrix33	m;
+	t_dot		res;
+
+	m = fill_rot_m(angle);
+	res = (t_dot){v.x * m.m[0][0] + v.y * m.m[0][1] + v.z * m.m[0][2],\
+	v.x * m.m[1][0] + v.y * m.m[1][1] + v.z * m.m[1][2],\
+	v.x * m.m[2][0] + v.y * m.m[2][1] + v.z * m.m[2][2]};
 	return (res);
 }
 
 t_surface_coeffs	rotate_surface(t_surface *s)
 {
-	float	m[3][3];
-	float	x;
-	float	y;
-	float	z;
+	t_matrix33	m;
 
 	s->angle = vector_sum(s->angle, s->cache.angle);
-	x = s->angle.x;
-	y = s->angle.y;
-	z = s->angle.z;
-	m[0][0] = (cos(y + z) + cos(y - z)) / 2;
-	m[0][1] = (-cos(x + y + z) + cos(x - y + z) - cos(x + y - z) +\
-	cos(x - y - z) - 2 * sin(x + z) + 2 * sin(x - z)) / 4;
-	m[0][2] = (-2 * cos(x + z) + 2 * cos(x - z) + sin(x + y + z) -\
-	sin(x - y + z) + sin(x + y - z) - sin(x - y - z)) / 4;
-	m[1][0] = (sin(y + z) - sin(y - z)) / 2;
-	m[1][1] = (2 * cos(x + z) + 2 * cos(x - z) - sin(x + y + z) +\
-	sin(x - y + z) + sin(x + y - z) - sin(x - y - z)) / 4;
-	m[1][2] = (-cos(x + y + z) + cos(x - y + z) + cos(x + y - z) -\
-	cos(x - y - z) - 2 * sin(x + z) - 2 * sin(x - z)) / 4;
-	m[2][0] = -sin(y);
-	m[2][1] = (sin(x + y) + sin(x - y)) / 2;
-	m[2][2] = (cos(x + y) + cos(x - y)) / 2;
+	m = fill_rot_m(s->angle);
 	s->cache.angle = s->angle;
 	s->angle = (t_dot){0, 0, 0};
-	matrix_using(s->cache.c, m, &s->c);
+	matrix_using(s->cache.c, m.m, &s->c);
 	s->shift = s->cache.shift;
 	s->cache.shift = (t_dot){0, 0, 0};
 	s->c = surface_shift(s);
@@ -214,7 +206,7 @@ t_dot				surface_normal(t_surface_coeffs c, t_dot dot)
 	return (res);
 }
 
-void	*ft_memset(void *src, int c, size_t len)
+void				*ft_memset(void *src, int c, size_t len)
 {
 	unsigned char	*ptr;
 	int				i;

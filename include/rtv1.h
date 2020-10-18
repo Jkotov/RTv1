@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/17 00:05:56 by root             ###   ########.fr       */
+/*   Updated: 2020/10/18 23:02:04 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 # include "colors.h"
 # define WIDTH 640
 # define HEIGHT 480
+
+typedef struct			s_matrix33
+{
+	float				m[3][3];
+}						t_matrix33;
 
 typedef struct			s_surface_coeffs
 {
@@ -38,8 +43,6 @@ typedef struct			s_surface_coeffs
 typedef struct			s_menu
 {
 	SDL_Rect			menu_size;
-	SDL_Rect			add_menu_size;
-	SDL_Texture			*add_menu;
 	SDL_Texture			*img;
 }						t_menu;
 
@@ -64,8 +67,8 @@ typedef struct			s_camera
 	t_dot				camera;
 	t_dot				*dir_vecs;
 	t_dot				angle;
-	t_dot				x_screen_vec;
-	t_dot				y_screen_vec;
+	t_dot				x_vec;
+	t_dot				y_vec;
 	t_dot				screen_center;
 }						t_camera;
 
@@ -132,7 +135,6 @@ typedef struct			s_sdl
 	t_menu				menu;
 }						t_sdl;
 
-
 void					camera_move(t_sdl *sdl);
 t_dot					rotate_vector(t_dot v, t_dot angle);
 t_dot					cross_product(t_dot v1, t_dot v2);
@@ -144,7 +146,7 @@ void					matrix_using(t_surface_coeffs c, float m[3][3],\
 t_surface_coeffs *res);
 void					sphere_cache_calc(t_surface *sphere, t_dot start);
 char					dot_cmp(t_dot d1, t_dot d2);
-t_dot					*directions_vec_compute(t_sdl *sdl, t_dot *dir_vecs);
+void					directions_vec_compute(t_sdl *sdl, t_dot **dir_vecs);
 size_t					ft_strlen(const char *str);
 int						ft_putstr(const char *s);
 SDL_Texture				*create_texture(char *file_name, t_sdl *sdl);
@@ -164,7 +166,7 @@ void					keyboard_events(t_sdl *sdl, char *quit, SDL_Event e);
 void					mouse_events(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
 int						quadratic_equation(t_dot coeffs, float *x1,\
 float *x2);
-t_dot					vector_subtraction(t_dot v1, t_dot v2);
+t_dot					vector_sub(t_dot v1, t_dot v2);
 t_dot					vector_sum(t_dot v1, t_dot v2);
 t_dot					vector_mult_num(t_dot v, float num);
 float					scalar_mult(t_dot vec1, t_dot vec2);

@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gui_utils_2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/18 20:41:28 by epainter          #+#    #+#             */
+/*   Updated: 2020/10/18 20:46:48 by epainter         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/rtv1.h"
 
-
-t_surface 		*select_last(t_surface **list, int nb)
+t_surface		*select_last(t_surface **list, int nb)
 {
 //	t_surface *head;
 //
@@ -10,16 +21,17 @@ t_surface 		*select_last(t_surface **list, int nb)
 		list = &(*list)->next;
 //	if((*list)->next == NULL && nb == (*list)->number + 1)
 //		(*list) = head;
-	printf ("nb = %i\n", nb);
+	printf("nb = %i\n", nb); // Не забудь удалить
 	return (*list);
 }
 
-void 	give_number(t_surface **list)
+void			give_number(t_surface **list)
 {
-	int 	i;
+	int	i;
 
 	i = 0;
-	while ((*list)->next) {
+	while ((*list)->next)
+	{
 		(*list)->number = i;
 		list = &(*list)->next;
 		i++;
@@ -27,8 +39,7 @@ void 	give_number(t_surface **list)
 	(*list)->number = i;
 }
 
-
-void 			del_objs(t_surface **list)
+void			del_objs(t_surface **list)
 {
 	while ((*list)->next)
 		list = &(*list)->next;
@@ -36,9 +47,9 @@ void 			del_objs(t_surface **list)
 	*list = NULL;
 }
 
-int 			count_objs(t_surface *list)
+int				count_objs(t_surface *list)
 {
-	int 		i;
+	int	i;
 
 	i = 0;
 	while (list->next)
@@ -46,5 +57,5 @@ int 			count_objs(t_surface *list)
 		list = list->next;
 		i++;
 	}
-	return(i);
+	return (i);
 }

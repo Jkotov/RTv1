@@ -6,13 +6,13 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:52:59 by root              #+#    #+#             */
-/*   Updated: 2020/09/22 19:44:07 by root             ###   ########.fr       */
+/*   Updated: 2020/10/18 20:31:02 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/rtv1.h"
 
-void 			del_light(t_light **list)
+void			del_light(t_light **list)
 {
 	while ((*list)->next)
 		list = &(*list)->next;
@@ -20,9 +20,9 @@ void 			del_light(t_light **list)
 	*list = NULL;
 }
 
-int 			count_light(t_light *list)
+int				count_light(t_light *list)
 {
-	int 		i;
+	int	i;
 
 	i = 0;
 	while (list->next)
@@ -30,6 +30,5 @@ int 			count_light(t_light *list)
 		list = list->next;
 		i++;
 	}
-	return(i);
-
+	return (i);
 }
