@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/16 15:41:30 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/30 17:43:05 by root             ###   ########.fr       */
+/*   Created: 2019/09/16 14:32:10 by epainter          #+#    #+#             */
+/*   Updated: 2020/10/19 05:34:48 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include "libft.h"
 
-int				main(int argc, char **argv)
+void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	t_sdl		sdl;
+	void	*tmp;
 
-	if (argc > 2)
-		sdl_error("too many args");
-	sdl = sdl_init();
-	if (argc == 2)
-		parsing(&sdl, argv[1]);
-	init_menu(&sdl);
-	sdl.fg = SDL_CreateTexture(sdl.renderer,\
-	SDL_PIXELFORMAT_ARGB8888,\
-	SDL_TEXTUREACCESS_STREAMING, sdl.width, sdl.height);
-	SDL_RenderClear(sdl.renderer);
-	loop(&sdl);
-	cleanup(&sdl);
-	return (0);
+	while (lst != NULL)
+	{
+		tmp = lst->next;
+		f(lst);
+		lst = tmp;
+	}
 }

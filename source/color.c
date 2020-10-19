@@ -29,7 +29,7 @@ int					color_sum(int c1, int c2)
 	((int)(c1 & 0xFF) + (c2 & 0xFF)));
 }
 
-t_compute_light_p	init_light_params(t_dot dir_vec, int len,\
+t_compute_light_p	init_light_params(t_dot dir_vec, float len,\
 t_surface *sphere, t_dot start)
 {
 	t_compute_light_p	light_p;

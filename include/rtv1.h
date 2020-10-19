@@ -135,6 +135,7 @@ typedef struct			s_sdl
 	t_menu				menu;
 }						t_sdl;
 
+void					parsing(t_sdl* sdl, char *scene_file);
 void					camera_move(t_sdl *sdl);
 t_dot					rotate_vector(t_dot v, t_dot angle);
 t_dot					cross_product(t_dot v1, t_dot v2);

@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/16 15:41:30 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/30 17:43:05 by root             ###   ########.fr       */
+/*   Created: 2019/09/06 20:13:47 by epainter          #+#    #+#             */
+/*   Updated: 2020/10/19 05:34:48 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include <string.h>
 
-int				main(int argc, char **argv)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	t_sdl		sdl;
+	unsigned char	*tmp;
+	unsigned char	*res;
+	size_t			i;
 
-	if (argc > 2)
-		sdl_error("too many args");
-	sdl = sdl_init();
-	if (argc == 2)
-		parsing(&sdl, argv[1]);
-	init_menu(&sdl);
-	sdl.fg = SDL_CreateTexture(sdl.renderer,\
-	SDL_PIXELFORMAT_ARGB8888,\
-	SDL_TEXTUREACCESS_STREAMING, sdl.width, sdl.height);
-	SDL_RenderClear(sdl.renderer);
-	loop(&sdl);
-	cleanup(&sdl);
-	return (0);
+	i = 0;
+	tmp = (unsigned char*)src;
+	res = (unsigned char*)dst;
+	while (i < n)
+	{
+		*(res + i) = *(tmp + i);
+		if (*(res + i) == (unsigned char)c)
+			return (res + i + 1);
+		i++;
+	}
+	return (NULL);
 }
