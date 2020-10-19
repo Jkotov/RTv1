@@ -41,7 +41,7 @@ void		mouse_events(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache)
 	}
 }
 
-void		camera_events(t_sdl *sdl, SDL_KeyCode sym)
+void		camera_events(t_sdl *sdl, SDL_Keycode sym)
 {
 	t_dot	tmp;
 
