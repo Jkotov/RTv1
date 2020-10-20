@@ -59,3 +59,9 @@ int				count_objs(t_surface *list)
 	}
 	return (i);
 }
+
+void			init_menu(t_sdl *sdl)
+{
+	sdl->menu.menu_size = (SDL_Rect){0, 0, sdl->width, 300};
+	sdl->menu.img = create_texture("menu.png", sdl);
+}

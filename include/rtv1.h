@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/18 23:34:15 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 05:31:46 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ typedef struct			s_sdl
 	t_menu				menu;
 }						t_sdl;
 
+void					camera_move(t_sdl *sdl);
 void					set_default_scene(t_sdl *sdl);
 void					parsing(t_sdl* sdl, char *scene_file);
 void					camera_move(t_sdl *sdl);

@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:50:01 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/30 16:21:04 by root             ###   ########.fr       */
+/*   Updated: 2020/10/20 07:17:24 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ float		lighting(t_scene scene, t_compute_light_p p)
 			light_vector = vector_normalize(light_vector);
 			tmp = scalar_mult(p.normal_vec, light_vector)\
 			* cur_light->intensity;
-			res = res + fabs(tmp);
+			res = tmp > 0 ? res + tmp : res;
 			res += specular(p, light_vector, cur_light->intensity);
 		}
 		cur_light = cur_light->next;

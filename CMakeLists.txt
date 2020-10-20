@@ -85,6 +85,10 @@ add_executable(RTv1 source/cleanup.c
         source/gui/gui_light.c
         source/gui/gui_shape_btns.c
         source/gui/gui_utils.c
-        source/gui/gui_utils_2.c)
+        source/gui/gui_utils_2.c
+        source/parsing.c
+        source/camera.c
+        source/vectors_2.c
+        source/rotations.c)
 
 target_link_libraries(${PROJECT_NAME} SDL2 SDL2_image libft m)
