@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 16:52:42 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 18:34:29 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 18:54:39 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,26 @@ static void				add_pair_to_block(t_block *block, t_string_pair *pair)
 	tmp->next = pair;
 }
 
+static char				*skip_spaces(char *txt)
+{
+	if (!txt)
+		return (NULL);
+	while (ft_strchr(" \n\t\v\f\r", *txt) && *txt)
+		txt++;
+	return (txt);
+}
+
 static void				block_parse(char *txt, t_block *block)
 {
 	char			*tmp;
 	char			*key;
 	char			*value;
 
-	while (ft_strchr(" \n\t\v\f\r", *txt) && *txt)
-		txt++;
-	while (*txt)
+	txt = skip_spaces(txt);
+	while (txt)
 	{
+		if (!*txt)
+			return ;
 		if (!(tmp = ft_strchr(txt, '=')))
 			return ;
 		if (!(key = ft_strsub(txt, 0, tmp - txt)))
@@ -91,10 +101,7 @@ static void				block_parse(char *txt, t_block *block)
 		add_pair_to_block(block, pair_create(key, value));
 		txt++;
 		txt = ft_strchr(txt, '\n');
-		if (!txt)
-			return ;
-		while (ft_strchr(" \n\t\v\f\r", *txt) && *txt)
-			txt++;
+		txt = skip_spaces(txt);
 	}
 }
 
