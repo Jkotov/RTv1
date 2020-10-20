@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 16:52:42 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 05:21:15 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 05:21:26 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ static void				block_parse(char *txt, t_block *block)
 		add_pair_to_block(block, pair_create(key, value));
 		txt++;
 		txt = ft_strchr(txt, '\n');
+		if (!txt)
+			return ;
 		while (ft_strchr(" \n\t\v\f\r", *txt) && *txt)
 			txt++;
 	}
