@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 16:52:42 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 18:54:39 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 18:56:44 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void					find_blocks(t_block **blocks, char *txt)
 	block_parse(block_txt, (*blocks));
 	free(block_txt);
 	tmp_list = *blocks;
-	txt = ft_strchr(txt + 1, '[');
+	txt = ft_strchr(txt, '[');
 	while (txt)
 	{
 		block_txt = find_block(txt, &tmp);
