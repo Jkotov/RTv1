@@ -6,12 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 07:26:50 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 16:02:52 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rtv1.h"
-#include "ini_parser.h"
 
 t_sdl			sdl_init(void)
 {
