@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 07:32:51 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 07:33:13 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void				loop(t_sdl *sdl)
 				mouse_events(sdl, e, gui_cache);
 		}
 		head = sdl->scene.shape;
-		give_number(&sdl->scene.shape);
+//		give_number(&sdl->scene.shape);
 //		while(sdl->scene.shape->next)
 //		{
 //			printf("shape number is: %i\n", sdl->scene.shape->number);

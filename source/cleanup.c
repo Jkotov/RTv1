@@ -14,6 +14,8 @@
 
 void		clean_light(t_light *light)
 {
+	if (!light)
+		return ;
 	if (light->next)
 		clean_light(light->next);
 	free(light);
@@ -21,6 +23,8 @@ void		clean_light(t_light *light)
 
 void		clean_sphere(t_surface *sphere)
 {
+	if (!sphere)
+		return ;
 	if (sphere->next)
 		clean_sphere(sphere->next);
 	free(sphere);
