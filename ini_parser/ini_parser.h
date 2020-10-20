@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ini_parser.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/20 05:08:36 by epainter          #+#    #+#             */
+/*   Updated: 2020/10/20 05:09:39 by epainter         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef INI_PARSER_H
 # define INI_PARSER_H
 # define SUCCESS 0
 # define FILE_ERROR -1
 # define MALLOC_ERROR -2
 # define UNKNOWN_ERROR -3
-
-#include "libft.h"
+# include "libft.h"
 
 typedef struct				s_string_pair
 {
@@ -18,7 +29,7 @@ typedef struct				s_block
 {
 	char					*name;
 	t_string_pair			*pairs;
-	struct	s_block			*next;
+	struct s_block			*next;
 }							t_block;
 
 void						parse_error(int code);

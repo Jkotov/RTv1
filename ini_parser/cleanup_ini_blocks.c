@@ -16,7 +16,7 @@
 void	clean_pairs(t_string_pair *pair)
 {
 	if (!pair)
-		return;
+		return ;
 	if (pair->next)
 		clean_pairs(pair->next);
 	free(pair->key);
@@ -27,7 +27,7 @@ void	clean_pairs(t_string_pair *pair)
 void	clean_blocks(t_block *block)
 {
 	if (!block)
-		return;
+		return ;
 	if (block->next)
 		clean_blocks(block->next);
 	clean_pairs(block->pairs);

@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 16:52:42 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/19 20:22:33 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 05:21:15 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_string_pair	*pair_create(char *key, char *value)
 	return (pair);
 }
 
-static void	add_pair_to_block(t_block* block, t_string_pair* pair)
+static void				add_pair_to_block(t_block *block, t_string_pair *pair)
 {
 	t_string_pair *tmp;
 
@@ -60,61 +60,68 @@ static void	add_pair_to_block(t_block* block, t_string_pair* pair)
 	if (!tmp)
 	{
 		block->pairs = pair;
-		return;
+		return ;
 	}
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = pair;
 }
 
-static int				block_parse(char *txt, t_block *block)
+static void				block_parse(char *txt, t_block *block)
 {
-	char			*trimed;
 	char			*tmp;
 	char			*key;
 	char			*value;
 
-	trimed = ft_strtrim(txt);
-	while (trimed)
+	while (ft_strchr(" \n\t\v\f\r", *txt) && *txt)
+		txt++;
+	while (*txt)
 	{
-		if (!(tmp = ft_strchr(trimed, '=')))
-		{
-			free(trimed);
-			return 0;
-		}
-		if (!(key = ft_strsub(trimed, 0, tmp - trimed)))
+		if (!(tmp = ft_strchr(txt, '=')))
+			return ;
+		if (!(key = ft_strsub(txt, 0, tmp - txt)))
 			parse_error(MALLOC_ERROR);
 		if (!(value = ft_strchr(tmp, '\n')))
 			value = ft_strchr(tmp, '\0');
 		if (!(value = ft_strsub(tmp, 1, value - tmp - 1)))
-		{
 			if (ft_strchr(tmp, '\n') == NULL)
 				value = ft_strdup("");
-			else
-				parse_error(MALLOC_ERROR);
-		}
+		if (value == NULL)
+			parse_error(MALLOC_ERROR);
 		add_pair_to_block(block, pair_create(key, value));
-		txt = ft_strchr(txt + 1, '\n');
-		free(trimed);
-		trimed = ft_strtrim(txt);
-		txt = txt ? txt + 1 : txt;
+		txt++;
+		txt = ft_strchr(txt, '\n');
+		while (ft_strchr(" \n\t\v\f\r", *txt) && *txt)
+			txt++;
 	}
-	free(trimed);
-	return 0;
 }
 
-static	t_block 		*block_alloc(char *name)
+static	t_block			*block_alloc(char *name)
 {
 	t_block	*block;
 
-	if(!(block = (t_block*)malloc(sizeof(t_block))))
+	if (!(block = (t_block*)malloc(sizeof(t_block))))
 		parse_error(MALLOC_ERROR);
 	block->next = NULL;
 	block->pairs = NULL;
-	if (name != NULL)
-	if (!(block->name = ft_strdup(name)))
+	if (!(block->name = name))
 		parse_error(MALLOC_ERROR);
-	return block;
+	return (block);
+}
+
+char					*find_block(char *txt, char **tmp)
+{
+	char	*block_txt;
+
+	if (!(*tmp = ft_strchr(txt, ']')))
+		parse_error(FILE_ERROR);
+	if (!(block_txt = ft_strchr(txt + 1, '[')))
+		block_txt = ft_strchr(txt + 1, '\0');
+	if (*tmp > block_txt)
+		parse_error(FILE_ERROR);
+	if (!((block_txt = ft_strsub(*tmp, 1, block_txt - *tmp - 1))))
+		parse_error(MALLOC_ERROR);
+	return (block_txt);
 }
 
 void					find_blocks(t_block **blocks, char *txt)
@@ -122,29 +129,20 @@ void					find_blocks(t_block **blocks, char *txt)
 	char	*block_txt;
 	char	*tmp;
 	t_block	*tmp_list;
-	char	*name;
 
-	*blocks = block_alloc("NULL");
+	*blocks = block_alloc(ft_strdup("NULL"));
 	if (!((block_txt = ft_strsub(txt, 0, ft_strchr(txt, '[') - txt))))
 		parse_error(MALLOC_ERROR);
 	block_parse(block_txt, (*blocks));
 	free(block_txt);
 	tmp_list = *blocks;
+	txt = ft_strchr(txt + 1, '[');
 	while (txt)
 	{
-		if (!(tmp = ft_strchr(txt, ']')))
-			parse_error(FILE_ERROR);
-		if (!(block_txt = ft_strchr(txt + 1, '[')))
-			block_txt = ft_strchr(txt + 1, '\0');
-		if (tmp > block_txt)
-			parse_error(FILE_ERROR);
-		if (!((block_txt = ft_strsub(tmp, 1, block_txt - tmp - 1))))
-			return;
-		name = ft_strsub(txt, 1, tmp - txt - 1);
-		tmp_list->next = block_alloc(name);
+		block_txt = find_block(txt, &tmp);
+		tmp_list->next = block_alloc(ft_strsub(txt, 1, tmp - txt - 1));
 		tmp_list = tmp_list->next;
 		block_parse(block_txt, tmp_list);
-		free(name);
 		free(block_txt);
 		txt = ft_strchr(txt + 1, '[');
 	}

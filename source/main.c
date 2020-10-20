@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:41:30 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/30 17:43:05 by root             ###   ########.fr       */
+/*   Updated: 2020/10/20 03:05:48 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int				main(int argc, char **argv)
 	sdl = sdl_init();
 	if (argc == 2)
 		parsing(&sdl, argv[1]);
+	else
+		set_default_scene(&sdl);
 	init_menu(&sdl);
 	sdl.fg = SDL_CreateTexture(sdl.renderer,\
 	SDL_PIXELFORMAT_ARGB8888,\
