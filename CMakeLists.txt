@@ -9,7 +9,7 @@ include_directories(${SDL2_INCLUDE_DIR})
 link_directories(${SDL2_LIB_DIR})
 include_directories(${SDL2_INCLUDE_DIRS}
         ${SDL2IMAGE_INCLUDE_DIRS}
-        ${SDL2TTF_INCLUDE_DIRS} include ini_parser libft)
+        ${SDL2TTF_INCLUDE_DIRS} include ../epainter's_lib/ini_parser libft)
 add_compile_options(-Wall -Wextra -Werror)
 
 
@@ -69,9 +69,9 @@ add_library(libft STATIC
         libft/ft_atoi_base.c)
 
 add_executable(RTv1 source/cleanup.c
-        ini_parser/cleanup_ini_blocks.c
-        ini_parser/error_parser.c
-        ini_parser/ini_parser.c
+        ../epainter's_lib/ini_parser/cleanup_ini_blocks.c
+        ../epainter's_lib/ini_parser/error_parser.c
+        ../epainter's_lib/ini_parser/ini_parser.c
         source/color.c
         source/control_utils.c
         source/errors.c

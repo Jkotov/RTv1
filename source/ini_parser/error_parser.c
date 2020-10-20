@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   error_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/13 12:30:45 by epainter          #+#    #+#             */
-/*   Updated: 2020/09/30 16:21:04 by root             ###   ########.fr       */
+/*   Created: 2020/06/10 19:12:01 by epainter          #+#    #+#             */
+/*   Updated: 2020/10/20 16:42:19 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include "../../include/rtv1.h"
 
-//size_t		ft_strlen(const char *str)
-//{
-//	size_t i;
-//
-//	i = 0;
-//	while (*(str + i) != '\0')
-//		i++;
-//	return (i);
-//}
-//
-//int			ft_putstr(const char *s)
-//{
-//	return (write(1, s, ft_strlen(s)));
-//}
-
-void		sdl_error(char *text)
+void	parse_error(int code)
 {
-	ft_putstr(text);
-	ft_putstr(SDL_GetError());
-	exit(1);
+	if (code == MALLOC_ERROR)
+		ft_putstr("Memory allocation error\n");
+	if (code == FILE_ERROR)
+		ft_putstr("File error\n");
+	exit(code);
 }
