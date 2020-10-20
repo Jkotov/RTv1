@@ -6,18 +6,18 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 16:29:07 by root             ###   ########.fr       */
+/*   Updated: 2020/10/20 18:33:56 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTV1_H
 # define RTV1_H
 
-# include "../libft/include/libft.h"
 # include <SDL2/SDL.h>
+# include <unistd.h>
 # include <SDL2/SDL_image.h>
+# include <math.h>
 # include "colors.h"
-# include "ini_parser.h"
 # define WIDTH 640
 # define HEIGHT 480
 
@@ -150,8 +150,8 @@ t_surface_coeffs *res);
 void					sphere_cache_calc(t_surface *sphere, t_dot start);
 char					dot_cmp(t_dot d1, t_dot d2);
 void					directions_vec_compute(t_sdl *sdl, t_dot **dir_vecs);
-//size_t					ft_strlen(const char *str);
-//int						ft_putstr(const char *s);
+size_t					ft_strlen(const char *str);
+int						ft_putstr(const char *s);
 SDL_Texture				*create_texture(char *file_name, t_sdl *sdl);
 void					sdl_error(char *text);
 void					light_balancer(t_scene *scene);

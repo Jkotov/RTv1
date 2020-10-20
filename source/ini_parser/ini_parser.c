@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 16:52:42 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 05:21:26 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 18:34:29 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,13 +156,13 @@ static int				read_file(char *file_name, char **txt)
 	char	*buf;
 
 	if ((fd = open(file_name, O_RDONLY)) < 1)
-		return (FILE_ERROR);
+		parse_error(FILE_ERROR);
 	if (read(fd, NULL, 0) < 0)
-		return (FILE_ERROR);
+		parse_error(FILE_ERROR);
 	if (!(*txt = ft_strnew(0)))
-		return (MALLOC_ERROR);
+		parse_error(MALLOC_ERROR);
 	if (!(buf = ft_strnew(BUFF_SIZE)))
-		return (MALLOC_ERROR);
+		parse_error(MALLOC_ERROR);
 	while (read(fd, buf, BUFF_SIZE))
 	{
 		*txt = ft_strjoinfree(txt, &buf, 1);

@@ -6,11 +6,12 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 10:50:53 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 16:42:19 by root             ###   ########.fr       */
+/*   Updated: 2020/10/20 18:41:29 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/rtv1.h"
+#include "ini_parser.h"
 
 void	clean_pairs(t_string_pair *pair)
 {

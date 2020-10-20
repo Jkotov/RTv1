@@ -6,11 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 07:28:04 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 07:28:04 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 18:33:56 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include "rtv1.h"
 
 void			directions_vec_compute(t_sdl *sdl, t_dot **dir_vecs)
 {

@@ -6,11 +6,13 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 07:11:05 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 07:11:40 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 18:33:57 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/rtv1.h"
+#include "rtv1.h"
+#include "ini_parser.h"
+#include "libft.h"
 
 void			parse_light(t_sdl *sdl, t_block *tmp)
 {
