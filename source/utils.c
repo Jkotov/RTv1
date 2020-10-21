@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/21 13:10:14 by root             ###   ########.fr       */
+/*   Updated: 2020/10/21 23:56:15 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ void				loop(t_sdl *sdl)
 			if (e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEWHEEL)
 				cur = mouse_events(sdl, e, gui_cache, cur);
 		}
-		render(sdl);
+		if (sdl->need_render)
+			render(sdl);
+		sdl->need_render = 0;
 	}
 	free(gui_cache);
 }

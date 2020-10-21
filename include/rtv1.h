@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/21 20:41:25 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/21 23:45:26 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,25 +132,22 @@ typedef struct			s_sdl
 	SDL_Texture			*fg;
 	int					*buffer;
 	int					buffer_len;
-	int					counter;
 	t_scene				scene;
 	t_menu				menu;
 	char				*scene_file;
+	int					need_render;
 }						t_sdl;
 
 void					camera_move(t_sdl *sdl);
 void					set_default_scene(t_sdl *sdl);
 void					parsing(t_sdl *sdl, char *scene_file);
 t_dot					rotate_vector(t_dot v, t_dot angle);
-t_dot					cross_product(t_dot v1, t_dot v2);
 void					*ft_memset(void *src, int c, size_t len);
 t_dot					surface_normal(t_surface_coeffs c, t_dot dot);
 t_surface_coeffs		surface_shift(t_surface *s);
 t_surface_coeffs		rotate_surface(t_surface *s);
 void					matrix_using(t_surface_coeffs c, float m[3][3],\
 t_surface_coeffs *res);
-void					sphere_cache_calc(t_surface *sphere, t_dot start);
-char					dot_cmp(t_dot d1, t_dot d2);
 void					directions_vec_compute(t_sdl *sdl, t_dot **dir_vecs);
 size_t					ft_strlen(const char *str);
 SDL_Texture				*create_texture(char *file_name, t_sdl *sdl);

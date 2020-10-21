@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 18:33:57 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/21 23:43:17 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,5 @@ void			scene_init(t_sdl *sdl)
 	sdl->scene.max_depth = 3;
 	sdl->scene.shape = NULL;
 	sdl->scene.light = NULL;
-	sdl->counter = 0;
+	sdl->need_render = 1;
 }

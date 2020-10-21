@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/21 15:08:47 by root             ###   ########.fr       */
+/*   Updated: 2020/10/21 23:56:15 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,15 @@ void		camera_events(t_sdl *sdl, SDL_Keycode sym)
 void		del_reset(t_sdl *sdl, SDL_Event e, t_surface *cur)
 {
 	if (e.button.y > 3 && e.button.y < 20)
+	{
+		sdl->need_render = 1;
 		reset(sdl);
+	}
 	else if (e.button.y > 21 && e.button.y < 43)
+	{
 		del_surface(sdl, cur);
+		sdl->need_render = 1;
+	}
 }
 
 t_surface	*mouse_events(t_sdl *sdl, SDL_Event e,\

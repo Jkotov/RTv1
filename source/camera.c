@@ -51,5 +51,6 @@ void			camera_move(t_sdl *sdl)
 	tmp.x_vec = rotate_vector((t_dot){1, 0, 0}, tmp.angle);
 	tmp.y_vec = rotate_vector((t_dot){0, 1, 0}, tmp.angle);
 	sdl->scene.camera = tmp;
+	sdl->need_render = 1;
 	directions_vec_compute(sdl, &sdl->scene.camera.dir_vecs);
 }

@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 20:31:17 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/18 20:31:17 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/21 23:56:37 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void			button_create_cylinder(t_sdl *sdl, t_gui_cache *gui_cache)
 {
 	t_surface_cache tmp;
 
+	sdl->need_render = 1;
 	ft_memset(&tmp, 0, sizeof(tmp));
 	add_shape(&sdl->scene.shape, (t_surface){gui_cache->position, {1, 2, 0,\
 	-10000, 0, 0, 0, 0, 0, 0}, gui_cache->color, \
@@ -26,6 +27,7 @@ void			button_create_plane(t_sdl *sdl, t_gui_cache *gui_cache)
 {
 	t_surface_cache tmp;
 
+	sdl->need_render = 1;
 	ft_memset(&tmp, 0, sizeof(tmp));
 	add_shape(&sdl->scene.shape, (t_surface){gui_cache->position,\
 	{0, 0, 0, -100, 0, 0, 0, 1, 2, 3}, \
@@ -37,6 +39,7 @@ void			button_create_cone(t_sdl *sdl, t_gui_cache *gui_cache)
 {
 	t_surface_cache tmp;
 
+	sdl->need_render = 1;
 	ft_memset(&tmp, 0, sizeof(tmp));
 	add_shape(&sdl->scene.shape, (t_surface){gui_cache->position, {1, 2,\
 	-1, 0, 0, 0, 0, 0, 0, 0}, gui_cache->color, \
@@ -48,6 +51,7 @@ void			button_create_sphere(t_sdl *sdl, t_gui_cache *gui_cache)
 {
 	t_surface_cache tmp;
 
+	sdl->need_render = 1;
 	ft_memset(&tmp, 0, sizeof(tmp));
 	add_shape(&sdl->scene.shape, (t_surface){gui_cache->position, {1, 1, 1,\
 	-(gui_cache->radius), 0, 0, 0, 0, 0, 0}, gui_cache->color, \
