@@ -6,74 +6,27 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/21 10:50:00 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/21 12:55:11 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rtv1.h"
 
-void			reset(t_sdl *sdl)
+
+/*
+ * e.wheel.x = 0 ; e.wheel.y = -1 - zoom +
+ * e.wheel.x = 0 ; e.wheel.y = 1 - xoom -
+ */
+
+void 		mouse_camera(t_sdl *sdl, SDL_Event e)
 {
-	clean_scene(&sdl->scene);
-	if (sdl->scene_file)
-		parsing(sdl, sdl->scene_file);
-	else
-		set_default_scene(sdl);
-}
+	t_dot	tmp;
 
-void			del_surface(t_sdl *sdl, t_surface *del)
-{
-	t_surface *tmp;
-
-	tmp = sdl->scene.shape;
-	if (!tmp || !del)
-		return ;
-	if (tmp == del)
-	{
-		sdl->scene.shape = tmp->next;
-		free(tmp);
-		return ;
-	}
-	while (tmp->next)
-	{
-		if (tmp->next == del)
-		{
-			tmp->next = tmp->next->next;
-			free(del);
-			return ;
-		}
-		tmp = tmp->next;
-	}
-}
-
-t_surface		*mouse_events(t_sdl *sdl, SDL_Event e,\
-t_gui_cache *gui_cache, t_surface *cur)
-{
-	float tmp;
-
-	tmp = INFINITY;
-	gui_buttons(gui_cache, e, sdl);
-	if (e.button.x > 0 && e.button.x < 105)
-	{
-		if (e.button.y > 3 && e.button.y < 45)
-			button_create_sphere(sdl, gui_cache);
-		else if (e.button.y > 50 && e.button.y < 70)
-			button_create_cone(sdl, gui_cache);
-		else if (e.button.y > 75 && e.button.y < 92)
-			button_create_plane(sdl, gui_cache);
-		else if (e.button.y > 99 && e.button.y < 118)
-			button_create_cylinder(sdl, gui_cache);
-	}
-	else if (e.button.x > 290 && e.button.x < 395)
-	{
-		if (e.button.y > 3 && e.button.y < 20)
-			reset(sdl);
-		else if (e.button.y > 21 && e.button.y < 43)
-			del_surface(sdl, cur);
-	}
-	return (closest(sdl->scene.camera.camera,\
-	sdl->scene.camera.dir_vecs[e.button.y * sdl->width + e.button.x],\
-	sdl->scene, &tmp));
+	tmp = vector_mult_num(sdl->scene.camera.center_vec, 100);
+	if (e.wheel.x == 0 && e.wheel.y == -1)
+		sdl->scene.camera.camera = vector_sum(sdl->scene.camera.camera, tmp);
+	if (e.wheel.x == 0 && e.wheel.y == 1)
+		sdl->scene.camera.camera = vector_sub(sdl->scene.camera.camera, tmp);
 }
 
 void		camera_events(t_sdl *sdl, SDL_Keycode sym)
@@ -102,24 +55,40 @@ void		camera_events(t_sdl *sdl, SDL_Keycode sym)
 		camera_move(sdl);
 }
 
-void		get_counter(t_sdl *sdl, SDL_Event e)
+t_surface		*mouse_events(t_sdl *sdl, SDL_Event e,\
+t_gui_cache *gui_cache, t_surface *cur)
 {
-	if (e.key.keysym.sym == SDLK_0)
+	float tmp;
+
+	tmp = INFINITY;
+	gui_buttons(gui_cache, e, sdl);
+	if (e.wheel.x == 0 && (e.wheel.y == -1 ||  e.wheel.y == 1))
+		mouse_camera(sdl, e);
+	printf("e.w.x = %i\n e.w.y = %i\n", e.wheel.x, e.wheel.y);
+	if (e.button.x > 0 && e.button.x < 105)
 	{
-		if (sdl->scene.shape->next == NULL)
-			sdl->counter = sdl->scene.shape->number;
-		else
-			sdl->counter += 1;
+		if (e.button.y > 3 && e.button.y < 45)
+			button_create_sphere(sdl, gui_cache);
+		else if (e.button.y > 50 && e.button.y < 70)
+			button_create_cone(sdl, gui_cache);
+		else if (e.button.y > 75 && e.button.y < 92)
+			button_create_plane(sdl, gui_cache);
+		else if (e.button.y > 99 && e.button.y < 118)
+			button_create_cylinder(sdl, gui_cache);
 	}
-	if (e.key.keysym.sym == SDLK_1)
+	else if (e.button.x > 290 && e.button.x < 395)
 	{
-		ft_putstr("key down"); // Wow
-		if (sdl->counter - 1 < 0)
-			sdl->counter = 0;
-		else
-			sdl->counter--;
+		if (e.button.y > 3 && e.button.y < 20)
+			reset(sdl);
+		else if (e.button.y > 21 && e.button.y < 43)
+			del_surface(sdl, cur);
 	}
+	return (closest(sdl->scene.camera.camera,\
+	sdl->scene.camera.dir_vecs[e.button.y * sdl->width + e.button.x],\
+	sdl->scene, &tmp));
 }
+
+
 
 void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e, t_surface *cur)
 {

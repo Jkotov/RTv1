@@ -6,58 +6,44 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 20:41:28 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/18 20:46:48 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/21 11:47:21 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/rtv1.h"
 
-t_surface		*select_last(t_surface **list, int nb)
+void			reset(t_sdl *sdl)
 {
-//	t_surface *head;
-//
-//	head = (*list);
-	while ((*list)->number != nb && (*list)->next != NULL)
-		list = &(*list)->next;
-//	if((*list)->next == NULL && nb == (*list)->number + 1)
-//		(*list) = head;
-	printf("nb = %i\n", nb); // Не забудь удалить
-	return (*list);
+	clean_scene(&sdl->scene);
+	if (sdl->scene_file)
+		parsing(sdl, sdl->scene_file);
+	else
+		set_default_scene(sdl);
 }
 
-void			give_number(t_surface **list)
+void			del_surface(t_sdl *sdl, t_surface *del)
 {
-	int	i;
+	t_surface *tmp;
 
-	i = 0;
-	while ((*list)->next)
+	tmp = sdl->scene.shape;
+	if (!tmp || !del)
+		return ;
+	if (tmp == del)
 	{
-		(*list)->number = i;
-		list = &(*list)->next;
-		i++;
+		sdl->scene.shape = tmp->next;
+		free(tmp);
+		return ;
 	}
-	(*list)->number = i;
-}
-
-void			del_objs(t_surface **list)
-{
-	while ((*list)->next)
-		list = &(*list)->next;
-	free(*list);
-	*list = NULL;
-}
-
-int				count_objs(t_surface *list)
-{
-	int	i;
-
-	i = 0;
-	while (list->next)
+	while (tmp->next)
 	{
-		list = list->next;
-		i++;
+		if (tmp->next == del)
+		{
+			tmp->next = tmp->next->next;
+			free(del);
+			return ;
+		}
+		tmp = tmp->next;
 	}
-	return (i);
 }
 
 void			init_menu(t_sdl *sdl)

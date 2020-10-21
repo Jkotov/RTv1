@@ -106,7 +106,3 @@ void			gui_buttons(t_gui_cache *gui_cache, SDL_Event e, t_sdl *sdl)
 			get_light(e.button.x, sdl);
 	}
 }
-
-/*
-** ДОПИЛИТЬ СТРУКТУРУ УДАЛЕНИЯ
-*/

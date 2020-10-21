@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/21 11:30:10 by root             ###   ########.fr       */
+/*   Updated: 2020/10/21 11:47:21 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,16 +197,13 @@ void					render(t_sdl *sdl);
 void					loop(t_sdl *sdl);
 void					gui_buttons(t_gui_cache *gui_cache, SDL_Event e,\
 t_sdl *sdl);
-void					del_objs(t_surface **list);
-int						count_objs(t_surface *list);
 void					button_create_sphere(t_sdl *sdl,\
 t_gui_cache *gui_cache);
 void					button_create_cone(t_sdl *sdl, t_gui_cache *gui_cache);
 void					button_create_plane(t_sdl *sdl, t_gui_cache *gui_cache);
 void					button_create_cylinder(t_sdl *sdl,\
 t_gui_cache *gui_cache);
-void					give_number(t_surface **list);
-t_surface				*select_last(t_surface **list, int nb);
-//void					gui_light(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache);
+void					reset(t_sdl *sdl);
+void					del_surface(t_sdl *sdl, t_surface *del);
 
 #endif
