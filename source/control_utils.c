@@ -6,12 +6,11 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/21 12:55:11 by root             ###   ########.fr       */
+/*   Updated: 2020/10/21 13:20:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rtv1.h"
-
 
 /*
  * e.wheel.x = 0 ; e.wheel.y = -1 - zoom +
@@ -23,10 +22,11 @@ void 		mouse_camera(t_sdl *sdl, SDL_Event e)
 	t_dot	tmp;
 
 	tmp = vector_mult_num(sdl->scene.camera.center_vec, 100);
-	if (e.wheel.x == 0 && e.wheel.y == -1)
+	if (e.wheel.y == -1)
 		sdl->scene.camera.camera = vector_sum(sdl->scene.camera.camera, tmp);
-	if (e.wheel.x == 0 && e.wheel.y == 1)
+	if (e.wheel.y == 1)
 		sdl->scene.camera.camera = vector_sub(sdl->scene.camera.camera, tmp);
+	camera_move(sdl);
 }
 
 void		camera_events(t_sdl *sdl, SDL_Keycode sym)
@@ -64,7 +64,6 @@ t_gui_cache *gui_cache, t_surface *cur)
 	gui_buttons(gui_cache, e, sdl);
 	if (e.wheel.x == 0 && (e.wheel.y == -1 ||  e.wheel.y == 1))
 		mouse_camera(sdl, e);
-	printf("e.w.x = %i\n e.w.y = %i\n", e.wheel.x, e.wheel.y);
 	if (e.button.x > 0 && e.button.x < 105)
 	{
 		if (e.button.y > 3 && e.button.y < 45)

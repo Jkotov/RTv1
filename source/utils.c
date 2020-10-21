@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/21 11:55:21 by root             ###   ########.fr       */
+/*   Updated: 2020/10/21 13:10:14 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ void				loop(t_sdl *sdl)
 			if (e.type == SDL_MOUSEBUTTONDOWN)
 				cur = mouse_events(sdl, e, gui_cache, cur);
 			if (e.type == SDL_MOUSEWHEEL)
-			{
-				printf("mouse wheel");
 				cur = mouse_events(sdl, e, gui_cache, cur);
-			}
 		}
 		render(sdl);
 	}
