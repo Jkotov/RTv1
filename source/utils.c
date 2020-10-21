@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 13:00:23 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 19:11:32 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 19:57:35 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void				loop(t_sdl *sdl)
 	SDL_Event	e;
 	char		quit;
 	t_gui_cache	*gui_cache;
-	t_surface	*head;
+	t_surface	*cur;
 //	uint		cur_time;
 //	uint		time;
 
@@ -46,6 +46,7 @@ void				loop(t_sdl *sdl)
 	if (!(gui_cache = (t_gui_cache *)malloc(sizeof(t_gui_cache))))
 		sdl_error("GUI Alloc error");
 	quit = 0;
+	cur = NULL;
 	while (!quit)
 	{
 		while (SDL_PollEvent(&e))
@@ -56,20 +57,18 @@ void				loop(t_sdl *sdl)
 			{
 //				printf("keydown");
 //				last_shape(&sdl->scene.shape);
-				keyboard_events(sdl, &quit, e);
+				keyboard_events(sdl, &quit, e, cur);
 			}
 			if (e.type == SDL_MOUSEBUTTONDOWN)
-				mouse_events(sdl, e, gui_cache);
+				cur = mouse_events(sdl, e, gui_cache, cur);
 		}
-		head = sdl->scene.shape;
-		give_number(&sdl->scene.shape);
+//		give_number(&sdl->scene.shape);
 //		while(sdl->scene.shape->next)
 //		{
 //			printf("shape number is: %i\n", sdl->scene.shape->number);
 //			sdl->scene.shape = sdl->scene.shape->next;
 //		}
 //		printf("shape number is: %i\n", sdl->scene.shape->number);
-		sdl->scene.shape = head;
 		render(sdl);
 //		cur_time = SDL_GetTicks();
 //		printf("%i ms on frame\n", cur_time - time);

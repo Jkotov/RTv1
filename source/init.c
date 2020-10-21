@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:45:44 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 18:33:56 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 18:33:57 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_sdl			sdl_init(void)
 {
 	t_sdl		sdl;
 
+	sdl.scene_file = NULL;
 	sdl.width = 640;
 	sdl.height = 480;
 	sdl.buffer_len = sdl.width * sdl.height;

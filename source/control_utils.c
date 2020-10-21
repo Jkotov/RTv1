@@ -6,17 +6,52 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/18 21:16:44 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/21 10:50:00 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rtv1.h"
 
-void		mouse_events(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache)
+void			reset(t_sdl *sdl)
 {
-	t_surface_cache tmp;
+	clean_scene(&sdl->scene);
+	if (sdl->scene_file)
+		parsing(sdl, sdl->scene_file);
+	else
+		set_default_scene(sdl);
+}
 
-	ft_memset(&tmp, 0, sizeof(tmp));
+void			del_surface(t_sdl *sdl, t_surface *del)
+{
+	t_surface *tmp;
+
+	tmp = sdl->scene.shape;
+	if (!tmp || !del)
+		return ;
+	if (tmp == del)
+	{
+		sdl->scene.shape = tmp->next;
+		free(tmp);
+		return ;
+	}
+	while (tmp->next)
+	{
+		if (tmp->next == del)
+		{
+			tmp->next = tmp->next->next;
+			free(del);
+			return ;
+		}
+		tmp = tmp->next;
+	}
+}
+
+t_surface		*mouse_events(t_sdl *sdl, SDL_Event e,\
+t_gui_cache *gui_cache, t_surface *cur)
+{
+	float tmp;
+
+	tmp = INFINITY;
 	gui_buttons(gui_cache, e, sdl);
 	if (e.button.x > 0 && e.button.x < 105)
 	{
@@ -32,13 +67,13 @@ void		mouse_events(t_sdl *sdl, SDL_Event e, t_gui_cache *gui_cache)
 	else if (e.button.x > 290 && e.button.x < 395)
 	{
 		if (e.button.y > 3 && e.button.y < 20)
-			ft_putstr("reset");
+			reset(sdl);
 		else if (e.button.y > 21 && e.button.y < 43)
-		{
-			if (count_objs(sdl->scene.shape) != 3)
-				del_objs(&sdl->scene.shape);
-		}
+			del_surface(sdl, cur);
 	}
+	return (closest(sdl->scene.camera.camera,\
+	sdl->scene.camera.dir_vecs[e.button.y * sdl->width + e.button.x],\
+	sdl->scene, &tmp));
 }
 
 void		camera_events(t_sdl *sdl, SDL_Keycode sym)
@@ -86,33 +121,26 @@ void		get_counter(t_sdl *sdl, SDL_Event e)
 	}
 }
 
-void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e)
+void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e, t_surface *cur)
 {
-	t_surface	*head;
-
-	head = sdl->scene.shape;
-	get_counter(sdl, e);
-	sdl->scene.shape = select_last(&sdl->scene.shape, sdl->counter);
 	if (e.key.keysym.sym == SDLK_ESCAPE)
 		*quit = 1;
-	if (e.key.keysym.sym == SDLK_RIGHT)
-		sdl->scene.shape->shift.x = 10;
-	if (e.key.keysym.sym == SDLK_LEFT)
-		sdl->scene.shape->shift.x = -10;
-	if (e.key.keysym.sym == SDLK_UP)
-		sdl->scene.shape->shift.y = -10;
-	if (e.key.keysym.sym == SDLK_DOWN)
-		sdl->scene.shape->shift.y = 10;
-	if (e.key.keysym.sym == SDLK_SPACE)
-		sdl->scene.shape->shift.z = 10;
-	if (e.key.keysym.sym == SDLK_SLASH)
-		sdl->scene.shape->shift.z = -10;
+	if (e.key.keysym.sym == SDLK_RIGHT && cur)
+		cur->shift.x = 10;
+	if (e.key.keysym.sym == SDLK_LEFT && cur)
+		cur->shift.x = -10;
+	if (e.key.keysym.sym == SDLK_UP && cur)
+		cur->shift.y = -10;
+	if (e.key.keysym.sym == SDLK_DOWN && cur)
+		cur->shift.y = 10;
+	if (e.key.keysym.sym == SDLK_SPACE && cur)
+		cur->shift.z = 10;
 	camera_events(sdl, e.key.keysym.sym);
-	sdl->scene.shape->c = surface_shift(sdl->scene.shape);
-	if (e.key.keysym.sym == SDLK_q)
+	if (cur)
+		cur->c = surface_shift(cur);
+	if (e.key.keysym.sym == SDLK_q && cur)
 	{
-		sdl->scene.shape->angle.z = M_PI / 6;
-		sdl->scene.shape->c = rotate_surface(sdl->scene.shape);
+		cur->angle.z = M_PI / 6;
+		cur->c = rotate_surface(cur);
 	}
-	sdl->scene.shape = head;
 }

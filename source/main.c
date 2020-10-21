@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:41:30 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 03:05:48 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/20 05:31:46 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ int				main(int argc, char **argv)
 		sdl_error("too many args");
 	sdl = sdl_init();
 	if (argc == 2)
+	{
 		parsing(&sdl, argv[1]);
+		sdl.scene_file = argv[1];
+	}
 	else
 		set_default_scene(&sdl);
 	init_menu(&sdl);
