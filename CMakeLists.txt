@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.6)
 project(RTv1 C)
 
 
-set(SDL2_INCLUDE_DIR ./SDL2/include)
+set(SDL2_INCLUDE_DIR ./SDL2/include/SDL2)
 set(SDL2_LIB_DIR ./SDL2/lib)
 
 include_directories(${SDL2_INCLUDE_DIR})
@@ -65,7 +65,10 @@ add_library(libft STATIC
         libft/source/ft_strtrim.c
         libft/source/ft_tolower.c
         libft/source/ft_toupper.c
-        libft/source/ft_atoi_base.c)
+        libft/source/ft_atoi_base.c
+        libft/source/ft_putstr.c
+        libft/source/ft_putchar.c
+        )
 
 add_executable(RTv1 source/cleanup.c
         source/ini_parser/cleanup_ini_blocks.c

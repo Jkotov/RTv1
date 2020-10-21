@@ -53,7 +53,7 @@ t_dot start)
 	color = 0;
 	len = INFINITY;
 	cur_sphere = closest(start, direction_vector, scene, &len);
-	if (!isinf(len) && scene.light)
+	if (!isinf(len) && scene.light && cur_sphere)
 	{
 		light_p = init_light_params(direction_vector, len, cur_sphere, start);
 		color = color_intens(cur_sphere->color, lighting(scene, light_p));

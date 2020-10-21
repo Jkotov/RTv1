@@ -6,7 +6,7 @@
 #    By: epainter <epainter@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/23 18:11:39 by epainter          #+#    #+#              #
-#    Updated: 2020/10/20 18:33:56 by epainter         ###   ########.fr        #
+#    Updated: 2020/10/21 21:08:22 by epainter         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = RTv1
 ### COMPILATION ###
 
 CC = gcc
-FLAGS = -O2 -Wall -Wextra -Werror
+FLAGS = -O2 -Wall -Wextra -Werror `./SDL2/bin/sdl2-config --cflags` `./SDL2/bin/sdl2-config --libs`
 
 ### INCLUDES ###
 
@@ -71,11 +71,14 @@ RESET = \033[0m
 UP = "\033[A"
 CUT = "\033[K"
 
-all: lib $(NAME)
+all: lib sdl $(NAME)
 
 lib:
 	@echo "$(WHITE)Creating lib files$(CYAN)"
 	@make -C $(LIBFT)
+
+sdl:
+	./SDL_built.sh
 
 %.o: %.c $(HEADERS)
 	@$(CC) $(FLAGS) -o $@ -c $<
@@ -87,15 +90,18 @@ $(NAME): $(OBJS)
 	@echo "$(GREEN)Project successfully compiled$(RESET)"
 
 clean:
+	@rm -rf SDL2-2.0.12
+	@rm -rf SDL2_image-2.0.5
 	@echo "$(VIOLET)Supressing libraries files$(RESET)"
 	@$(MAKE) fclean -C $(LIBFT)
 	@echo "$(VIOLET)Del objects files$(RESET)"
 	@/bin/rm -f $(OBJS)
 
 fclean: clean
+	@rm -rf SDL2
 	@echo "$(VIOLET)Del libft, objects and $(NAME) $(RESET)"
 	@/bin/rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: clean fclean re lib all
+.PHONY: clean fclean re lib all sdl

@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/21 14:37:18 by root             ###   ########.fr       */
+/*   Updated: 2020/10/21 20:41:25 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <SDL2/SDL.h>
 # include <unistd.h>
-# include <SDL2/SDL_image.h>
+# include <SDL_image.h>
 # include <math.h>
 # include "colors.h"
 # include "ini_parser.h"
