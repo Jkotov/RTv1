@@ -205,5 +205,6 @@ void					button_create_cylinder(t_sdl *sdl,\
 t_gui_cache *gui_cache);
 void					reset(t_sdl *sdl);
 void					del_surface(t_sdl *sdl, t_surface *del);
+void					camera_init(t_sdl *sdl);
 
 #endif

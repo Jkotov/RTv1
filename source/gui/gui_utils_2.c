@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 20:41:28 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/21 11:47:21 by root             ###   ########.fr       */
+/*   Updated: 2020/10/21 14:37:18 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,15 @@ void			reset(t_sdl *sdl)
 {
 	clean_scene(&sdl->scene);
 	if (sdl->scene_file)
+	{
 		parsing(sdl, sdl->scene_file);
+		camera_init(sdl);
+	}
 	else
+	{
 		set_default_scene(sdl);
+		camera_init(sdl);
+	}
 }
 
 void			del_surface(t_sdl *sdl, t_surface *del)
