@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ini_parser.h"
 #include "../../include/rtv1.h"
 
 void	parse_error(int code)

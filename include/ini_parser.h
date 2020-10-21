@@ -16,9 +16,6 @@
 # define FILE_ERROR -1
 # define MALLOC_ERROR -2
 # define UNKNOWN_ERROR -3
-#include "../include/rtv1.h"
-
-
 
 typedef struct				s_string_pair
 {

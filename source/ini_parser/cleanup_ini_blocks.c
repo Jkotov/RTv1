@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/rtv1.h"
-#include "ini_parser.h"
+
 
 void	clean_pairs(t_string_pair *pair)
 {

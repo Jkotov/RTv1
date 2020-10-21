@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/rtv1.h"
-#include "ini_parser.h"
 
 t_sdl			sdl_init(void)
 {

@@ -10,13 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ini_parser.h"
-#include <fcntl.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "libft.h"
-#define BUFF_SIZE 4096
-
+#include "../../include/rtv1.h"
 /*
 ** res should be NULL
 ** res should be free by freeing function after using

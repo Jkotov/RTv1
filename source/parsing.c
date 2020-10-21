@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
-#include "ini_parser.h"
-#include "libft.h"
+#include "../include/rtv1.h"
 
 void			parse_light(t_sdl *sdl, t_block *tmp)
 {

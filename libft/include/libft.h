@@ -64,6 +64,7 @@ int				ft_count_mass(char const *s, char c);
 int				get_next_line(int fd, char **line);
 int				ft_cl(char const *s, char c);
 int				get_line(const int fd, char **line, char *rest);
+void			ft_putstr(char const *s);
 void			ft_bzero(void *str, size_t n);
 void			*ft_memset(void *src, int c, size_t len);
 void			*ft_memmove(void *dst, const void *src, size_t len);

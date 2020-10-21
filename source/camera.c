@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../include/rtv1.h"
 
 void			directions_vec_compute(t_sdl *sdl, t_dot **dir_vecs)
 {
