@@ -43,7 +43,7 @@ void				loop(t_sdl *sdl)
 	if (!(gui_cache = (t_gui_cache *)malloc(sizeof(t_gui_cache))))
 		sdl_error("GUI Alloc error");
 	quit = 0;
-	cur = NULL;
+	cur = sdl->scene.shape;
 	while (!quit)
 	{
 		while (SDL_PollEvent(&e))
@@ -51,14 +51,8 @@ void				loop(t_sdl *sdl)
 			if (e.type == SDL_QUIT)
 				quit = 1;
 			if (e.type == SDL_KEYDOWN)
-			{
-				if (cur == NULL)
-					cur = sdl->scene.shape;
 				keyboard_events(sdl, &quit, e, cur);
-			}
-			if (e.type == SDL_MOUSEBUTTONDOWN)
-				cur = mouse_events(sdl, e, gui_cache, cur);
-			if (e.type == SDL_MOUSEWHEEL)
+			if (e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEWHEEL)
 				cur = mouse_events(sdl, e, gui_cache, cur);
 		}
 		render(sdl);

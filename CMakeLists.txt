@@ -88,6 +88,6 @@ add_executable(RTv1 source/cleanup.c
         source/parsing.c
         source/camera.c
         source/vectors_2.c
-        source/rotations.c)
+        source/rotations.c source/ini_parser/parser_utils.c)
 
 target_link_libraries(${PROJECT_NAME} SDL2 SDL2_image libft m)

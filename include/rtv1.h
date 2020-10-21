@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 13:58:47 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/21 11:47:21 by root             ###   ########.fr       */
+/*   Updated: 2020/10/21 14:37:18 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,7 @@ typedef struct			s_sdl
 
 void					camera_move(t_sdl *sdl);
 void					set_default_scene(t_sdl *sdl);
-void					parsing(t_sdl* sdl, char *scene_file);
-void					camera_move(t_sdl *sdl);
+void					parsing(t_sdl *sdl, char *scene_file);
 t_dot					rotate_vector(t_dot v, t_dot angle);
 t_dot					cross_product(t_dot v1, t_dot v2);
 void					*ft_memset(void *src, int c, size_t len);

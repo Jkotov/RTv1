@@ -31,6 +31,7 @@ SRCS = gui/gui_shape_btns.c \
        ini_parser/cleanup_ini_blocks.c \
        ini_parser/error_parser.c \
        ini_parser/ini_parser.c \
+       ini_parser/parser_utils.c \
        camera.c \
        cleanup.c \
        color.c \

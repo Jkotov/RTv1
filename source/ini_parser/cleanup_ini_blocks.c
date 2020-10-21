@@ -12,7 +12,6 @@
 
 #include "../../include/rtv1.h"
 
-
 void	clean_pairs(t_string_pair *pair)
 {
 	if (!pair)

@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 05:08:36 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/20 16:27:29 by root             ###   ########.fr       */
+/*   Updated: 2020/10/21 15:23:22 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,9 @@ void						parse_error(int code);
 int							ini_parser(char	*file_name, t_block **res);
 void						cleanup_ini(t_block *ini);
 char						*find_value(char *key, t_block *block);
+t_string_pair				*pair_create(char *key, char *value);
+void						add_pair_to_block(t_block *block, \
+t_string_pair *pair);
+char						*skip_spaces(char *txt);
+int							read_file(char *file_name, char **txt);
 #endif

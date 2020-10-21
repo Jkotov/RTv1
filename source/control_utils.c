@@ -6,18 +6,18 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/21 13:20:00 by root             ###   ########.fr       */
+/*   Updated: 2020/10/21 15:08:47 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rtv1.h"
 
 /*
- * e.wheel.x = 0 ; e.wheel.y = -1 - zoom +
- * e.wheel.x = 0 ; e.wheel.y = 1 - xoom -
- */
+** e.wheel.x = 0 ; e.wheel.y = -1 - zoom +
+** e.wheel.x = 0 ; e.wheel.y = 1 - xoom -
+*/
 
-void 		mouse_camera(t_sdl *sdl, SDL_Event e)
+void		mouse_camera(t_sdl *sdl, SDL_Event e)
 {
 	t_dot	tmp;
 
@@ -55,14 +55,22 @@ void		camera_events(t_sdl *sdl, SDL_Keycode sym)
 		camera_move(sdl);
 }
 
-t_surface		*mouse_events(t_sdl *sdl, SDL_Event e,\
+void		del_reset(t_sdl *sdl, SDL_Event e, t_surface *cur)
+{
+	if (e.button.y > 3 && e.button.y < 20)
+		reset(sdl);
+	else if (e.button.y > 21 && e.button.y < 43)
+		del_surface(sdl, cur);
+}
+
+t_surface	*mouse_events(t_sdl *sdl, SDL_Event e,\
 t_gui_cache *gui_cache, t_surface *cur)
 {
-	float tmp;
+	float	tmp;
 
 	tmp = INFINITY;
 	gui_buttons(gui_cache, e, sdl);
-	if (e.wheel.x == 0 && (e.wheel.y == -1 ||  e.wheel.y == 1))
+	if (e.wheel.x == 0 && (e.wheel.y == -1 || e.wheel.y == 1))
 		mouse_camera(sdl, e);
 	if (e.button.x > 0 && e.button.x < 105)
 	{
@@ -76,18 +84,11 @@ t_gui_cache *gui_cache, t_surface *cur)
 			button_create_cylinder(sdl, gui_cache);
 	}
 	else if (e.button.x > 290 && e.button.x < 395)
-	{
-		if (e.button.y > 3 && e.button.y < 20)
-			reset(sdl);
-		else if (e.button.y > 21 && e.button.y < 43)
-			del_surface(sdl, cur);
-	}
-	return (closest(sdl->scene.camera.camera,\
-	sdl->scene.camera.dir_vecs[e.button.y * sdl->width + e.button.x],\
-	sdl->scene, &tmp));
+		del_reset(sdl, e, cur);
+	return (closest(sdl->scene.camera.camera, \
+	sdl->scene.camera.dir_vecs[e.button.y * sdl->width \
+	+ e.button.x], sdl->scene, &tmp));
 }
-
-
 
 void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e, t_surface *cur)
 {
@@ -103,6 +104,8 @@ void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e, t_surface *cur)
 		cur->shift.y = 10;
 	if (e.key.keysym.sym == SDLK_SPACE && cur)
 		cur->shift.z = 10;
+	if (e.key.keysym.sym == SDLK_SLASH && cur)
+		cur->shift.z = -10;
 	camera_events(sdl, e.key.keysym.sym);
 	if (cur)
 		cur->c = surface_shift(cur);

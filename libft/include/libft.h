@@ -112,6 +112,6 @@ size_t			ft_strnlen(const char *src, size_t maxlen);
 t_list			*ft_lstnew(void const *content, size_t content_size);
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_arr			*newlist(const int fd);
-char 			*ft_strjoinfree(char **s1, char **s2, int key);
+char			*ft_strjoinfree(char **s1, char **s2, int key);
 int				ft_atoi_base(const char *str, int str_base);
 #endif
