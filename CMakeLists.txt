@@ -10,7 +10,7 @@ link_directories(${SDL2_LIB_DIR})
 include_directories(${SDL2_INCLUDE_DIRS}
         ${SDL2IMAGE_INCLUDE_DIRS}
         ${SDL2TTF_INCLUDE_DIRS} include  libft/include)
-add_compile_options(-Wall -Wextra -Werror)
+add_compile_options(-Wall -Wextra -Werror -O2)
 
 
 add_library(libft STATIC

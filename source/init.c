@@ -47,13 +47,13 @@ void			camera_init(t_sdl *sdl)
 	sdl->scene.camera.angle = (t_dot){0, 0, 0};
 	sdl->scene.camera.camera = (t_dot){0, 0, -1000};
 	sdl->scene.camera.center_vec = (t_dot){0, 0, 1};
+	free(sdl->scene.camera.dir_vecs);
 	sdl->scene.camera.dir_vecs = NULL;
 	camera_move(sdl);
 }
 
 /*
 ** 1 fig - cylinder
-** 2 fig - ellipsoid
 ** 3 fig - conic
 ** 4 fig - plane
 */
@@ -79,10 +79,12 @@ void			set_default_scene(t_sdl *sdl)
 	add_light(&sdl->scene, (t_dot){300, 300, -1000}, 0.5);
 	add_light(&sdl->scene, (t_dot){1000, 40, 0}, 0.4);
 	add_light(&sdl->scene, (t_dot){300, 100, -550}, 0.4);
+	sdl->scene_file = NULL;
 }
 
 void			scene_init(t_sdl *sdl)
 {
+	sdl->scene.camera.dir_vecs = NULL;
 	camera_init(sdl);
 	sdl->scene.max_depth = 3;
 	sdl->scene.shape = NULL;
