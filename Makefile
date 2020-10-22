@@ -15,10 +15,11 @@ NAME = RTv1
 ### COMPILATION ###
 
 CC = gcc
-FLAGS = -O2 -Wall -Wextra -Werror `./SDL2/bin/sdl2-config --cflags` `./SDL2/bin/sdl2-config --libs`
+FLAGS = -O2 -Wall -Wextra -Werror  `./SDL2/bin/sdl2-config --cflags`
 
 ### INCLUDES ###
 
+SDL2 = `./SDL2/bin/sdl2-config --libs`
 S_DIR = source
 H_DIR = include
 LIBFT = libft
@@ -78,7 +79,6 @@ lib:
 	@make -C $(LIBFT)
 
 sdl:
-	./SDL_built.sh
 
 %.o: %.c $(HEADERS)
 	@$(CC) $(FLAGS) -o $@ -c $<
@@ -86,7 +86,7 @@ sdl:
 	@#printf $(UP) $(CUT)
 
 $(NAME): $(OBJS)
-	@$(CC) $(FLAGS) -I $(H_DIR) -L $(LIBFT) -o $@ $^ -lft -lSDL2main -lSDL2 -lSDL2_image -lm
+	@$(CC) $(FLAGS) $(SDL2) -I $(H_DIR) -L $(LIBFT) -o $@ $^ -lft -lSDL2main -lSDL2_image -lm
 	@echo "$(GREEN)Project successfully compiled$(RESET)"
 
 clean:

@@ -13,9 +13,9 @@
 #ifndef RTV1_H
 # define RTV1_H
 
-# include <SDL2/SDL.h>
+# include "SDL.h"
 # include <unistd.h>
-# include <SDL_image.h>
+# include "SDL_image.h"
 # include <math.h>
 # include "colors.h"
 # include "ini_parser.h"
