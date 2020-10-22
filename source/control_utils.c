@@ -6,7 +6,7 @@
 /*   By: epainter <epainter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:48:35 by epainter          #+#    #+#             */
-/*   Updated: 2020/10/21 23:56:15 by epainter         ###   ########.fr       */
+/*   Updated: 2020/10/22 11:42:22 by epainter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,13 @@ void		keyboard_events(t_sdl *sdl, char *quit, SDL_Event e, t_surface *cur)
 		cur->shift.z = -10;
 	camera_events(sdl, e.key.keysym.sym);
 	if (cur)
-		cur->c = surface_shift(cur);
-	if (e.key.keysym.sym == SDLK_q && cur)
 	{
-		cur->angle.z = M_PI / 6;
-		cur->c = rotate_surface(cur);
+		sdl->need_render = 1;
+		cur->c = surface_shift(cur);
+		if (e.key.keysym.sym == SDLK_q)
+		{
+			cur->angle.z = M_PI / 6;
+			cur->c = rotate_surface(cur);
+		}
 	}
 }
