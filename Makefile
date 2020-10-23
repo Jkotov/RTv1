@@ -6,7 +6,7 @@
 #    By: epainter <epainter@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/23 18:11:39 by epainter          #+#    #+#              #
-#    Updated: 2020/10/23 06:01:08 by epainter         ###   ########.fr        #
+#    Updated: 2020/10/23 08:44:43 by epainter         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,23 +80,38 @@ lib:
 	@echo "$(WHITE)Creating lib files$(CYAN)"
 	@make -C $(LIBFT)
 
-$(SDLDIR):
-	mkdir -p ./SDL2
-
 sdl:
-	@tar xfz SDL2-2.0.12.tar.gz
-	@tar xfz SDL2_image-2.0.5.tar.gz
-	(cd SDL2-2.0.12; mkdir -p build; cd build; ../configure --prefix=$(CURDIR)/SDL2; make -C $(CURDIR)/SDL2-2.0.12/build; make -C $(CURDIR)/SDL2-2.0.12/build install)
-	(mkdir -p SDL2_image-2.0.5/build; cd $(CURDIR)/SDL2_image-2.0.5/build; ../configure --prefix=$(CURDIR)/SDL2; make -C $(CURDIR)/SDL2_image-2.0.5/build; make -C $(CURDIR)/SDL2_image-2.0.5/build install)
+	(make -C $(CURDIR)/SDL2-2.0.12/build \
+	|| ( tar xfz SDL2-2.0.12.tar.gz; \
+	mkdir -p SDL2-2.0.12/build; cd $(CURDIR)/SDL2-2.0.12/build; \
+	../configure --prefix=$(CURDIR)/SDL2; \
+	make -C $(CURDIR)/SDL2-2.0.12/build))
+	(make -C $(CURDIR)/SDL2_image-2.0.5/build || \
+	( tar xfz SDL2_image-2.0.5.tar.gz; \
+	mkdir -p SDL2_image-2.0.5/build; \
+	cd SDL2_image-2.0.5/build; \
+	../configure --prefix=$(CURDIR)/SDL2; \
+	make -C $(CURDIR)/SDL2_image-2.0.5/build))
 
 %.o: %.c $(HEADERS)
-	@$(CC) $(FLAGS) -o $@ -c $<
-	@echo "$(CYAN)Creating object file -> $(YELLOW)$(notdir $@)... $(RED)[Done]$(RESET)"
-	@#printf $(UP) $(CUT)
+	if $(CC) $(FLAGS) -o $@ -c $<; then\
+		echo "$(CYAN)Creating object file -> $(YELLOW)$(notdir $@)... $(RED)[Done]$(RESET)"; \
+	else \
+		make -C $(CURDIR)/SDL2-2.0.12/build install; \
+		make -C $(CURDIR)/SDL2_image-2.0.5/build install; \
+		$(CC) $(FLAGS) -o $@ -c $<; \
+		echo "$(CYAN)Creating object file -> $(YELLOW)$(notdir $@)... $(RED)[Done]$(RESET)"; \
+	fi
 
 $(NAME): $(OBJS)
-	@$(CC) $(FLAGS) -I $(H_DIR) -o $@ $^ $(SDL2) -L $(LIBFT) -lft -lSDL2main -lSDL2_image -lm
-	@echo "$(GREEN)Project successfully compiled$(RESET)"
+	if $(CC) $(FLAGS) -I $(H_DIR) -o $@ $^ $(SDL2) -L $(LIBFT) -lft -lSDL2main -lSDL2_image -lm; then \
+		echo "$(GREEN)Project successfully compiled$(RESET)"; \
+	else \
+		make -C $(CURDIR)/SDL2-2.0.12/build install; \
+		make -C $(CURDIR)/SDL2_image-2.0.5/build install; \
+		$(CC) $(FLAGS) -I $(H_DIR) -o $@ $^ $(SDL2) -L $(LIBFT) -lft -lSDL2main -lSDL2_image -lm; \
+		echo "$(GREEN)Project successfully compiled$(RESET)"; \
+	fi
 
 clean:
 	@rm -rf SDL2-2.0.12
@@ -113,4 +128,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: clean fclean re lib all sdl
+.PHONY: clean fclean re lib all sdl sdlinstall
