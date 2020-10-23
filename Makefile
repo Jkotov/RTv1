@@ -6,7 +6,7 @@
 #    By: epainter <epainter@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/23 18:11:39 by epainter          #+#    #+#              #
-#    Updated: 2020/10/21 21:08:22 by epainter         ###   ########.fr        #
+#    Updated: 2020/10/23 06:01:08 by epainter         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,13 +72,22 @@ RESET = \033[0m
 UP = "\033[A"
 CUT = "\033[K"
 
+SDLDIR = SDL2
+
 all: lib sdl $(NAME)
 
 lib:
 	@echo "$(WHITE)Creating lib files$(CYAN)"
 	@make -C $(LIBFT)
 
+$(SDLDIR):
+	mkdir -p ./SDL2
+
 sdl:
+	@tar xfz SDL2-2.0.12.tar.gz
+	@tar xfz SDL2_image-2.0.5.tar.gz
+	(cd SDL2-2.0.12; mkdir -p build; cd build; ../configure --prefix=$(CURDIR)/SDL2; make -C $(CURDIR)/SDL2-2.0.12/build; make -C $(CURDIR)/SDL2-2.0.12/build install)
+	(mkdir -p SDL2_image-2.0.5/build; cd $(CURDIR)/SDL2_image-2.0.5/build; ../configure --prefix=$(CURDIR)/SDL2; make -C $(CURDIR)/SDL2_image-2.0.5/build; make -C $(CURDIR)/SDL2_image-2.0.5/build install)
 
 %.o: %.c $(HEADERS)
 	@$(CC) $(FLAGS) -o $@ -c $<
@@ -86,7 +95,7 @@ sdl:
 	@#printf $(UP) $(CUT)
 
 $(NAME): $(OBJS)
-	@$(CC) $(FLAGS) $(SDL2) -I $(H_DIR) -L $(LIBFT) -o $@ $^ -lft -lSDL2main -lSDL2_image -lm
+	@$(CC) $(FLAGS) -I $(H_DIR) -o $@ $^ $(SDL2) -L $(LIBFT) -lft -lSDL2main -lSDL2_image -lm
 	@echo "$(GREEN)Project successfully compiled$(RESET)"
 
 clean:
