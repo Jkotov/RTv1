@@ -85,7 +85,7 @@ sdl:
 	|| ( tar xfz SDL2-2.0.12.tar.gz; \
 	mkdir -p SDL2-2.0.12/build; cd $(CURDIR)/SDL2-2.0.12/build; \
 	../configure --prefix=$(CURDIR)/SDL2; \
-	make -C $(CURDIR)/SDL2-2.0.12/build))
+	make -C $(CURDIR)/SDL2-2.0.12/build > /dev/null 2>&1))
 	@(make -C $(CURDIR)/SDL2_image-2.0.5/build || \
 	( tar xfz SDL2_image-2.0.5.tar.gz; \
 	mkdir -p SDL2_image-2.0.5/build; \
@@ -93,10 +93,10 @@ sdl:
 	../configure --prefix=$(CURDIR)/SDL2 ||\
 	(make -C $(CURDIR)/SDL2-2.0.12/build install; \
 	../configure --prefix=$(CURDIR)/SDL2;) ;\
-	make -C $(CURDIR)/SDL2_image-2.0.5/build))
+	make -C $(CURDIR)/SDL2_image-2.0.5/build > /dev/null 2>&1))
 
 %.o: %.c $(HEADERS)
-	if $(CC) $(FLAGS) -o $@ -c $<; then\
+	@if $(CC) $(FLAGS) -o $@ -c $<; then\
 		echo "$(CYAN)Creating object file -> $(YELLOW)$(notdir $@)... $(RED)[Done]$(RESET)"; \
 	else \
 		make -C $(CURDIR)/SDL2-2.0.12/build install; \
@@ -106,7 +106,7 @@ sdl:
 	fi
 
 $(NAME): $(OBJS)
-	if $(CC) $(FLAGS) -I $(H_DIR) -o $@ $^ $(SDL2) -L $(LIBFT) -lft -lSDL2main -lSDL2_image -lm; then \
+	@if $(CC) $(FLAGS) -I $(H_DIR) -o $@ $^ $(SDL2) -L $(LIBFT) -lft -lSDL2main -lSDL2_image -lm; then \
 		echo "$(GREEN)Project successfully compiled$(RESET)"; \
 	else \
 		make -C $(CURDIR)/SDL2-2.0.12/build install; \
