@@ -40,7 +40,7 @@ void				loop(t_sdl *sdl)
 	t_gui_cache	*gui_cache;
 	t_surface	*cur;
 
-	if (!(gui_cache = (t_gui_cache *)malloc(sizeof(t_gui_cache))))
+	if (!(gui_cache = (t_gui_cache *)ft_memalloc(sizeof(t_gui_cache))))
 		sdl_error("GUI Alloc error");
 	quit = 0;
 	cur = sdl->scene.shape;

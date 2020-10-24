@@ -81,16 +81,18 @@ lib:
 	@make -C $(LIBFT)
 
 sdl:
-	(make -C $(CURDIR)/SDL2-2.0.12/build \
+	@(make -C $(CURDIR)/SDL2-2.0.12/build \
 	|| ( tar xfz SDL2-2.0.12.tar.gz; \
 	mkdir -p SDL2-2.0.12/build; cd $(CURDIR)/SDL2-2.0.12/build; \
 	../configure --prefix=$(CURDIR)/SDL2; \
 	make -C $(CURDIR)/SDL2-2.0.12/build))
-	(make -C $(CURDIR)/SDL2_image-2.0.5/build || \
+	@(make -C $(CURDIR)/SDL2_image-2.0.5/build || \
 	( tar xfz SDL2_image-2.0.5.tar.gz; \
 	mkdir -p SDL2_image-2.0.5/build; \
 	cd SDL2_image-2.0.5/build; \
-	../configure --prefix=$(CURDIR)/SDL2; \
+	../configure --prefix=$(CURDIR)/SDL2 ||\
+	(make -C $(CURDIR)/SDL2-2.0.12/build install; \
+	../configure --prefix=$(CURDIR)/SDL2;) ;\
 	make -C $(CURDIR)/SDL2_image-2.0.5/build))
 
 %.o: %.c $(HEADERS)
