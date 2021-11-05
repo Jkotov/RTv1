@@ -6,16 +6,4 @@ How to:
 Use CMake for compile:
 
 `cmake . && make`
-
-TO DO:
-
-- Reflections
-- Other figures:
-  - Cone
-  - Plane
-  - Cylinder
-- GUI
-- Multithreading:
-  - POSIX Threads
-  - OpenCL
-- Test cross-platform compile
+Simple raytracing for surface of the second order. Used C and SDL2
